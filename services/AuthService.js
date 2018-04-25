@@ -1,18 +1,15 @@
-const User 			= require('./../models').User;
+const Usuario 			= require('./../models').Usuario;
 const validator     = require('validator');
 
 const getUniqueKeyFromBody = function(body){// this is so they can send in 3 options unique_key, email, or phone and it will work
-    let unique_key = body.unique_key;
+    let unique_key = body.username;
     if(typeof unique_key==='undefined'){
         if(typeof body.email != 'undefined'){
             unique_key = body.email
-        }else if(typeof body.phone != 'undefined'){
-            unique_key = body.phone
         }else{
             unique_key = null;
         }
     }
-
     return unique_key;
 }
 module.exports.getUniqueKeyFromBody = getUniqueKeyFromBody;
@@ -24,25 +21,17 @@ const createUser = async function(userInfo){
     auth_info.status='create';
 
     unique_key = getUniqueKeyFromBody(userInfo);
-    if(!unique_key) TE('An email or phone number was not entered.');
+    if(!unique_key) TE('No se ha ingresado un email o nombre de usuario');
 
     if(validator.isEmail(unique_key)){
         auth_info.method = 'email';
         userInfo.email = unique_key;
 
-        [err, user] = await to(User.create(userInfo));
+        [err, user] = await to(Usuario.create(userInfo));
         if(err) TE('user already exists with that email');
 
         return user;
 
-    }else if(validator.isMobilePhone(unique_key, 'any')){//checks if only phone number was sent
-        auth_info.method = 'phone';
-        userInfo.phone = unique_key;
-
-        [err, user] = await to(User.create(userInfo));
-        if(err) TE('user already exists with that phone number');
-
-        return user;
     }else{
         TE('A valid email or phone number was not entered.');
     }

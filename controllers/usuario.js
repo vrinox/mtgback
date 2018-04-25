@@ -1,14 +1,14 @@
-const User          = require('../models').User;
+const Usuario          = require('../models').Usuario;
 const authService   = require('./../services/AuthService');
 
 const create = async function(req, res){
     res.setHeader('Content-Type', 'application/json');
     const body = req.body;
 
-    if(!body.unique_key && !body.email && !body.phone){
-        return ReE(res, 'Please enter an email or phone number to register.');
-    } else if(!body.password){
-        return ReE(res, 'Please enter a password to register.');
+    if(!body.username && !body.email){
+        return ReE(res, 'Por favor ingresez nombre y mail para registrarse');
+    } else if(!body.clave){
+        return ReE(res, 'Por favor ingrese una clave para registrarse');
     }else{
         let err, user;
 
@@ -22,9 +22,9 @@ module.exports.create = create;
 
 const get = async function(req, res){
     res.setHeader('Content-Type', 'application/json');
-    let user = req.user;
+    let user = req.usuario;
 
-    return ReS(res, {user:user.toWeb()});
+    return ReS(res, {usuario.toWeb()});
 }
 module.exports.get = get;
 

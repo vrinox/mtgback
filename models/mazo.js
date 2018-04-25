@@ -1,11 +1,12 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  var Model = sequelize.define('Company', {
-    name: DataTypes.STRING
+  var Model = sequelize.define('Mazo', {
+    nombre: DataTypes.STRING,
   });
 
   Model.associate = function(models){
-      this.Users = this.belongsToMany(models.User, {through: 'UserCompany'});
+      this.belongsTo(models.Formato);
+      this.belongsTo(models.Usuario);
   };
 
   Model.prototype.toWeb = function (pw) {
