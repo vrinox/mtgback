@@ -1,11 +1,12 @@
 const DueloController 	= require('./../controllers/duelo');
 const userParser        = require('./../middleware/userParser');
+const passport      	  = require('passport');
 
 const rutas = function(router){
-  router.get(       '/duelo', userParser.usuario, userParser.retador, DueloController.get);
-  router.post(      '/duelo', userParser.usuario, userParser.retador, DueloController.create);
-  router.put(       '/duelo', userParser.usuario, userParser.retador, DueloController.update);
-  router.delete(    '/duelo', userParser.usuario, userParser.retador, DueloController.remove);
+  router.get(       '/duelo', passport.authenticate('jwt', {session:false}), userParser.retador, DueloController.get);
+  router.post(      '/duelo', passport.authenticate('jwt', {session:false}), userParser.retador, DueloController.create);
+  router.put(       '/duelo', passport.authenticate('jwt', {session:false}), userParser.retador, DueloController.update);
+  router.delete(    '/duelo', passport.authenticate('jwt', {session:false}), userParser.retador, DueloController.remove);
 }
 
 module.exports = rutas;

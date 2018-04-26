@@ -4,51 +4,56 @@ const authService   = require('./../services/AuthService');
 const create = async function(req, res){
     res.setHeader('Content-Type', 'application/json');
     const body = req.body;
-
-    if(!body.username && !body.email){
+    if(!body.usuarioname && !body.email){
         return ReE(res, 'Por favor ingresez nombre y mail para registrarse');
     } else if(!body.clave){
         return ReE(res, 'Por favor ingrese una clave para registrarse');
     }else{
-        let err, user;
+        let err, usuario;
 
-        [err, user] = await to(authService.createUser(body));
+        [err, usuario] = await to(authService.createUser(body));
 
         if(err) return ReE(res, err, 422);
-        return ReS(res, {message:'Successfully created new user.', user:user.toWeb(), token:user.getJWT()}, 201);
+        return ReS(res, {message:'nuevo usuario creado satisfactoriamente.', usuario:usuario.toWeb(), token:usuario.getJWT()}, 201);
     }
 }
 module.exports.create = create;
 
 const get = async function(req, res){
     res.setHeader('Content-Type', 'application/json');
-    let user = req.usuario;
+    let idUsuario, err, usuario;
+    idUsuario = req.params.id;
 
-    return ReS(res, {usuario.toWeb()});
+    [err, usuario] = await to(Usuario.findOne({where:{"id":idUsuario}}));
+    if(err) return ReE(res, "err encontrando retador");
+
+    if(!usuario) return ReE(res, "usuario no encontrando con id "+idUsuario);
+
+    return ReS(res, {usuario});
 }
 module.exports.get = get;
 
 const update = async function(req, res){
-    let err, user, data
-    user = req.user;
+    let err, usuario, data
+    usuario = req.usuario;
     data = req.body;
-    user.set(data);
+    usuario.set(data);
 
-    [err, user] = await to(user.save());
+    [err, usuario] = await to(usuario.save());
     if(err){
         if(err.message=='Validation error') err = 'The email address or phone number is already in use';
         return ReE(res, err);
     }
-    return ReS(res, {message :'Updated User: '+user.email});
+    return ReS(res, {message :'Updated User: '+usuario.email});
 }
 module.exports.update = update;
 
 const remove = async function(req, res){
-    let user, err;
-    user = req.user;
+    let usuario, err;
+    usuario = req.usuario;
 
-    [err, user] = await to(user.destroy());
-    if(err) return ReE(res, 'error occured trying to delete user');
+    [err, usuario] = await to(usuario.destroy());
+    if(err) return ReE(res, 'error occured trying to delete usuario');
 
     return ReS(res, {message:'Deleted User'}, 204);
 }
@@ -57,11 +62,11 @@ module.exports.remove = remove;
 
 const login = async function(req, res){
     const body = req.body;
-    let err, user;
+    let err, usuario;
 
-    [err, user] = await to(authService.authUser(req.body));
+    [err, usuario] = await to(authService.authUser(req.body));
     if(err) return ReE(res, err, 422);
 
-    return ReS(res, {token:user.getJWT(), user:user.toWeb()});
+    return ReS(res, {token:usuario.getJWT(), usuario:usuario.toWeb()});
 }
 module.exports.login = login;

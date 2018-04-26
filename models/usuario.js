@@ -5,8 +5,8 @@ const jwt           	= require('jsonwebtoken');
 
 module.exports = (sequelize, DataTypes) => {
     var Model = sequelize.define('Usuario', {
-        //phone   : {type: DataTypes.STRING, allowNull: true, unique: true, validate: { len: {args: [7, 20], msg: "Phone number invalid, too short."}, isNumeric: { msg: "not a valid phone number."} }},
-        username  : {type: DataTypes.STRING, allowNull: true, unique: true, validate: { len: {args: [7, 20], msg: "Nombre de usuario invalido."}}},
+        telefono  : {type: DataTypes.STRING, allowNull: true, unique: true, validate: { len: {args: [7, 20], msg: "Phone number invalid, too short."}, isNumeric: { msg: "not a valid phone number."} }},
+        username  : {type: DataTypes.STRING, allowNull: false, unique: true, validate: { len: {args: [3, 20], msg: "Nombre de usuario invalido."}}},
         nombre    : DataTypes.STRING,
         apellido  : DataTypes.STRING,
         email     : {type: DataTypes.STRING, allowNull: true, unique: true, validate: { isEmail: {msg: "Email Invalido."} }},
@@ -43,7 +43,7 @@ module.exports = (sequelize, DataTypes) => {
         }
     });
 
-    Model.prototype.compareclave = async function (pw) {
+    Model.prototype.compararClave = async function (pw) {
         let err, pass
         if(!this.clave) TE('clave not set');
 
