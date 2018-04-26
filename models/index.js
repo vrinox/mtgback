@@ -6,12 +6,26 @@ var Sequelize = require('sequelize');
 var basename  = path.basename(__filename);
 var db        = {};
 
-const sequelize = new Sequelize(CONFIG.db_name, CONFIG.db_user, CONFIG.db_password, {
-  host: CONFIG.db_host,
-  dialect: CONFIG.db_dialect,
-  port: CONFIG.db_port,
-  operatorsAliases: false
-});
+var sequelize;
+if (CONFIG.DATABASE_URL) {
+    // the application is executed on Heroku ... use the postgres database
+    sequelize = new Sequelize(process.env.HEROKU_POSTGRESQL_BRONZE_URL, {
+      dialect:  'postgres',
+      protocol: 'postgres',
+      port:     match[4],
+      host:     match[3],
+      logging:  true //false
+    })
+  } else {
+    // the application is executed on the local machine ... use mysql
+    sequelize = new Sequelize(CONFIG.db_name, CONFIG.db_user, CONFIG.db_password, {
+      host: CONFIG.db_host,
+      dialect: CONFIG.db_dialect,
+      port: CONFIG.db_port,
+      operatorsAliases: false
+    });
+  }
+
 
 fs
   .readdirSync(__dirname)
