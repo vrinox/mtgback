@@ -8,8 +8,11 @@ var db        = {};
 
 var sequelize;
 if (CONFIG.DATABASE_URL) {
+    console.log("--------------");
+    console.log("SERVIDOR");
+    console.log("--------------");
     // the application is executed on Heroku ... use the postgres database
-    var match = process.env.DATABASE_URL.match(/postgres:\/\/([^:]+):([^@]+)@([^:]+):(\d+)\/(.+)/)
+    var match = CONFIG.DATABASE_URL.match(/postgres:\/\/([^:]+):([^@]+)@([^:]+):(\d+)\/(.+)/)
     sequelize = new Sequelize(match[5], match[1], match[2], {
         dialect:  'postgres',
         protocol: 'postgres',
@@ -18,7 +21,10 @@ if (CONFIG.DATABASE_URL) {
         logging: false
     });
   } else {
-    // the application is executed on the local machine ... use mysql
+    console.log("--------------");
+    console.log("local");
+    console.log("--------------");
+    // the application is executed on the local machine ... use postgres
     sequelize = new Sequelize(CONFIG.db_name, CONFIG.db_user, CONFIG.db_password, {
       host: CONFIG.db_host,
       dialect: CONFIG.db_dialect,
