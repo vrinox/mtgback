@@ -12,7 +12,6 @@ if (CONFIG.DATABASE_URL) {
     console.log("SERVIDOR");
     // the application is executed on Heroku ... use the postgres database
     var match = CONFIG.DATABASE_URL.match(/postgres:\/\/([^:]+):([^@]+)@([^:]+):(\d+)\/(.+)/);
-    console.log(CONFIG.DATABASE_URL);
     console.log("--------------");
     console.log(match);
     console.log("--------------");
