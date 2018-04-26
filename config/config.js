@@ -3,7 +3,7 @@ require('dotenv').config();//instatiate environment variables
 CONFIG = {} //Make this global to use all over the application
 
 CONFIG.app          = process.env.APP   || 'mtgback';
-CONFIG.port         = process.env.PORT  || '3000';
+CONFIG.port         = process.env.PORT  || '8000';
 
 CONFIG.db_dialect   = process.env.DB_DIALECT    || 'postgres';
 CONFIG.db_host      = process.env.DB_HOST       || 'localhost';
