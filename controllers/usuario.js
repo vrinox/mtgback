@@ -62,6 +62,9 @@ module.exports.remove = remove;
 
 const login = async function(req, res){
     const body = req.body;
+    console.log("------body controller-----");
+    console.log(body);
+    console.log("----body----");
     let err, usuario;
     [err, usuario] = await to(authService.authUser(req.body));
     if(err) return ReE(res, err, 422);
