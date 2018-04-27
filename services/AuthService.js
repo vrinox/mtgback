@@ -23,7 +23,9 @@ const createUser = async function(userInfo){
 
     auth_info={}
     auth_info.status='create';
-
+    console.log("---------------");
+    console.log("Auth:",userInfo);
+    console.log("---------------");
     unique_key = getUniqueKeyFromBody(userInfo);
     if(!unique_key) TE('No se ha ingresado un email o nombre de usuario');
     if(validator.isEmail(unique_key)){
