@@ -7,7 +7,6 @@ const express 		= require('express');
 const logger 	    = require('morgan');
 const bodyParser 	= require('body-parser');
 const passport    = require('passport');
-const bodyLogger  = require('./middleware/bodyLogger');
 
 const v1 = require('./routes/v1');
 
@@ -16,9 +15,12 @@ const app = express();
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-//comentar cuando salga de desarrollo
-app.use(bodyLogger());
-
+//// TODO: delete this
+var myLogger = function (req, res, next) {
+  console.log(req.body);
+  next();
+};
+app.use(myLogger);
 // app.use(cookieParser());
 // app.use(express.static(path.join(__dirname, 'public')));
 
