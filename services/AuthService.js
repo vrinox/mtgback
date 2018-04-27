@@ -48,9 +48,6 @@ const authUser = async function(userInfo){//returns token
     let unique_key;
     let auth_info = {};
     auth_info.status = 'login';
-    console.log("------body------");
-    console.log("body:",req.body);
-    console.log("------ fin body------");
     unique_key = getUniqueKeyFromBody(userInfo);
 
     if(!unique_key) TE('Por favor ingrese su nombre de usuario o email para accesar');
