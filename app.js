@@ -15,12 +15,6 @@ const app = express();
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-//// TODO: delete this
-var myLogger = function (req, res, next) {
-  console.log(req.body);
-  next();
-};
-app.use(myLogger);
 // app.use(cookieParser());
 // app.use(express.static(path.join(__dirname, 'public')));
 
