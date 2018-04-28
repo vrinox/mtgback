@@ -11,12 +11,12 @@ const create = async function(req, res){
     }else{
         let err, usuario,validado;
         validado = await to(authService.verificar(body));
-        console.log(validado);
         if(validado.success){
+          console.log("validacion: validado");
           [err, usuario] = await to(authService.createUser(body));
           if(err) return ReE(res, err, 422);
         }else{
-          console.log(validado.message);
+          console.log("validacion: ",validado.message);
           return ReS(res, {message:validado.message }, 200);
         }
 
