@@ -12,6 +12,7 @@ CONFIG.db_name      = process.env.DB_NAME       || 'da3gp9ioktteud';
 CONFIG.db_user      = process.env.DB_USER       || 'dyybldixnzggrl';
 CONFIG.db_password  = process.env.DB_PASSWORD   || 'ce6cf52668943015ef562bc6ef980e13ed2693dff1d29b485761d6fd87a48e5a';
 CONFIG.DATABASE_URL = process.env.DATABASE_URL;
+CONFIG.log_body     = process.env.LOG_BODY      ||  1;
 
 CONFIG.jwt_encryption  = process.env.JWT_ENCRYPTION || 'mtgback';
 CONFIG.jwt_expiration  = process.env.JWT_EXPIRATION || '10000';
