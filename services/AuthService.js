@@ -23,9 +23,6 @@ const createUser = async function(userInfo){
 
     auth_info={}
     auth_info.status='create';
-    console.log("---------------");
-    console.log("Auth:",userInfo);
-    console.log("---------------");
     unique_key = getUniqueKeyFromBody(userInfo);
     if(!unique_key) TE('No se ha ingresado un email o nombre de usuario');
     if(validator.isEmail(unique_key)){
@@ -86,3 +83,31 @@ const authUser = async function(userInfo){//returns token
 
 }
 module.exports.authUser = authUser;
+const verificar = async function(userInfo){
+  let err, usuario,repuesta;
+  [err,usuario] = await to(Usuario.findOne({where:{"username":userInfo.username}}));
+  if(err) TE(err.message);
+
+  if(usuario){
+    respuesta.message = "nombre de usuario ya existe";
+    respuesta.success = 0;
+  }else{
+    [err,usuario] = await to(Usuario.findOne({where:{"email":userInfo.email}}));
+    if(err) TE(err.message);
+    if(usuario){
+      respuesta.message = "email ya esta en uso";
+      respuesta.success = 0;
+    }else{
+      [err,usuario] = await to(Usuario.findOne({where:{"telefono":userInfo.telefono}}));
+      if(err) TE(err.message);
+      if(usuario){
+        respuesta.message = "numero de telefono ya esta en uso";
+        respuesta.success = 0;
+      }else{
+          respuesta.success = 1;
+      }
+    }
+  }
+  return respuesta;
+}
+module.export.verificar = verificar;

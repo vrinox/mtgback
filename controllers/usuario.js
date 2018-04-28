@@ -9,11 +9,17 @@ const create = async function(req, res){
     } else if(!body.clave){
         return ReE(res, 'Por favor ingrese una clave para registrarse');
     }else{
-        let err, usuario;
+        let err, usuario,validado;
+        validado = await to(authService.verificar(userInfo));
 
-        [err, usuario] = await to(authService.createUser(body));
+        if(validado.success){
+          [err, usuario] = await to(authService.createUser(body));
+          if(err) return ReE(res, err, 422);
+        }else{
+          TE(validado.message);
+          return ReS(res, {message:validado.message, usuario:usuario.toWeb(), token:usuario.getJWT()}, 201);
+        }
 
-        if(err) return ReE(res, err, 422);
         return ReS(res, {message:'nuevo usuario creado satisfactoriamente.', usuario:usuario.toWeb(), token:usuario.getJWT()}, 201);
     }
 }
