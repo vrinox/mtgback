@@ -11,10 +11,16 @@ const passport    = require('passport');
 const v1 = require('./routes/v1');
 
 const app = express();
-const myLogger = function(req, res, next){
+const custom = function(req, res, next){
+  let body = req.body;
+  body = body.map(x => {
+    if((typeof x) == "string"){
+      return x.toLowerCase();
+    }
+  });
   if(CONFIG.log_body){
     console.log("-------------------");
-    console.log("Body:",req.body);
+    console.log("Body:",body);
     console.log("-------------------");
   }
   next();
@@ -22,7 +28,7 @@ const myLogger = function(req, res, next){
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(myLogger);
+app.use(custom);
 // app.use(cookieParser());
 // app.use(express.static(path.join(__dirname, 'public')));
 
