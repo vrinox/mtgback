@@ -18,7 +18,7 @@ const create = async function(req, res){
           if(err) return ReE(res, err, 422);
         }else{
           console.log("validacion: ",validado.message);
-          return ReS(res, validado.message, 200);
+          return ReE(res, validado.message, 200);
         }
 
         return ReS(res, {message:'nuevo usuario creado satisfactoriamente.', usuario:usuario.toWeb(), token:usuario.getJWT()}, 201);
