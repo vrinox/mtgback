@@ -18,6 +18,7 @@ const custom = function(req, res, next){
       return x.toLowerCase();
     }
   });
+  console.log(body);
   if(CONFIG.log_body){
     console.log("-------------------");
     console.log("Body:",body);
