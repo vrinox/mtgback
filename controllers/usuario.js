@@ -11,7 +11,7 @@ const create = async function(req, res){
     }else{
         let err, usuario,validado;
         validado = await to(authService.verificar(body));
-
+        console.log(validado);
         if(validado.success){
           [err, usuario] = await to(authService.createUser(body));
           if(err) return ReE(res, err, 422);
