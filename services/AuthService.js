@@ -85,7 +85,8 @@ const authUser = async function(userInfo){//returns token
 module.exports.authUser = authUser;
 
 const verificar = async function(userInfo){
-  let err, usuario,respuesta;
+  let err, usuario;
+  let respuesta = { message:"", success:0 };
   [err,usuario] = await to(Usuario.findOne({where:{"username":userInfo.username}}));
   if(err) TE(err.message);
 
