@@ -17,6 +17,7 @@ const myLogger = function(req, res, next){
     console.log("Body:",req.body);
     console.log("-------------------");
   }
+  next();
 }
 app.use(logger('dev'));
 app.use(bodyParser.json());
