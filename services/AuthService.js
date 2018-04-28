@@ -110,4 +110,4 @@ const verificar = async function(userInfo){
   }
   return respuesta;
 }
-module.export.verificar = verificar;
+module.exports.verificar = verificar;
