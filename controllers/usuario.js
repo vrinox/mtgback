@@ -10,7 +10,7 @@ const create = async function(req, res){
         return ReE(res, 'Por favor ingrese una clave para registrarse');
     }else{
         let err, usuario,validado;
-        validado = await to(authService.verificar(userInfo));
+        validado = await to(authService.verificar(body));
 
         if(validado.success){
           [err, usuario] = await to(authService.createUser(body));
