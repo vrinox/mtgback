@@ -4,8 +4,8 @@ const authService   = require('./../services/AuthService');
 const create = async function(req, res){
     res.setHeader('Content-Type', 'application/json');
     const body = req.body;
-    if(!body.usuarioname && !body.email){
-        return ReE(res, 'Por favor ingresez nombre y mail para registrarse');
+    if(!body.usuario && !body.email){
+        return ReE(res, 'Por favor ingrese nombre y mail para registrarse');
     } else if(!body.clave){
         return ReE(res, 'Por favor ingrese una clave para registrarse');
     }else{
