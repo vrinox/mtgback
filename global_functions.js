@@ -27,6 +27,7 @@ ReE = function(res, err, code){ // Error Web Response
     return res.json({success:false, error: err});
 }
 
+
 ReS = function(res, data, code){ // Success Web Response
     let send_data = {success:true};
 
@@ -43,6 +44,3 @@ ReS = function(res, data, code){ // Success Web Response
 process.on('unhandledRejection', error => {
     console.error('Uncaught Error', pe(error));
 });
-
-
-
