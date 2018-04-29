@@ -79,7 +79,7 @@ const decoradorUsuario= async function(usuario){
     include:[{
       model:Formato
     }],
-    where:"UsuarioId":usuario.dataValues.id;
+    where:{"UsuarioId":usuario.dataValues.id}
   }));
   if(err) return [err,null];
   usuario.dataValues.mazos = decks;
