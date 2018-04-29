@@ -15,7 +15,6 @@ module.exports = function(passport){
         if(usuario) {
             [err, usuario] = await to(UsuarioController.decoradorUsuario(usuario));
             if(err) done(err, false);
-            req.usuario = usuario;
             return done(null, usuario);
         }else{
             return done(null, false);

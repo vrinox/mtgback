@@ -5,7 +5,7 @@ const create = async function(req, res){
     res.setHeader('Content-Type', 'application/json');
     let err, mazo;
     let mazoInfo = req.body;
-    let usuario = req.usuario;
+    let usuario = req.user;
     console.log(usuario);
     mazoInfo.UsuarioId = usuario.id;
     console.log(mazoInfo);
