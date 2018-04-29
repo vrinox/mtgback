@@ -65,17 +65,6 @@ module.exports = (sequelize, DataTypes) => {
         let json = this.toJSON();
         return json;
     };
-    Model.prototype.obtener = async function(idUsuario){
-      [err, usuario] = await to(Usuario.findOne({where:{"id":idUsuario}}));
-      if(err) return  [err,null];
-
-      if(!usuario) return "usuario no encontrando con id "+idUsuario;
-
-      [err, decks] = await to(usuario.getMazos());
-      if(err) return [err,null];
-
-      usuario.dataValues.mazos = decks;
-      return [null,usuario];
-    }
+    
     return Model;
 };
