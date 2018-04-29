@@ -82,7 +82,7 @@ const decoradorUsuario= async function(usuario){
     where:{"UsuarioId":usuario.dataValues.id}
   }));
   if(err) return [err,null];
-  usuario.dataValues.mazos = decks;
+  usuario.dataValues.mazos = mazos;
   return [null,usuario];
 }
 
