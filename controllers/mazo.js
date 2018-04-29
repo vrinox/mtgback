@@ -50,6 +50,7 @@ const get = async function(req, res){
       }],
       where:{"id":req.params.id}
     }));
+    console.log(err);
     if(err) return ReE(res, "err encontrando mazo");
 
     return ReS(res, {mazo:mazo.toWeb()});
