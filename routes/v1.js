@@ -5,9 +5,10 @@ const router 			      = express.Router();
 const passport      	  = require('passport');
 const path              = require('path');
 //rutas externas
-const RutasFormato      = require('./formato')(router);
-const RutasDuelo        = require('./duelo')(router)
-const RutasUsuario      = require('./usuario')(router);
+require('./formato')(router);
+require('./duelo')(router)
+require('./usuario')(router);
+require('./mazo')(router);
 
 require('./../middleware/passport')(passport)
 /* GET home page. */
