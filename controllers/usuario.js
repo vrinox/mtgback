@@ -41,7 +41,6 @@ const get = async function(req, res){
 
     usuario.dataValues.mazos = decks;
 
-
     return ReS(res, {usuario});
 }
 module.exports.get = get;
@@ -79,6 +78,11 @@ const login = async function(req, res){
     let err, usuario;
     [err, usuario] = await to(authService.authUser(req.body));
     if(err) return ReE(res, err, 422);
+
+    [err, decks] = await to(usuario.getMazos());
+    if(err) return ReE(res, err, 422);
+
+    usuario.dataValues.mazos = decks;
 
     return ReS(res, {token:usuario.getJWT(), usuario:usuario.toWeb()});
 }
