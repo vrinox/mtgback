@@ -38,10 +38,8 @@ const get = async function(req, res){
 
     if(!usuario) return ReE(res, "usuario no encontrando con id "+idUsuario);
 
-    [err, decks] = await to(usuario.getMazos());
-    if(err) return ReE(res, err, 422);
-
-    usuario.dataValues.mazos = decks;
+    [err, usuario] = await to(UsuarioController.decoradorUsuario(usuario));
+    if(err) next(err, false);
 
     return ReS(res, {usuario});
 }
