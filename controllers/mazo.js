@@ -4,6 +4,9 @@ const create = async function(req, res){
     res.setHeader('Content-Type', 'application/json');
     let err, mazo;
     let mazoInfo = req.body;
+    let usuario = req.usuario;
+    
+    mazoInfo.UsuarioId = usuario.dataValues.id;
 
     [err, mazo] = await to(Mazo.create(mazoInfo));
     if(err) return ReE(res, err, 422);
