@@ -83,9 +83,8 @@ const decoradorUsuario= async function(usuario){
   }));
   if(err) return [err,null];
   usuario.dataValues.mazos = mazos.map(mazo => {
-    console.log(mazo.dataValues.Formato);
     let newMazo = mazo.dataValues;
-    newMazo.formato = mazo.dataValues.Formato;
+    newMazo.formato = mazo.dataValues.Formato.dataValues;
     return newMazo;
   });
   return [null,usuario];
