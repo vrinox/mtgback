@@ -27,7 +27,6 @@ const custom = function(req, res, next){
   }
   next();
 }
-app.set('view engine', 'ejs');
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -87,7 +86,10 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.send('error');
+  res.json({
+    message: err.message,
+    error: err
+  });
 });
 
 module.exports = app;
