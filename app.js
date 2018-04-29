@@ -14,8 +14,10 @@ const app = express();
 const custom = function(req, res, next){
   let body = req.body;
   body = body.map(x => {
-    if((typeof x) == "string"){
+    if(typeof x == "string"){
       return x.toLowerCase();
+    }else{
+      return x;
     }
   });
   if(CONFIG.log_body){
