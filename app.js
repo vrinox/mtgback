@@ -14,9 +14,11 @@ const app = express();
 const custom = function(req, res, next){
   let body = req.body;
   for(let propiedad in body){
-    if(typeof propiedad == "string"){
-      console.log(propiedad);
-      propiedad = propiedad.toLowerCase();
+    if (body.hasOwnProperty(propiedad)) {
+      if(typeof propiedad == "string"){
+        console.log(propiedad);
+        propiedad = propiedad.toLowerCase();
+      }
     }
   }
   if(CONFIG.log_body){
