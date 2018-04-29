@@ -13,11 +13,11 @@ const v1 = require('./routes/v1');
 const app = express();
 const custom = function(req, res, next){
   let body = req.body;
-  // body = body.map(x => {
-  //   if((typeof x) == "string"){
-  //     return x.toLowerCase();
-  //   }
-  // });
+  body = body.map(x => {
+    if((typeof x) == "string"){
+      return x.toLowerCase();
+    }
+  });
   if(CONFIG.log_body){
     console.log("-------------------");
     console.log("Body:",body);
