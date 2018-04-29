@@ -73,7 +73,7 @@ const authUser = async function(userInfo){//returns token
         [err, usuario] = await to(Usuario.findOne({where:{username:unique_key }}));
         if(err) TE(err.message);
     }
-    if(!usuario) TE('Not registered');
+    if(!usuario) TE('No existe usuario con ese nombre');
 
     [err, usuario] = await to(usuario.compararClave(userInfo.clave));
 
