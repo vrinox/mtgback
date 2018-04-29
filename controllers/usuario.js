@@ -40,7 +40,7 @@ const get = async function(req, res){
     if(err) return ReE(res, err, 422);
 
     console.log(usuario);
-    usuario.mazos = decks;
+    usuario.dataValues.mazos = decks;
 
 
     return ReS(res, {usuario});
