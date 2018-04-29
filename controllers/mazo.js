@@ -43,7 +43,13 @@ module.exports.getAll = getAll;
 const get = async function(req, res){
     res.setHeader('Content-Type', 'application/json');
 
-    [err, mazo] = await to(Mazo.findOne({where:{"id":req.params.id}}));
+    [err, mazo] = await to(Mazo.findOne({
+      include:[{
+        model:Formato,
+        as:"formato"
+      }]
+      where:{"id":req.params.id}
+    }));
     if(err) return ReE(res, "err encontrando mazo");
 
     return ReS(res, {mazo:mazo.toWeb()});
