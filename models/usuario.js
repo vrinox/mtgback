@@ -25,6 +25,7 @@ module.exports = (sequelize, DataTypes) => {
         this.hasMany(models.Chat);
         this.hasMany(models.Lista);
         this.hasMany(models.Amigo);
+        this.hasMany(models.Mazo);
         //pertenece
         this.belongsTo(models.Comunidad);
     };

@@ -32,7 +32,7 @@ const get = async function(req, res){
     idUsuario = req.params.id;
 
     [err, usuario] = await to(Usuario.findOne({where:{"id":idUsuario}}));
-    if(err) return ReE(res, "err encontrando retador");
+    if(err) return ReE(res, "err encontrando usuario");
 
     if(!usuario) return ReE(res, "usuario no encontrando con id "+idUsuario);
 
