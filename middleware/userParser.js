@@ -1,4 +1,5 @@
 const Usuario = require('./../models').Usuario;
+const UsuarioController = require('../controllers/usuario');
 
 let retador = async function (req, res, next) {
     let idRetador, err, retador;
@@ -9,6 +10,8 @@ let retador = async function (req, res, next) {
 
     if(!retador) return ReE(res, "Retador no encontrando con id "+idUsuario);
 
+    [err, retador] = await to(UsuarioController.decoradorUsuario(retador));
+    if(err) next(err, false);
     req.usuario = retador;
     next();
 }

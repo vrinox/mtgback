@@ -1,4 +1,6 @@
 const Usuario          = require('../models').Usuario;
+const Formato          = require('../models').Formato;
+const Mazo          = require('../models').Mazo;
 const authService   = require('./../services/AuthService');
 
 const create = async function(req, res){
@@ -71,6 +73,20 @@ const remove = async function(req, res){
 }
 module.exports.remove = remove;
 
+const decoradorUsuario= async function(usuario){
+  let err,mazos;
+  [err, mazos] = await to(Mazo.findAll({
+    include:[{
+      model:Formato
+    }],
+    where:"UsuarioId":usuario.dataValues.id;
+  }));
+  if(err) return [err,null];
+  usuario.dataValues.mazos = decks;
+  return [null,usuario];
+}
+
+module.exports.decoradorUsuario = decoradorUsuario;
 
 const login = async function(req, res){
     const body = req.body;
@@ -79,10 +95,8 @@ const login = async function(req, res){
     [err, usuario] = await to(authService.authUser(req.body));
     if(err) return ReE(res, err, 422);
 
-    [err, decks] = await to(usuario.getMazos());
+    [err, usuario] = await to(decoradorUsuario(usuario));
     if(err) return ReE(res, err, 422);
-
-    usuario.dataValues.mazos = decks;
 
     return ReS(res, {token:usuario.getJWT(), usuario:usuario.toWeb()});
 }
