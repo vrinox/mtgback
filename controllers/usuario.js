@@ -47,7 +47,7 @@ module.exports.get = get;
 
 const update = async function(req, res){
     let err, usuario, data
-    usuario = req.usuario;
+    usuario = req.user;
     data = req.body;
     usuario.set(data);
 
@@ -62,7 +62,7 @@ module.exports.update = update;
 
 const remove = async function(req, res){
     let usuario, err;
-    usuario = req.usuario;
+    usuario = req.user;
 
     [err, usuario] = await to(usuario.destroy());
     if(err) return ReE(res, 'error occured trying to delete usuario');

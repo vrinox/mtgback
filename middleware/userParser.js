@@ -12,7 +12,7 @@ let retador = async function (req, res, next) {
 
     [err, retador] = await to(UsuarioController.decoradorUsuario(retador));
     if(err) next(err, false);
-    req.usuario = retador;
+    req.retador = retador;
     next();
 }
 module.exports.retador = retador;

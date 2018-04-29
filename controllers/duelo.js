@@ -3,7 +3,7 @@ const Duelo = require('../models').Duelo;
 const create = async function(req, res){
     res.setHeader('Content-Type', 'application/json');
     let err, duelo, dueloInfo, usuario, retador;
-    usuario = req.usuario;
+    usuario = req.user;
     retador = req.retador;
     dueloInfo = req.body;
 
@@ -20,7 +20,7 @@ module.exports.create = create;
 const getAll = async function(req, res){
     res.setHeader('Content-Type', 'application/json');
     let err, duelos, usuario;
-    usuario = req.usuario;
+    usuario = req.user;
 
     [err, duelos] = await to(usuario.getDuelos());
     let duelosJson = duelos.map(duelo => {
