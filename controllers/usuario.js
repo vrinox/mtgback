@@ -36,6 +36,12 @@ const get = async function(req, res){
 
     if(!usuario) return ReE(res, "usuario no encontrando con id "+idUsuario);
 
+    [err, decks] = await to(usuario.getMazos());
+    if(err) return ReE(res, err, 422);
+
+    console.log(decks);
+    usuario.mazos = decks;
+
     return ReS(res, {usuario});
 }
 module.exports.get = get;
@@ -77,18 +83,3 @@ const login = async function(req, res){
     return ReS(res, {token:usuario.getJWT(), usuario:usuario.toWeb()});
 }
 module.exports.login = login;
-
-const getMazos = async function(req, res){
-  let usuario, err, decks;
-  usuario = req.usuario;
-
-  [err, decks] = await to(usuario.getMazos());
-  if(err) return ReE(res, err, 422);
-
-  console.log(decks);
-  usuario.mazos = decks;
-
-  return ReS(res, {token:usuario.getJWT(), usuario:usuario.toWeb()});
-}
-
-module.exports.getMazos = getMazos;
