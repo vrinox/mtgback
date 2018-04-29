@@ -80,9 +80,9 @@ const decoradorUsuario= async function(usuario){
     }],
     where:{"UsuarioId":usuario.dataValues.id}
   }));
-  if(err) return [err,null];
+  if(err) TE("error al buscar mazos de usuario "+usuario.dataValues.id,true);
   usuario.dataValues.mazos = mazos;
-  return [null,usuario];
+  return usuario;
 }
 
 module.exports.decoradorUsuario = decoradorUsuario;
@@ -96,7 +96,6 @@ const login = async function(req, res){
     [err, usuario] = await to(decoradorUsuario(usuario));
     if(err) return ReE(res, err, 422);
 
-    console.log(usuario);
     return ReS(res, {token:usuario.getJWT(), usuario:usuario.toWeb()});
 }
 module.exports.login = login;
