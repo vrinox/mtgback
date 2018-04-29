@@ -89,13 +89,13 @@ module.exports.decoradorUsuario = decoradorUsuario;
 const login = async function(req, res){
     const body = req.body;
     console.log("Body:",req.body);
-    let err, usuario;
+    let err, usuario,values;
     [err, usuario] = await to(authService.authUser(req.body));
     if(err) return ReE(res, err, 422);
 
-    [err, usuario] = await to(decoradorUsuario(usuario));
+    [err, values] = await to(decoradorUsuario(usuario));
     if(err) return ReE(res, err, 422);
-
+    usuario.dataValues = values;
     return ReS(res, {token:usuario.getJWT(), usuario:usuario.toWeb()});
 }
 module.exports.login = login;
