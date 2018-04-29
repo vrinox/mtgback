@@ -50,7 +50,7 @@ module.exports = (sequelize, DataTypes) => {
         [err, pass] = await to(bcrypt_p.compare(pw, this.clave));
         if(err) TE(err);
 
-        if(!pass) TE('invalid clave');
+        if(!pass) TE('clave/usuario no coinsiden');
 
         return this;
     }
