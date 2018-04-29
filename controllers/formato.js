@@ -22,7 +22,6 @@ const getAll = async function(req, res){
     let formatosJson = formatos.map(formato => {
       return formato.toWeb();
     });
-    console.log('formatos',formatos);
     return ReS(res, {formatos:formatosJson});
 }
 module.exports.getAll = getAll;

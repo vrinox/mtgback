@@ -11,6 +11,7 @@ const create = async function(req, res){
     console.log(mazoInfo);
     [err, mazo] = await to(Mazo.create(mazoInfo));
     if(err) return ReE(res, err, 422);
+
     [err, mazo] = await to(Mazo.findOne({
       include:[{
         model:Formato,
