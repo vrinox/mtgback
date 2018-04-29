@@ -39,8 +39,9 @@ const get = async function(req, res){
     [err, decks] = await to(usuario.getMazos());
     if(err) return ReE(res, err, 422);
 
-    console.log(decks);
+    console.log(usuario);
     usuario.mazos = decks;
+
 
     return ReS(res, {usuario});
 }
