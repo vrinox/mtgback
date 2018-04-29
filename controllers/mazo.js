@@ -27,12 +27,16 @@ module.exports.create = create;
 const getAll = async function(req, res){
     res.setHeader('Content-Type', 'application/json');
     let err, mazos;
-
-    [err, mazos] = await to(Mazo.findAll());
+    let usuario = req.user;
+    [err, mazos] = await to(Mazo.findAll({
+      include:[{
+        model:Formato
+      }],
+      where:{"UsuarioId":usuario.id}
+    }));
     let mazosJson = mazos.map(mazo => {
       return mazo.toWeb();
     });
-    console.log('mazos',mazos);
     return ReS(res, {mazos:mazosJson});
 }
 module.exports.getAll = getAll;
