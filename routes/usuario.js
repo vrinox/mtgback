@@ -5,6 +5,7 @@ const rutas = function(router){
   router.post(    '/usuario',         UsuarioController.create);                                                    // C
   router.get(     '/usuario/:id',     passport.authenticate('jwt', {session:false}), UsuarioController.get);
   router.get(     '/usuario',         passport.authenticate('jwt', {session:false}), UsuarioController.get);
+  router.get(     '/usuario/mazos',   passport.authenticate('jwt', {session:false}), UsuarioController.getMazos);
   router.put(     '/usuario',         passport.authenticate('jwt', {session:false}), UsuarioController.update);     // U
   router.delete(  '/usuario',         passport.authenticate('jwt', {session:false}), UsuarioController.remove);     // D
   router.post(    '/usuario/login',   UsuarioController.login);
