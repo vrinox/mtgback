@@ -15,9 +15,9 @@ const custom = function(req, res, next){
   let body = req.body;
   for(let propiedad in body){
     if (body.hasOwnProperty(propiedad)) {
-      if(typeof propiedad == "string"){
-        console.log(propiedad);
-        propiedad = propiedad.toLowerCase();
+      if(typeof body[propiedad] == "string"){
+        console.log(body[propiedad]);
+        body[propiedad] = body[propiedad].toLowerCase();
       }
     }
   }
