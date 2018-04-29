@@ -31,17 +31,8 @@ const get = async function(req, res){
     let idUsuario, err, usuario;
     idUsuario = req.params.id;
 
-    [err, usuario] = await to(Usuario.findOne({where:{"id":idUsuario}}));
-    if(err) return ReE(res, "err encontrando usuario");
-
-    if(!usuario) return ReE(res, "usuario no encontrando con id "+idUsuario);
-
-    [err, decks] = await to(usuario.getMazos());
+    [err, usuario] = await to(Usuario.obtener(idUsuario));
     if(err) return ReE(res, err, 422);
-
-    console.log(usuario);
-    usuario.dataValues.mazos = decks;
-
 
     return ReS(res, {usuario});
 }
