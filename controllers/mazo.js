@@ -6,20 +6,21 @@ const create = async function(req, res){
     let err, mazo;
     let mazoInfo = req.body;
     let usuario = req.user;
-    console.log(usuario);
+
     mazoInfo.UsuarioId = usuario.id;
-    console.log(mazoInfo);
+
     [err, mazo] = await to(Mazo.create(mazoInfo));
     if(err) return ReE(res, err, 422);
-
-    console.log(mazo);
+    console.log(mazo.id);
     [err, mazo] = await to(Mazo.findOne({
       include:[{
         model:Formato,
         as:"formato"
       }],
-      where:{"id":mazo.dataValues.id}
+      where:{"id":mazo.id}
     }));
+    console.log('-----------------------------------------');
+    console.log(mazo);
     let mazoJson = mazo.toWeb();
 
     return ReS(res,{mazo:mazoJson}, 201);
