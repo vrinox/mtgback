@@ -82,6 +82,7 @@ const decoradorUsuario= async function(usuario){
     where:{"UsuarioId":usuario.dataValues.id}
   }));
   if(err) return [err,null];
+  console.log(mazos);
   usuario.dataValues.mazos = mazos;
   return [null,usuario];
 }
