@@ -5,9 +5,9 @@ const create = async function(req, res){
     let err, mazo;
     let mazoInfo = req.body;
     let usuario = req.usuario;
-    
-    mazoInfo.UsuarioId = usuario.dataValues.id;
 
+    mazoInfo.UsuarioId = usuario.dataValues.id;
+    console.log(mazoInfo);
     [err, mazo] = await to(Mazo.create(mazoInfo));
     if(err) return ReE(res, err, 422);
 

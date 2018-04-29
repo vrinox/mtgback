@@ -21,7 +21,7 @@ ReE = function(res, err, code){ // Error Web Response
     if(typeof err == 'object' && typeof err.message != 'undefined'){
         err = err.message;
     }
-
+    console.log(err);
     if(typeof code !== 'undefined') res.statusCode = code;
 
     return res.json({success:false, error: err});
