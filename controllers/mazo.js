@@ -47,7 +47,7 @@ const get = async function(req, res){
       include:[{
         model:Formato,
         as:"formato"
-      }]
+      }],
       where:{"id":req.params.id}
     }));
     if(err) return ReE(res, "err encontrando mazo");
