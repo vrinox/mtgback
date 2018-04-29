@@ -1,4 +1,5 @@
 const Mazo = require('../models').Mazo;
+const Formato = require('../models').Formato;
 
 const create = async function(req, res){
     res.setHeader('Content-Type', 'application/json');
@@ -10,7 +11,13 @@ const create = async function(req, res){
     console.log(mazoInfo);
     [err, mazo] = await to(Mazo.create(mazoInfo));
     if(err) return ReE(res, err, 422);
-
+    [err, mazo] = await to(Mazo.findOne({
+      include:[{
+        model:Formato,
+        as:"formato"
+      }],
+      where:{"id":mazo.dataValues.id}
+    }));
     let mazoJson = mazo.toWeb();
 
     return ReS(res,{mazo:mazoJson}, 201);
