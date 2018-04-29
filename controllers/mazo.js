@@ -11,15 +11,12 @@ const create = async function(req, res){
 
     [err, mazo] = await to(Mazo.create(mazoInfo));
     if(err) return ReE(res, err, 422);
-    console.log(mazo.id);
     [err, mazo] = await to(Mazo.findOne({
       include:[{
-        model:Formato,
-        as:"formato"
+        model:Formato
       }],
       where:{"id":mazo.id}
     }));
-    console.log('-----------------------------------------');
     console.log(mazo);
     let mazoJson = mazo.toWeb();
 
@@ -45,8 +42,7 @@ const get = async function(req, res){
 
     [err, mazo] = await to(Mazo.findOne({
       include:[{
-        model:Formato,
-        as:"formato"
+        model:Formato
       }],
       where:{"id":req.params.id}
     }));
