@@ -38,7 +38,7 @@ const get = async function(req, res){
 
     if(!usuario) return ReE(res, "usuario no encontrando con id "+idUsuario);
 
-    [err, usuario] = await to(UsuarioController.decoradorUsuario(usuario));
+    [err, usuario] = await to(decoradorUsuario(usuario));
     if(err) next(err, false);
 
     return ReS(res, {usuario});
