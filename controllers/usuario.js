@@ -41,6 +41,7 @@ const get = async function(req, res){
     [err, usuario] = await to(decoradorUsuario(usuario));
     if(err) next(err, false);
 
+    console.log(usuario);
     return ReS(res, {usuario});
 }
 module.exports.get = get;
@@ -88,7 +89,6 @@ module.exports.decoradorUsuario = decoradorUsuario;
 
 const login = async function(req, res){
     const body = req.body;
-    console.log("Body:",req.body);
     let err, usuario;
     [err, usuario] = await to(authService.authUser(req.body));
     if(err) return ReE(res, err, 422);
