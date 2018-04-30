@@ -10,7 +10,7 @@ const getAll = async function(req, res){
         page    : pagina actual,
         pageSize: registros por pagina
     */
-    [err, cartas] = await to(mtg.card.all(filtros));
+    [err, cartas] = await to(Promise.resolve(mtg.card.all(filtros)));
     if(err) ReE(res, err, 422);
     return ReS(res, {"cartas":cartas});
 }
