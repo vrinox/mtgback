@@ -14,6 +14,9 @@ const getAll = async function(req, res){
     if(err) ReE(res, err, 422);
     return ReS(res, {"cartas":cartas});
 }
+
+mudule.exports.getAll = getAll;
+
 const getPorNombre = async function(req, res){
     res.setHeader('Content-Type', 'application/json');
     let err, cartas, filtros;
