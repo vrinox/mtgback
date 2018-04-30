@@ -10,7 +10,7 @@ const getAll = async function(req, res){
         page    : pagina actual,
         pageSize: registros por pagina
     */
-    [err, cartas] = await to(mtg.cards.all(filtros));
+    [err, cartas] = await to(mtg.card.all(filtros));
     if(err) ReE(res, err, 422);
     return ReS(res, {"cartas":cartas});
 }
@@ -20,7 +20,7 @@ const get = async function(req, res){
     res.setHeader('Content-Type', 'application/json');
     let idCarta,carta;
     idCarta = req.params.id;
-    [err, carta] = await to(mtg.find(idCarta));
+    [err, carta] = await to(mtg.card.find(idCarta));
     if(err) return ReE(res, err, 422);
 
     return ReS(res, {"carta":carta});
