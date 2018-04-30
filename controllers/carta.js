@@ -17,7 +17,7 @@ const getAll = async function(req, res){
 const getPorNombre = async function(req, res){
     res.setHeader('Content-Type', 'application/json');
     let err, cartas, filtros;
-    filtros = {"name":req.params.nombre};
+    filtros = {"name":"'"+req.params.nombre+"'"};
 
     [err, cartas] = await to(mtg.card.where(filtros));
     if(err) ReE(res, err, 422);
