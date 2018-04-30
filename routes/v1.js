@@ -9,6 +9,7 @@ require('./formato')(router);
 require('./duelo')(router)
 require('./usuario')(router);
 require('./mazo')(router);
+require('./carta')(router);
 
 require('./../middleware/passport')(passport)
 /* GET home page. */
