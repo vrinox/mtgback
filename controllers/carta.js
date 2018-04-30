@@ -2,9 +2,9 @@ const mtg = require('mtgsdk');
 
 const getAll = async function(req, res){
     res.setHeader('Content-Type', 'application/json');
-    let err, cartas, filtros, page;
+    let err, cartas, filtros;
     filtros = req.body.filtros;
-    console.log(filtros);
+
     /*
       para paginacion usa:
         page    : pagina actual,
