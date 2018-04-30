@@ -23,7 +23,7 @@ const getPorNombre = async function(req, res){
     if(err) ReE(res, err, 422);
     return ReS(res, {"cartaa":carta});
 }
-module.exports.getAll = getPorNombre;
+module.exports.getPorNombre = getPorNombre;
 
 const get = async function(req, res){
     res.setHeader('Content-Type', 'application/json');
