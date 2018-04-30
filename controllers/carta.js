@@ -15,7 +15,7 @@ const getAll = async function(req, res){
     return ReS(res, {"cartas":cartas});
 }
 
-mudule.exports.getAll = getAll;
+module.exports.getAll = getAll;
 
 const getPorNombre = async function(req, res){
     res.setHeader('Content-Type', 'application/json');
