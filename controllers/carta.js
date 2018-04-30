@@ -19,8 +19,8 @@ module.exports.getAll = getAll;
 const get = async function(req, res){
     res.setHeader('Content-Type', 'application/json');
     let idCarta,carta;
-    idCarta = req.body.id;
-    [err, carta] = await to(mtg.find(id));
+    idCarta = req.params.id;
+    [err, carta] = await to(mtg.find(idCarta);
     if(err) return ReE(res, err, 422);
 
     return ReS(res, {"carta":carta});
