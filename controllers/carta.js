@@ -14,7 +14,16 @@ const getAll = async function(req, res){
     if(err) ReE(res, err, 422);
     return ReS(res, {"cartas":cartas});
 }
-module.exports.getAll = getAll;
+const getPorNombre = async function(req, res){
+    res.setHeader('Content-Type', 'application/json');
+    let err, cartas, filtros;
+    filtros = {"name":req.params.nombre};
+
+    [err, cartas] = await to(mtg.card.where(filtros));
+    if(err) ReE(res, err, 422);
+    return ReS(res, {"cartaa":carta});
+}
+module.exports.getAll = getPorNombre;
 
 const get = async function(req, res){
     res.setHeader('Content-Type', 'application/json');
