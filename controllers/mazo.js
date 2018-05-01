@@ -167,7 +167,7 @@ const actualizarCarta = async function(req, res){
 
 module.exports.actualizarCarta = actualizarCarta;
 
-const remove = async function(req, res){
+const eliminarCarta = async function(req, res){
   let err, idCarta, carta;
   idCarta = req.body.userMetadata
   [err, carta] = await to(DetalleMazo.findOne({where:{"id":idCarta}}));
@@ -178,4 +178,4 @@ const remove = async function(req, res){
 
   return ReS(res, {message:'Mazo eliminado'}, 200);
 }
-module.exports.remove = remove;
+module.exports.eliminarCarta = eliminarCarta;
