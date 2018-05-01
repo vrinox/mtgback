@@ -1,5 +1,7 @@
 const Mazo = require('../models').Mazo;
 const Formato = require('../models').Formato;
+const DetalleMazo = require('../models').DetalleMazo;
+const mtg = require('mtgsdk');
 
 const create = async function(req, res){
     res.setHeader('Content-Type', 'application/json');
@@ -17,7 +19,6 @@ const create = async function(req, res){
       }],
       where:{"id":mazo.id}
     }));
-    console.log(mazo);
     let mazoJson = mazo.toWeb();
 
     return ReS(res,{mazo:mazoJson}, 201);
@@ -52,10 +53,56 @@ const get = async function(req, res){
     }));
     console.log(err);
     if(err) return ReE(res, "err encontrando mazo");
-
+    //busco el detalle del mazo
+    [err, cartas] = await to(mazo.getDetalleMazos());
+    if(err) ReE(res, err);
+    //busco todas las cartas con la api de mtg
+    const pArray = cartas.map(async carta =>{
+      const mtgCarta = await mtg.card.find(carta.idCarta);
+      fullCard.userMetadata = {
+        cantidad: carta.cantidad,
+        id      : carta.id,
+        tipo    : carta.tipo,
+        idCarta : carta.idCarta,
+      }
+      return mtgCarta;
+    });
+    //activo la busqueda en paralelo
+    const mtgCartas = await Promise.all(pArray);
+    //inicializo los valores del main y side
+    mazo.dataValues.main = [];
+    mazo.dataValues.side = [];
+    //organizo cada carta en su espacio
+    mtgCartas.forEach(carta => {
+      if(carta.userMetadata.tipo == "main"){
+        mazo.dataValues.main.push(carta);
+      }else{
+        mazo.dataValues.side.push(carta);
+      }
+    })
+    console.log(mazo.dataValues);
     return ReS(res, {mazo:mazo.toWeb()});
 }
 module.exports.get = get;
+
+const agregarCarta = async function(req, res){
+  let err, carta, body;
+  /*
+    body = userMetadata
+    {
+      id      : id de la bd
+      cantidad: cantidad de esta carta en el mazo
+      tipo    : main o side
+      idCarta : id de la api
+    }
+  */
+  body = req.body;
+
+  [err, carta] = await to(DetalleMazo.create(body));
+  if(err) ReE(res, err);
+
+  return ReS(res, {"mensaje":"carta agregada satisfactoriamente"});
+}
 
 const update = async function(req, res){
     let err, mazo;

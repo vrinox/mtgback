@@ -1,13 +1,13 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  var Model = sequelize.define('Mazo', {
-    nombre: DataTypes.STRING,
+  var Model = sequelize.define('DetalleMazo', {
+    cantidad  : DataTypes.SMALLINT,
+    idCarta   : DataTypes.STRING,
+    tipo      : DataTypes.STRING //si esta esta en el side o en el main
   });
 
   Model.associate = function(models){
-      this.belongsTo(models.Formato);
-      this.belongsTo(models.Usuario);
-      this.hasMany(models.DetalleMazo);
+      this.belongsTo(models.Mazo);
   };
 
   Model.prototype.toWeb = function (pw) {
