@@ -80,7 +80,6 @@ const get = async function(req, res){
         mazo.dataValues.side.push(carta);
       }
     })
-    console.log(mazo.dataValues);
     return ReS(res, {mazo:mazo.toWeb()});
 }
 module.exports.get = get;
