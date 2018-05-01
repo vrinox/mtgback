@@ -97,7 +97,7 @@ const get = async function(req, res){
    if(mazo.dataValues.manaCost != colores){
      mazo.dataValues.manaCost = colores;
      let newMazo;
-     mazo.set(mazo.dataValues.toWeb());
+     mazo.set(mazo.toWeb());
      [err,newMazo] = await to(mazo.save())
      if(err) ReE(res, err, 422);
    }
