@@ -93,11 +93,11 @@ const get = async function(req, res){
        return seen.hasOwnProperty(item) ? false : (seen[item] = true);
    }).join("");
    //evaluo si mantiene los colores
-   console.log(colores,mazo.dataValues);
+   console.log(colores,mazo.dataValues.manaCost);
    if(mazo.dataValues.manaCost != colores){
      mazo.dataValues.manaCost = colores;
      let newMazo;
-     mazo.set(mazo.dataValues);
+     mazo.set(mazo.dataValues.toWeb());
      [err,newMazo] = await to(mazo.save())
      if(err) ReE(res, err, 422);
    }
