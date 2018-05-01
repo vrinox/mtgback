@@ -59,6 +59,7 @@ const get = async function(req, res){
     //busco todas las cartas con la api de mtg
     const pArray = cartas.map(async carta =>{
       const mtgCarta = await mtg.card.find(carta.idCarta);
+      console.log(mtgCarta);
       mtgCarta.userMetadata = {
         cantidad: carta.cantidad,
         id      : carta.id,
