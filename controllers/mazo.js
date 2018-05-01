@@ -86,7 +86,7 @@ const get = async function(req, res){
 module.exports.get = get;
 
 const agregarCarta = async function(req, res){
-  let err, carta, body;
+  let err, carta, userMetadata;
   /*
     body = userMetadata
     {
@@ -96,12 +96,14 @@ const agregarCarta = async function(req, res){
       idCarta : id de la api
     }
   */
-  body = req.body;
+  userMetadata = req.body.userMetadata;
 
-  [err, carta] = await to(DetalleMazo.create(body));
+  [err, userMetadata] = await to(DetalleMazo.create(userMetadata));
   if(err) ReE(res, err);
+  carta = req.body;
+  carta.userMetadata = userMetadata.toWeb();
 
-  return ReS(res, {"mensaje":"carta agregada satisfactoriamente"});
+  return ReS(res, {"carta":carta});
 }
 
 module.exports.agregarCarta = agregarCarta;
