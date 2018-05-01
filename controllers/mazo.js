@@ -72,14 +72,34 @@ const get = async function(req, res){
     //inicializo los valores del main y side
     mazo.dataValues.main = [];
     mazo.dataValues.side = [];
+    //acumulo los colores
+    let seen = {};
+    let colores = [];
+    this.manaCost = colores.join("").toLowerCase();
     //organizo cada carta en su espacio
+
     mtgCartas.forEach(carta => {
+      carta.colorIdentity.map(color=>{
+        colores.push(color)
+      })
       if(carta.userMetadata.tipo == "main"){
         mazo.dataValues.main.push(carta);
       }else{
         mazo.dataValues.side.push(carta);
       }
     })
+    //limpio los colores
+    colores = colores.filter(function(item) {
+       return seen.hasOwnProperty(item) ? false : (seen[item] = true);
+   }).join("");
+   //evaluo si mantiene los colores
+   if(mazo.dataValues.manaCost != colores){
+     mazo.dataValues.manaCost = colores;
+     let newMazo;
+     mazo.set(mazo.dataValues);
+     [err,newMazo] = await to(mazo.save())
+     if(err) ReE(res, err, 422);
+   }
     return ReS(res, {mazo:mazo.toWeb()});
 }
 module.exports.get = get;

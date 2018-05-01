@@ -1,7 +1,8 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   var Model = sequelize.define('Mazo', {
-    nombre: DataTypes.STRING,
+    nombre  : DataTypes.STRING,
+    manaCost: DataTypes.STRING
   });
 
   Model.associate = function(models){
