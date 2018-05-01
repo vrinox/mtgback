@@ -49,7 +49,7 @@ const get = async function(req, res){
       include:[{
         model:Formato
       }],
-      where:{"id":req.params.id}
+      where:{"id":req.params.idMazo}
     }));
     console.log(err);
     if(err) return ReE(res, "err encontrando mazo");
@@ -85,10 +85,40 @@ const get = async function(req, res){
 }
 module.exports.get = get;
 
+const update = async function(req, res){
+    let err, mazo;
+
+    [err, mazo] = await to(Mazo.findOne({where:{"id":req.params.idMazo}}));
+    if(err) return ReE(res, "err encontrando mazo");
+
+    mazo.set(req.body);
+
+    [err, mazo] = await to(mazo.save());
+    if(err)  return ReE(res, err);
+
+    return ReS(res, {mazo:mazo.toWeb()});
+}
+module.exports.update = update;
+
+const remove = async function(req, res){
+  let err, mazo;
+
+  [err, mazo] = await to(Mazo.findOne({where:{"id":req.params.idMazo}}));
+  if(err) return ReE(res, "err encontrando mazo");
+
+  [err, mazo] = await to(mazo.destroy());
+  if(err) return ReE(res, 'Ha ocurrido un error mientras se eliminama el mazo');
+
+  return ReS(res, {message:'Mazo eliminado'}, 200);
+}
+module.exports.remove = remove;
+
+/////////////Manejo de detalle//////////////////////////////////////////////////////////////////
+
 const agregarCarta = async function(req, res){
-  let err, carta, userMetadata;
+  let err, carta, userMetadata,MazoId;
   /*
-    body = userMetadata
+    userMetadata
     {
       id      : id de la bd
       cantidad: cantidad de esta carta en el mazo
@@ -97,7 +127,7 @@ const agregarCarta = async function(req, res){
     }
   */
   userMetadata = req.body.userMetadata;
-
+  userMetadata.MazoId = req.params.idMazo;
   [err, userMetadata] = await to(DetalleMazo.create(userMetadata));
   if(err) ReE(res, err);
   carta = req.body;
@@ -108,29 +138,42 @@ const agregarCarta = async function(req, res){
 
 module.exports.agregarCarta = agregarCarta;
 
-const update = async function(req, res){
-    let err, mazo;
-
-    [err, mazo] = await to(Mazo.findOne({where:{"id":req.params.id}}));
-    if(err) return ReE(res, "err encontrando mazo");
-
-    mazo.set(req.body);
-
-    [err, mazo] = await to(mazo.save());
-    if(err){
-        return ReE(res, err);
+const actualizarCarta = async function(req, res){
+  let err, oldCarta, newCarta,fullCarta, userMetadata;
+  /*
+    userMetadata
+    {
+      id      : id de la bd
+      cantidad: cantidad de esta carta en el mazo
+      tipo    : main o side
+      idCarta : id de la api
     }
-    return ReS(res, {mazo:mazo.toWeb()});
+  */
+  userMetadata = req.body.userMetadata;
+  userMetadata.MazoId = req.params.idMazo;
+  [err, oldCarta] = await to(DetalleMazo.findOne({where:{"id":userMetadata.id}}));
+  if(err) ReE(res, err);
+
+  oldCarta.set(userMetadata);
+
+  [err, newCarta] = await to(oldCarta.save());
+  if(err)  return ReE(res, err);
+
+  fullCarta = req.body;
+  fullCarta.userMetadata = newCarta.toWeb();
+
+  return ReS(res, {"carta":fullCarta});
 }
-module.exports.update = update;
+
+module.exports.actualizarCarta = actualizarCarta;
 
 const remove = async function(req, res){
-  let err, mazo;
-
-  [err, mazo] = await to(Mazo.findOne({where:{"id":req.params.id}}));
+  let err, idCarta, carta;
+  idCarta = req.body.userMetadata
+  [err, carta] = await to(DetalleMazo.findOne({where:{"id":idCarta}}));
   if(err) return ReE(res, "err encontrando mazo");
 
-  [err, mazo] = await to(mazo.destroy());
+  [err, carta] = await to(car.destroy());
   if(err) return ReE(res, 'Ha ocurrido un error mientras se eliminama el mazo');
 
   return ReS(res, {message:'Mazo eliminado'}, 200);
