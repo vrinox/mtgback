@@ -59,14 +59,13 @@ const get = async function(req, res){
     //busco todas las cartas con la api de mtg
     const pArray = cartas.map(async carta =>{
       const mtgCarta = await mtg.card.find(carta.idCarta);
-      console.log(mtgCarta);
-      mtgCarta.userMetadata = {
+      mtgCarta.card.userMetadata = {
         cantidad: carta.cantidad,
         id      : carta.id,
         tipo    : carta.tipo,
         idCarta : carta.idCarta,
       }
-      return mtgCarta;
+      return mtgCarta.card;
     });
     //activo la busqueda en paralelo
     const mtgCartas = await Promise.all(pArray);
