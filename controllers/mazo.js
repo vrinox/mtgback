@@ -93,6 +93,7 @@ const get = async function(req, res){
        return seen.hasOwnProperty(item) ? false : (seen[item] = true);
    }).join("");
    //evaluo si mantiene los colores
+   console.log(colores,mazo.dataValues);
    if(mazo.dataValues.manaCost != colores){
      mazo.dataValues.manaCost = colores;
      let newMazo;
