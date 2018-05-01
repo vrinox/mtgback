@@ -1,5 +1,5 @@
 const Controller = require('./../controllers/mazo');
-const passport      	  = require('passport');
+const passport   = require('passport');
 
 const rutas = function(router){
   router.get(   '/mazos'        , passport.authenticate('jwt', {session:false}), Controller.getAll);

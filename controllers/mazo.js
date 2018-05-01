@@ -104,6 +104,8 @@ const agregarCarta = async function(req, res){
   return ReS(res, {"mensaje":"carta agregada satisfactoriamente"});
 }
 
+module.exports.agregarCarta = agregarCarta;
+
 const update = async function(req, res){
     let err, mazo;
 
