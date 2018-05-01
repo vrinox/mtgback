@@ -139,7 +139,7 @@ const agregarCarta = async function(req, res){
 module.exports.agregarCarta = agregarCarta;
 
 const actualizarCarta = async function(req, res){
-  let err, oldCarta, newCarta,fullCarta, userMetadata;
+  let err, idCarta, userMetadata, oldCarta, newCarta,fullCarta;
   /*
     userMetadata
     {
@@ -151,7 +151,8 @@ const actualizarCarta = async function(req, res){
   */
   userMetadata = req.body.userMetadata;
   userMetadata.MazoId = req.params.idMazo;
-  [err, oldCarta] = await to(DetalleMazo.findOne({where:{"id":userMetadata.id}}));
+  idCarta = req.params.idCarta;
+  [err, oldCarta] = await to(DetalleMazo.findOne({where:{"id":idCarta}}));
   if(err) ReE(res, err);
 
   oldCarta.set(userMetadata);

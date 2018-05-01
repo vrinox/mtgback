@@ -11,7 +11,7 @@ const rutas = function(router){
   //rutas del detalle
 
   router.post(  '/mazo/:idMazo/carta'          , passport.authenticate('jwt', {session:false}), Controller.agregarCarta);
-  router.put(   '/mazo/:idMazo/carta'          , passport.authenticate('jwt', {session:false}), Controller.actualizarCarta);
+  router.put(   '/mazo/:idMazo/carta/:idCarta' , passport.authenticate('jwt', {session:false}), Controller.actualizarCarta);
   router.delete('/mazo/:idMazo/carta/:idCarta' , passport.authenticate('jwt', {session:false}), Controller.eliminarCarta);
 
 }
