@@ -19,10 +19,10 @@ const agregarCarta = async function(req, res){
   if(err) ReE(res, err);
   //reviso si esta
   if(!newCarta){
-    oldCarta = decorarCarta(oldCarta,"join");
+    oldCarta = decorarCarta(oldCarta,"join",22);
     [err, newCarta] = await to(Carta.create(oldCarta));
     if(err) ReE(res, err);
-    newCarta = decorarCarta(newCarta,"split");
+    newCarta = decorarCarta(newCarta,"split",25);
   }
   userMetadata = oldCarta.userMetadata;
   userMetadata.idCarta = newCarta.id;
@@ -31,8 +31,8 @@ const agregarCarta = async function(req, res){
   [err, userMetadata] = await to(DetalleMazo.create(userMetadata));
   if(err) ReE(res, err);
   //preparo el envio
-  carta = decorarCarta(req.body,"join");
-  carta = decorarCarta(carta,"split");
+  carta = decorarCarta(req.body,"join",34);
+  carta = decorarCarta(carta,"split",35);
 
   carta.userMetadata = userMetadata.toWeb();
   //envio
@@ -84,7 +84,7 @@ const eliminarCarta = async function(req, res){
 }
 module.exports.eliminarCarta = eliminarCarta;
 
-const decorarCarta = function(carta,tipo){
+const decorarCarta = function(carta,tipo,num){
   const campos = ["types","subtypes","colorIdentity"];
   if(tipo == "split"){
     campos.forEach(campo=>{
@@ -99,6 +99,8 @@ const decorarCarta = function(carta,tipo){
     campos.forEach(campo=>{
       if(carta.hasOwnProperty(campo)){
         console.log("carta:"+carta.name);
+        console.log("carta:"+carta[campo]);
+        console.log("linea:"+num);
         console.log("campo:"+campo);
         console.log("tipo:"+tipo);
         carta[campo] = carta[campo].join('+');
