@@ -86,23 +86,26 @@ module.exports.eliminarCarta = eliminarCarta;
 
 const decorarCarta = function(carta,tipo,num){
   const campos = ["types","subtypes","colorIdentity"];
+
+  console.log("linea:"+num);
+  console.log("carta:"+carta.name);
+  console.log("tipo:"+tipo);
   if(tipo == "split"){
     campos.forEach(campo=>{
+      console.log("carta:"+carta[campo]);
+      console.log("campo:"+campo);
       if(carta.hasOwnProperty(campo)){
         carta[campo] = carta[campo].split('+');
-      }
-      if(typeof carta[campo] == "string"){
-        carta[campo] = [carta[campo]];
+        if(typeof carta[campo] == "string"){
+          carta[campo] = [carta[campo]];
+        }
       }
     });
   }else if(tipo == "join"){
     campos.forEach(campo=>{
       if(carta.hasOwnProperty(campo)){
-        console.log("carta:"+carta.name);
         console.log("carta:"+carta[campo]);
-        console.log("linea:"+num);
         console.log("campo:"+campo);
-        console.log("tipo:"+tipo);
         carta[campo] = carta[campo].join('+');
       }
     });
