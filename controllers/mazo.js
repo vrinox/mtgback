@@ -47,8 +47,8 @@ const duplicar = async function(req, res){
       userMetadata.MazoId = newMazo.id;
       userMetadata.id = undefined;
       return userMetadata;
-    })
-    cartas = await Promise.all(cartas.map(carta=>{ return DetalleMazo.create(userMetadata)}))
+    });
+    cartas = await Promise.all(cartas.map(carta=>{ return DetalleMazo.create(carta)}))
 
     return ReS(res,{mazo:newMazo.toWeb()}, 201);
 }
