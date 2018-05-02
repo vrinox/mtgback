@@ -25,6 +25,35 @@ const create = async function(req, res){
 }
 module.exports.create = create;
 
+const duplicar = async function(req, res){
+    res.setHeader('Content-Type', 'application/json');
+    let err, newMazo, oldMazo, cartas, mazoInfo;
+    let idMazo = req.params.idMazo;
+    let usuario = req.user;
+
+    [err, oldMazo] = await to(Mazo.findOne({where:{"id":idMazo}}));
+    if(err) return ReE(res, err, 422);
+
+    [err, cartas] = await to(oldMazo).getDetalleMazos());
+    if(err) ReE(res, err);
+
+    mazoInfo = oldMazo.toWeb()
+
+    [err, newMazo] = await to(Mazo.create(mazoInfo));
+    if(err) return ReE(res, err, 422);
+
+    cartas = cartas.map(carta=>{
+      let userMetadata = carta.userMetadata;
+      userMetadata.MazoId = newMazo.id;
+      userMetadata.id = undefined;
+      return userMetadata;
+    })
+    cartas = await Promise.all(cartas.map(carta=>{ return DetalleMazo.create(userMetadata)}))
+
+    return ReS(res,{mazo:newMazo.toWeb()}, 201);
+}
+module.exports.duplicar = duplicar;
+
 const getAll = async function(req, res){
     res.setHeader('Content-Type', 'application/json');
     let err, mazos;
