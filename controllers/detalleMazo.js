@@ -24,8 +24,8 @@ const agregarCarta = async function(req, res){
   }
   //decoro el resultado
   newCarta = decorarCarta(newCarta);
-  userMetadata.idCarta = newCarta.id;
   userMetadata = oldCarta.userMetadata;
+  userMetadata.idCarta = newCarta.id;
   userMetadata.MazoId = req.params.idMazo;
   //agrego al detalle
   [err, userMetadata] = await to(DetalleMazo.create(userMetadata));
