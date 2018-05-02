@@ -98,6 +98,7 @@ const decorarCarta = function(carta,tipo){
   }else if(tipo == "join"){
     campos.forEach(campo=>{
       if(carta.hasOwnProperty(campo)){
+        console.log("campo:",campo);
         carta[campo] = carta[campo].join('+');
       }
     });
