@@ -110,6 +110,7 @@ const get = async function(req, res){
     //organizo cada carta en su espacio
     mtgCartas.forEach(carta => {
       carta = decorarCarta(carta,"split");
+      console.log("colorIdentity:",carta.colorIdentity);
       if(carta.colorIdentity){
         carta.colorIdentity.map(color=>{ colores.push(color) });
       }
