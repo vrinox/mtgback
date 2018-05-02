@@ -86,7 +86,6 @@ module.exports.eliminarCarta = eliminarCarta;
 
 const decorarCarta = function(carta,tipo,num){
   const campos = ["types","subtypes","colorIdentity"];
-
   console.log("linea:"+num);
   console.log("carta:"+carta.name);
   console.log("tipo:"+tipo);
