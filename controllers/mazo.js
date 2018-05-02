@@ -1,5 +1,6 @@
 const Mazo = require('../models').Mazo;
 const DetalleMazo = require('../models').DetalleMazo;
+const decorarCarta = require('./DetalleMazo').decorarCarta;
 const Carta = require('../models').Carta;
 const Formato = require('../models').Formato;
 const mtg = require('mtgsdk');
@@ -106,9 +107,7 @@ const get = async function(req, res){
     let colores = [];
     //organizo cada carta en su espacio
     mtgCartas.forEach(carta => {
-      carta.colorIdentity = carta.colorIdentity.split("+");
-      carta.types = carta.types.split("+");
-      carta.subtypes = carta.subtypes.split("+");
+      carta = decorarCarta(carta);
       if(carta.colorIdentity){
         carta.colorIdentity.map(color=>{ colores.push(color) });
       }

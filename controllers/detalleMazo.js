@@ -19,12 +19,11 @@ const agregarCarta = async function(req, res){
   if(err) ReE(res, err);
   //reviso si esta
   if(!newCarta){
+    oldCarta = decorarCarta(oldCarta,"join");
     [err, newCarta] = await to(Carta.create(oldCarta));
     if(err) ReE(res, err);
+    newCarta = decorarCarta(newCarta,"split");
   }
-  //decoro el resultado
-  console.log(newCarta);
-  newCarta = decorarCarta(newCarta);
   userMetadata = oldCarta.userMetadata;
   userMetadata.idCarta = newCarta.id;
   userMetadata.MazoId = req.params.idMazo;
@@ -83,9 +82,15 @@ const eliminarCarta = async function(req, res){
 }
 module.exports.eliminarCarta = eliminarCarta;
 
-function decorarCarta(carta){
-  carta.types = carta.types.join("+");
-  carta.subtypes = carta.subtypes.join("+");
-  carta.colorIdentity = carta.colorIdentity.join("+");
+const decorarCarta = function(carta,tipo){
+  if(tipo === "join"){
+    carta.types = carta.types.join("+");
+    carta.subtypes = carta.subtypes.join("+");
+    carta.colorIdentity = carta.colorIdentity.join("+");
+  }else{
+    carta.types = carta.types.split("+");
+    carta.subtypes = carta.subtypes.split("+");
+    carta.colorIdentity = carta.colorIdentity.split("+");
+  }
   return carta;
 }
