@@ -88,14 +88,18 @@ const decorarCarta = function(carta,tipo){
   const campos = ["types","subtypes","colorIdentity"];
   if(tipo == "split"){
     campos.forEach(campo=>{
-      carta[campo] = carta[campo].split('+');
-        if(typeof carta[campo] == "string"){
-          carta[campo] = [carta[campo]];
-        }
+      if(carta.hasOwnProperty(campo)){
+        carta[campo] = carta[campo].split('+');
+      }
+      if(typeof carta[campo] == "string"){
+        carta[campo] = [carta[campo]];
+      }
     });
   }else if(tipo == "join"){
     campos.forEach(campo=>{
-      carta[campo] = carta[campo].join('+');
+      if(carta.hasOwnProperty(campo)){
+        carta[campo] = carta[campo].join('+');
+      }
     });
   }
   return carta;
