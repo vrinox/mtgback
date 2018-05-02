@@ -21,6 +21,7 @@ const custom = function(req, res, next){
       }
     }
   }
+  console.log(CONFIG.log_body);
   if(CONFIG.log_body){
     console.log("-------------------");
     console.log("Body:",body);
