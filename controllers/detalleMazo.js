@@ -20,7 +20,7 @@ const agregarCarta = async function(req, res){
   //reviso si esta
   if(!newCarta){
     oldCarta = decorarCarta(oldCarta,"join",22);
-    [err, newCarta] = await to(Carta.create(old));
+    [err, newCarta] = await to(Carta.create(oldCarta));
     if(err) ReE(res, err);
     newCarta = decorarCarta(newCarta,"split",25);
   }
