@@ -1,6 +1,7 @@
 const Mazo = require('../models').Mazo;
-const Formato = require('../models').Formato;
 const DetalleMazo = require('../models').DetalleMazo;
+const Carta = require('../models').Carta;
+const Formato = require('../models').Formato;
 const mtg = require('mtgsdk');
 
 const create = async function(req, res){
@@ -70,30 +71,32 @@ module.exports.getAll = getAll;
 
 const get = async function(req, res){
     res.setHeader('Content-Type', 'application/json');
-
+    const MazoId = req.params.idMazo;
     [err, mazo] = await to(Mazo.findOne({
       include:[{
         model:Formato
       }],
-      where:{"id":req.params.idMazo}
+      where:{"id":MazoId}
     }));
     console.log(err);
     if(err) return ReE(res, "err encontrando mazo");
     //busco el detalle del mazo
-    [err, cartas] = await to(mazo.getDetalleMazos());
+    [err, cartas] = await to(DetalleMazo.findAll({
+      "include":[{
+        "model":Carta,
+      }],
+      "where":{"MazoId":MazoId}
+    }));
     if(err) ReE(res, err);
-    //busco todas las cartas con la api de mtg
-    //activo la busqueda en paralelo
-    const parallelArray = await Promise.all(cartas.map(carta=>{return mtg.card.find(carta.idCarta)}))
-    //decoro el objeto carta
-    const mtgCartas = parallelArray.map(mtgCarta=>{
-      mtgCarta.card.userMetadata = {
-        cantidad: carta.cantidad,
-        id      : carta.id,
-        tipo    : carta.tipo,
-        idCarta : carta.idCarta,
+    const mtgCartas = cartas.map(oldCarta =>{
+      newCarta = oldCarta.Carta;
+      newCarta.userMetadata = {
+        cantidad: oldCarta.cantidad,
+        id      : oldCarta.id,
+        tipo    : oldCarta.tipo,
+        idCarta : oldCarta.idCarta,
       }
-      return mtgCarta.card;
+      return newCarta;
     });
     //inicializo los valores del main y side
     mazo.dataValues.main = [];
@@ -117,13 +120,14 @@ const get = async function(req, res){
     colores = colores.filter(function(item) {
        return seen.hasOwnProperty(item) ? false : (seen[item] = true);
    }).join("");
-   //evaluo si mantiene los colores
-   if(mazo.dataValues.manaCost != colores){
-     mazo.update({
-       manaCost: colores
-     });
-   }
+
   return ReS(res, {mazo:mazo.toWeb()});
+  //evaluo si mantiene los colores
+  if(mazo.dataValues.manaCost != colores){
+    mazo.update({
+      manaCost: colores
+    });
+  }
 }
 module.exports.get = get;
 

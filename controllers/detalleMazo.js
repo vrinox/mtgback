@@ -1,8 +1,9 @@
 const Mazo = require('../models').Mazo;
+const Carta = require('../models').Carta;
 const DetalleMazo = require('../models').DetalleMazo;
 
 const agregarCarta = async function(req, res){
-  let err, carta, userMetadata,MazoId;
+  let err, carta, userMetadata,MazoId,oldCarta;
   /*
     userMetadata
     {
@@ -12,8 +13,19 @@ const agregarCarta = async function(req, res){
       idCarta : id de la api
     }
   */
-  userMetadata = req.body.userMetadata;
+  oldCarta = req.body;
+  userMetadata = oldCarta.userMetadata;
   userMetadata.MazoId = req.params.idMazo;
+
+  [err, carta] = await to(Carta.findOne({where:{id:oldCarta.id}}));
+  if(err) ReE(res, err);
+
+  if(!carta){
+    [err, carta] = await to(Carta.create(oldCarta));
+    if(err) ReE(res, err);
+  }
+
+  userMetadata.idCarta = carta.id;
   [err, userMetadata] = await to(DetalleMazo.create(userMetadata));
   if(err) ReE(res, err);
   carta = req.body;
