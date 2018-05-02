@@ -81,7 +81,7 @@ const eliminarCarta = async function(req, res){
   [err, carta] = await to(carta.destroy());
   if(err) return ReE(res, 'Ha ocurrido un error mientras se eliminama el mazo');
 
-  return ReS(res, {message:'Carta Eliminado'}, 200);
+  return ReS(res, {message:'Carta Eliminada'}, 200);
 }
 module.exports.eliminarCarta = eliminarCarta;
 
