@@ -83,15 +83,15 @@ const eliminarCarta = async function(req, res){
 module.exports.eliminarCarta = eliminarCarta;
 
 const decorarCarta = function(carta,tipo){
-  if(tipo === "join"){
-    carta.types = carta.types.join("+");
-    carta.subtypes = carta.subtypes.join("+");
-    carta.colorIdentity = carta.colorIdentity.join("+");
-  }else{
-    carta.types = [carta.types.split("+")];
-    carta.subtypes = [carta.subtypes.split("+")];
-    carta.colorIdentity = [carta.colorIdentity.split("+")];
-  }
+  const campos = ["types","subtypes","colorIdentity"];
+  campos.forEach(campo=>{
+    carta[campo] = carta[campo][tipo]('+';)
+    if(tipo == "split"){
+      if(typeof carta[campo] == "string"){
+        carta[campo] = [carta[campo]];
+      }
+    }
+  });
   return carta;
 }
 
