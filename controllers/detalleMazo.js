@@ -89,8 +89,8 @@ const decorarCarta = function(carta,tipo,num){
   console.log("tipo:"+tipo,"linea:"+num,carta);
   if(tipo == "split"){
     campos.forEach(campo=>{
-      console.log("campo:"+campo,carta.hasOwnProperty(campo));
-      if(carta.hasOwnProperty(campo)){
+      console.log("campo:"+campo,(carta.hasOwnProperty(campo) || carta.dataValues.hasOwnProperty(campo) ));
+      if(carta.hasOwnProperty(campo) || carta.dataValues.hasOwnProperty(campo) ){
         console.log("antes:"+carta[campo]);
         carta[campo] = carta[campo].split('+');
         if(typeof carta[campo] == "string"){
@@ -102,7 +102,7 @@ const decorarCarta = function(carta,tipo,num){
   }else if(tipo == "join"){
     campos.forEach(campo=>{
       console.log("campo:"+campo,carta.hasOwnProperty(campo));
-      if(carta.hasOwnProperty(campo)){
+      if(carta.hasOwnProperty(campo) || carta.dataValues.hasOwnProperty(campo) ){
         console.log("antes:"+carta[campo]);
         carta[campo] = carta[campo].join('+');
         console.log("despues:"+carta[campo]);
