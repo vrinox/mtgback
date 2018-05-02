@@ -6,6 +6,7 @@ module.exports = (sequelize, DataTypes) => {
     cmc           : DataTypes.SMALLINT,
     rarity        : DataTypes.STRING,
     colorIdentity : DataTypes.STRING,
+    type         : DataTypes.STRING,
     types         : DataTypes.STRING,
     subtypes      : DataTypes.STRING,
     set           : DataTypes.STRING,
