@@ -19,8 +19,8 @@ const agregarCarta = async function(req, res){
   if(err) ReE(res, err);
   //reviso si esta
   if(!newCarta){
-    newCarta = decorarCarta(oldCarta,"join",22);
-    [err, newCarta] = await to(Carta.create(newCarta));
+    oldCarta = decorarCarta(oldCarta,"join",22);
+    [err, newCarta] = await to(Carta.create(old));
     if(err) ReE(res, err);
     newCarta = decorarCarta(newCarta,"split",25);
   }
@@ -31,9 +31,9 @@ const agregarCarta = async function(req, res){
   [err, userMetadata] = await to(DetalleMazo.create(userMetadata));
   if(err) ReE(res, err);
   //preparo el envio
-  console.log(carta);
-   carta = decorarCarta(req.body,"join",34);
-   carta = decorarCarta(carta,"split",35);
+  console.log("carta",req.body);
+  carta = decorarCarta(req.body,"join",34);
+  carta = decorarCarta(carta,"split",35);
 
   carta.userMetadata = userMetadata.toWeb();
   //envio
