@@ -3,7 +3,7 @@ const Carta = require('../models').Carta;
 const DetalleMazo = require('../models').DetalleMazo;
 
 const agregarCarta = async function(req, res){
-  let err, newCarta, userMetadata,MazoId,oldCarta;
+  let err, userMetadata, MazoId, oldCarta, newCarta, carta;
   /*
     userMetadata
     {
