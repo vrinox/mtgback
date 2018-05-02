@@ -95,6 +95,7 @@ const decorarCarta = function(carta,tipo){
     campos.forEach(campo=>{
       carta[campo] = carta[campo].join('+');
     });
+  }
   return carta;
 }
 
