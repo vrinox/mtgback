@@ -79,9 +79,11 @@ const get = async function(req, res){
     //organizo cada carta en su espacio
 
     mtgCartas.forEach(carta => {
-      carta.colorIdentity.map(color=>{
-        colores.push(color)
-      })
+      if(carta.colorIdentity){
+        carta.colorIdentity.map(color=>{
+          colores.push(color)
+        })
+      }
       if(carta.userMetadata.tipo == "main"){
         mazo.dataValues.main.push(carta);
       }else{
