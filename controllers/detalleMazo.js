@@ -84,15 +84,8 @@ module.exports.eliminarCarta = eliminarCarta;
 
 const decorarCarta = function(carta,tipo){
   if(tipo === "join"){
-    carta.types = carta.types.join("+");
-    carta.subtypes = carta.subtypes.join("+");
-    carta.colorIdentity = carta.colorIdentity.join("+");
+    carta.types = [carta.types.join("+")];
+    carta.subtypes = [carta.subtypes.join("+")];
+    carta.colorIdentity = [carta.colorIdentity.join("+")];
   }else{
-    carta.types = carta.types.split("+");
-    carta.subtypes = carta.subtypes.split("+");
-    carta.colorIdentity = carta.colorIdentity.split("+");
-  }
-  return carta;
-}
-
-module.exports.decorarCarta = decorarCarta;
+    carta.types =
