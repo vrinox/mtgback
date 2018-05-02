@@ -85,7 +85,7 @@ module.exports.eliminarCarta = eliminarCarta;
 const decorarCarta = function(carta,tipo){
   const campos = ["types","subtypes","colorIdentity"];
   campos.forEach(campo=>{
-    carta[campo] = carta[campo][tipo]('+';)
+    carta[campo] = carta[campo][tipo]('+');
     if(tipo == "split"){
       if(typeof carta[campo] == "string"){
         carta[campo] = [carta[campo]];
