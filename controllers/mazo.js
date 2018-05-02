@@ -98,7 +98,6 @@ const get = async function(req, res){
         tipo    : oldCarta.tipo,
         idCarta : oldCarta.idCarta,
       }
-      console.log(newCarta);
       return newCarta;
     });
 
