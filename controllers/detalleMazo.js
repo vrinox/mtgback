@@ -91,21 +91,23 @@ const decorarCarta = function(carta,tipo,num){
   console.log("tipo:"+tipo);
   if(tipo == "split"){
     campos.forEach(campo=>{
-      console.log("carta:"+carta[campo]);
       console.log("campo:"+campo);
+      console.log("antes:"+carta[campo]);
       if(carta.hasOwnProperty(campo)){
         carta[campo] = carta[campo].split('+');
         if(typeof carta[campo] == "string"){
           carta[campo] = [carta[campo]];
         }
+        console.log("depues:"+carta[campo]);
       }
     });
   }else if(tipo == "join"){
     campos.forEach(campo=>{
       if(carta.hasOwnProperty(campo)){
-        console.log("carta:"+carta[campo]);
         console.log("campo:"+campo);
+        console.log("antes:"+carta[campo]);
         carta[campo] = carta[campo].join('+');
+        console.log("despues:"+carta[campo]);
       }
     });
   }
