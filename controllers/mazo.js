@@ -193,7 +193,7 @@ const eliminarCarta = async function(req, res){
   [err, carta] = await to(DetalleMazo.findOne({where:{"id":idCarta}}));
   if(err) return ReE(res, "err encontrando mazo");
 
-  [err, carta] = await to(car.destroy());
+  [err, carta] = await to(carta.destroy());
   if(err) return ReE(res, 'Ha ocurrido un error mientras se eliminama el mazo');
 
   return ReS(res, {message:'Mazo eliminado'}, 200);
