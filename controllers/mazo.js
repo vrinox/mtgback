@@ -92,7 +92,7 @@ const get = async function(req, res){
     if(err) ReE(res, err);
     const mtgCartas = cartas.map(oldCarta =>{
       newCarta = oldCarta.carta;
-      newCarta.userMetadata = {
+      newCarta.dataValues.userMetadata = {
         cantidad: oldCarta.cantidad,
         id      : oldCarta.id,
         tipo    : oldCarta.tipo,
@@ -114,7 +114,7 @@ const get = async function(req, res){
       if(carta.colorIdentity){
         carta.colorIdentity.map(color=>{ colores.push(color) });
       }
-      if(carta.userMetadata.tipo == "main"){
+      if(carta.dataValues.userMetadata.tipo == "main"){
         mazo.dataValues.main.push(carta);
       }else{
         mazo.dataValues.side.push(carta);
