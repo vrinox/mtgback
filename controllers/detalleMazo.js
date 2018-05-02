@@ -23,6 +23,7 @@ const agregarCarta = async function(req, res){
     if(err) ReE(res, err);
   }
   //decoro el resultado
+  console.log(newCarta);
   newCarta = decorarCarta(newCarta);
   userMetadata = oldCarta.userMetadata;
   userMetadata.idCarta = newCarta.id;
