@@ -19,8 +19,8 @@ const agregarCarta = async function(req, res){
   if(err) ReE(res, err);
   //reviso si esta
   if(!newCarta){
-    oldCarta = decorarCarta(oldCarta,"join",22);
-    [err, newCarta] = await to(Carta.create(oldCarta));
+    newCarta = decorarCarta(oldCarta,"join",22);
+    [err, newCarta] = await to(Carta.create(newCarta));
     if(err) ReE(res, err);
     newCarta = decorarCarta(newCarta,"split",25);
   }
