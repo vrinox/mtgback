@@ -8,7 +8,7 @@ module.exports = (sequelize, DataTypes) => {
 
   Model.associate = function(models){
       this.belongsTo(models.Mazo);
-      this.belongsTo(models.Carta,{foreignKey:"idCarta",sourceKey:"id"})
+      this.belongsTo(models.Carta,{foreignKey:"idCarta",sourceKey:"id", as:"carta"})
   };
 
   Model.prototype.toWeb = function (pw) {

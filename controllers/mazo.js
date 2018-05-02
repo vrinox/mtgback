@@ -85,13 +85,14 @@ const get = async function(req, res){
     [err, cartas] = await to(DetalleMazo.findAll({
       "include":[{
         "model":Carta,
+        "as": "carta",
       }],
       "where":{"MazoId":MazoId}
     }));
     if(err) ReE(res, err);
     const mtgCartas = cartas.map(oldCarta =>{
-      console.log(oldCarta);
-      newCarta = oldCarta.Carta;
+      console.log("carta",oldCarta);
+      newCarta = oldCarta.carta;
       newCarta.userMetadata = {
         cantidad: oldCarta.cantidad,
         id      : oldCarta.id,
