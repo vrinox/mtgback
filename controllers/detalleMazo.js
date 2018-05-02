@@ -94,3 +94,5 @@ const decorarCarta = function(carta,tipo){
   }
   return carta;
 }
+
+module.exports.decorarCarta = decorarCarta;

@@ -91,8 +91,7 @@ const get = async function(req, res){
     }));
     if(err) ReE(res, err);
     const mtgCartas = cartas.map(oldCarta =>{
-      console.log("carta",oldCarta);
-      newCarta = oldCarta.carta;
+      newCarta = oldCarta.carta.Carta.dataValues;
       newCarta.userMetadata = {
         cantidad: oldCarta.cantidad,
         id      : oldCarta.id,
