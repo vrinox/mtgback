@@ -34,7 +34,7 @@ const duplicar = async function(req, res){
     [err, oldMazo] = await to(Mazo.findOne({where:{"id":idMazo}}));
     if(err) return ReE(res, err, 422);
 
-    [err, cartas] = await to(oldMazo).getDetalleMazos());
+    [err, cartas] = await to(oldMazo.getDetalleMazos());
     if(err) ReE(res, err);
 
     mazoInfo = oldMazo.toWeb()
