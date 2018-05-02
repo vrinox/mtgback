@@ -123,14 +123,13 @@ const get = async function(req, res){
     colores = colores.filter(function(item) {
        return seen.hasOwnProperty(item) ? false : (seen[item] = true);
    }).join("");
-
+   //evaluo si mantiene los colores
+   if(mazo.dataValues.manaCost != colores){
+     mazo.update({
+       manaCost: colores
+     });
+   }
   return ReS(res, {mazo:mazo.toWeb()});
-  //evaluo si mantiene los colores
-  if(mazo.dataValues.manaCost != colores){
-    mazo.update({
-      manaCost: colores
-    });
-  }
 }
 module.exports.get = get;
 
