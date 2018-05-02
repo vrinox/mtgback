@@ -98,8 +98,10 @@ const get = async function(req, res){
         tipo    : oldCarta.tipo,
         idCarta : oldCarta.idCarta,
       }
+      console.log(newCarta);
       return newCarta;
     });
+
     //inicializo los valores del main y side
     mazo.dataValues.main = [];
     mazo.dataValues.side = [];
@@ -109,7 +111,6 @@ const get = async function(req, res){
     //organizo cada carta en su espacio
     mtgCartas.forEach(carta => {
       carta = decorarCarta(carta,"split");
-      console.log(carta);
       if(carta.colorIdentity){
         carta.colorIdentity.map(color=>{ colores.push(color) });
       }
