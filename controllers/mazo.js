@@ -189,7 +189,7 @@ module.exports.actualizarCarta = actualizarCarta;
 
 const eliminarCarta = async function(req, res){
   let err, idCarta, carta;
-  idCarta = req.body.userMetadata
+  idCarta = req.params.idCarta;
   [err, carta] = await to(DetalleMazo.findOne({where:{"id":idCarta}}));
   if(err) return ReE(res, "err encontrando mazo");
 
