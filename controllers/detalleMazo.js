@@ -84,14 +84,17 @@ module.exports.eliminarCarta = eliminarCarta;
 
 const decorarCarta = function(carta,tipo){
   const campos = ["types","subtypes","colorIdentity"];
-  campos.forEach(campo=>{
-    carta[campo] = carta[campo][tipo]('+');
-    if(tipo == "split"){
-      if(typeof carta[campo] == "string"){
-        carta[campo] = [carta[campo]];
-      }
-    }
-  });
+  if(tipo == "split"){
+    campos.forEach(campo=>{
+      carta[campo] = carta[campo].split('+');
+        if(typeof carta[campo] == "string"){
+          carta[campo] = [carta[campo]];
+        }
+    });
+  }else if(tipo == "join"){
+    campos.forEach(campo=>{
+      carta[campo] = carta[campo].join('+');
+    });
   return carta;
 }
 
