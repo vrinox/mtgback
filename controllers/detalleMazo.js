@@ -31,8 +31,9 @@ const agregarCarta = async function(req, res){
   [err, userMetadata] = await to(DetalleMazo.create(userMetadata));
   if(err) ReE(res, err);
   //preparo el envio
-  carta = decorarCarta(req.body,"join",34);
-  carta = decorarCarta(carta,"split",35);
+  console.log(carta);
+   carta = decorarCarta(req.body,"join",34);
+   carta = decorarCarta(carta,"split",35);
 
   carta.userMetadata = userMetadata.toWeb();
   //envio
