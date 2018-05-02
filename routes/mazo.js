@@ -1,5 +1,5 @@
 const Ctrl = require('./../controllers/mazo');
-const detCtrl = require('./../controllers/DetalleMazo');
+const detCtrl = require('./../controllers/detalleMazo');
 const passport   = require('passport');
 
 const rutas = function(router){
