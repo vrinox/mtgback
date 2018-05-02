@@ -21,12 +21,12 @@ const agregarCarta = async function(req, res){
   if(err) ReE(res, err);
 
   if(!carta){
-    oldCarta = decorarCarta(carta);
     [err, carta] = await to(Carta.create(oldCarta));
     if(err) ReE(res, err);
   }
 
-  userMetadata.idCarta = carta.id;
+  oldCarta = decorarCarta(carta);
+  userMetadata.idCarta = oldCarta.id;
   [err, userMetadata] = await to(DetalleMazo.create(userMetadata));
   if(err) ReE(res, err);
   carta = req.body;
