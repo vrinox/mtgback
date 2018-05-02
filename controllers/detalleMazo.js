@@ -91,9 +91,9 @@ const decorarCarta = function(carta,tipo,num){
   console.log("tipo:"+tipo);
   if(tipo == "split"){
     campos.forEach(campo=>{
-      console.log("campo:"+campo);
-      console.log("antes:"+carta[campo]);
+      console.log("campo:"+campo,carta.hasOwnProperty(campo));
       if(carta.hasOwnProperty(campo)){
+        console.log("antes:"+carta[campo]);
         carta[campo] = carta[campo].split('+');
         if(typeof carta[campo] == "string"){
           carta[campo] = [carta[campo]];
