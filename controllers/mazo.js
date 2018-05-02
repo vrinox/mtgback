@@ -31,7 +31,7 @@ const duplicar = async function(req, res){
     let idMazo = req.params.idMazo;
     let usuario = req.user;
 
-    [err, cartas] = await to(DetalleMazo.findAll(where:{'MazoId':idMazo}));
+    [err, cartas] = await to(DetalleMazo.findAll({where:{'MazoId':idMazo}}));
     if(err) ReE(res, err);
 
     mazoInfo = req.body
