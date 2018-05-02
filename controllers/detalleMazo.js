@@ -23,6 +23,7 @@ const agregarCarta = async function(req, res){
     [err, newCarta] = await to(Carta.create(oldCarta));
     if(err) ReE(res, err);
     newCarta = decorarCarta(newCarta,"split",25);
+    req.body = decorarCarta(req.body,"split",26);
   }
   userMetadata = oldCarta.userMetadata;
   userMetadata.idCarta = newCarta.id;
