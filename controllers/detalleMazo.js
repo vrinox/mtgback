@@ -21,6 +21,7 @@ const agregarCarta = async function(req, res){
   if(err) ReE(res, err);
 
   if(!carta){
+    oldCarta = decorarCarta(carta);
     [err, carta] = await to(Carta.create(oldCarta));
     if(err) ReE(res, err);
   }
@@ -78,3 +79,10 @@ const eliminarCarta = async function(req, res){
   return ReS(res, {message:'Mazo eliminado'}, 200);
 }
 module.exports.eliminarCarta = eliminarCarta;
+
+function decorarCarta(carta){
+  carta.types = carta.types.join("+");
+  carta.subtypes = carta.subtypes.join("+");
+  carta.colorIdentity = carta.colorIdentity.join("+");
+  return carta;
+}

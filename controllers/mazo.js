@@ -104,9 +104,11 @@ const get = async function(req, res){
     //acumulo los colores
     let seen = {};
     let colores = [];
-    this.manaCost = colores.join("").toLowerCase();
     //organizo cada carta en su espacio
     mtgCartas.forEach(carta => {
+      carta.colorIdentity = carta.colorIdentity.split("+");
+      carta.types = carta.types.split("+");
+      carta.subtypes = carta.subtypes.split("+");
       if(carta.colorIdentity){
         carta.colorIdentity.map(color=>{ colores.push(color) });
       }
