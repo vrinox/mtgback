@@ -31,13 +31,10 @@ const duplicar = async function(req, res){
     let idMazo = req.params.idMazo;
     let usuario = req.user;
 
-    [err, oldMazo] = await to(Mazo.findOne({where:{"id":idMazo}}));
-    if(err) return ReE(res, err, 422);
-
-    [err, cartas] = await to(oldMazo.getDetalleMazos());
+    [err, cartas] = await to(DetalleMazo.findAll(where:{'MazoId':idMazo}));
     if(err) ReE(res, err);
 
-    mazoInfo = oldMazo.toWeb()
+    mazoInfo = req.body
 
     [err, newMazo] = await to(Mazo.create(mazoInfo));
     if(err) return ReE(res, err, 422);
