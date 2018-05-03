@@ -45,7 +45,7 @@ const duplicar = async function(req, res){
     cartas = cartas.map(carta=>{
       carta.MazoId = newMazo.id
       carta = carta.toWeb();
-      unset(carta.id)
+      delete carta.id;
       return ;
     });
     console.log(cartas);
