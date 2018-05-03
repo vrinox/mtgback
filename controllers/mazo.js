@@ -42,14 +42,12 @@ const duplicar = async function(req, res){
     [err, newMazo] = await to(Mazo.create(mazoInfo));
     if(err) return ReE(res, err, 422);
 
-    console.log(newMazo);
-
     cartas = cartas.map(carta=>{
-      let userMetadata = carta.userMetadata;
-      userMetadata.MazoId = newMazo.id;
-      userMetadata.id = undefined;
-      return userMetadata;
+      carta.MazoId = newMazo.id
+      carta.id = undefined;
+      return carta.toWeb();;
     });
+    console.log(cartas);
     cartas = await Promise.all(cartas.map(carta=>{ return DetalleMazo.create(carta)}))
 
     return ReS(res,{mazo:newMazo.toWeb()}, 201);
