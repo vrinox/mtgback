@@ -37,9 +37,12 @@ const duplicar = async function(req, res){
     if(err) ReE(res, err);
 
     mazoInfo = req.body
+    mazoInfo.UsuarioId = usuario.id;
 
     [err, newMazo] = await to(Mazo.create(mazoInfo));
     if(err) return ReE(res, err, 422);
+
+    console.log(newMazo);
 
     cartas = cartas.map(carta=>{
       let userMetadata = carta.userMetadata;
