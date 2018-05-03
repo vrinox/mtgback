@@ -50,8 +50,10 @@ const duplicar = async function(req, res){
         tipo      : carta.tipo
       };
     });
-    console.log(cartas);
-    cartas = await Promise.all(cartas.map(carta=>{ return DetalleMazo.create(carta)}))
+    [newMazo,cartas] = await Promise.all(
+      Mazo.findOne({include:[{model:Formato},where:{id:newMazo.id}]}),
+      Promise.all(cartas.map(carta=>{ return DetalleMazo.create(carta)})
+    );
 
     return ReS(res,{mazo:newMazo.toWeb()}, 201);
 }
