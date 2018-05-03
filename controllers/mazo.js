@@ -44,8 +44,9 @@ const duplicar = async function(req, res){
 
     cartas = cartas.map(carta=>{
       carta.MazoId = newMazo.id
-      carta.id = undefined;
-      return carta.toWeb();;
+      carta = carta.toWeb();
+      unset(carta.id)
+      return ;
     });
     console.log(cartas);
     cartas = await Promise.all(cartas.map(carta=>{ return DetalleMazo.create(carta)}))
