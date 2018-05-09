@@ -97,7 +97,7 @@ const cambiarEstado = async function(req, res){
     [err,usuario] = await to(usuario.save({fields: ['estado']}));
     if(err) ReE(res, err, 422);
 
-    return ReS(res, estado:usuario.toWeb()["estado"]})
+    return ReS(res, {estado:usuario.toWeb()["estado"]})
 }
 module.exports.cambiarEstado = cambiarEstado;
 
