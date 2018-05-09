@@ -4,7 +4,10 @@ const getAll = async function(req, res){
     res.setHeader('Content-Type', 'application/json');
     let err, cartas, filtros;
     filtros = req.body.filtros;
-
+    //ordeno por orden alfabetico en caso de que no traiga un orden
+    if(!filtros.hasOwnProperty("orderBy")){
+      filtros.orderBy="name";
+    }
     /*
       para paginacion usa:
         page    : pagina actual,
