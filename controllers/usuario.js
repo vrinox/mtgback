@@ -71,6 +71,36 @@ const remove = async function(req, res){
 }
 module.exports.remove = remove;
 
+const login = async function(req, res){
+    const body = req.body;
+    let err, usuario;
+    [err, usuario] = await to(authService.authUser(req.body));
+    if(err) return ReE(res, err, 422);
+
+    [err, usuario] = await to(decoradorUsuario(usuario));
+    if(err) return ReE(res, err, 422);
+
+    return ReS(res, {token:usuario.getJWT(), usuario:usuario.toWeb()});
+}
+module.exports.login = login;
+
+const cambiarEstado = async function(req, res){
+    const body = req.body;
+    const user = req.user;
+    let err, usuario;
+    // TODO: activar todo lo necesario como las notificaciones entre otros
+
+    [err,usuario] = await to(Usuario.findOne({where:{"id":user.id}}));
+    if(err) ReE(res, err, 422);
+
+    usuario.estado = body.estado;
+    [err,usuario] = await to(usuario.save({fields: ['estado']}));
+    if(err) ReE(res, err, 422);
+
+    return ReS(res, estado:usuario.toWeb()["estado"]})
+}
+module.exports.cambiarEstado = cambiarEstado;
+
 const decoradorUsuario= async function(usuario){
   let err,mazos;
   [err, mazos] = await to(Mazo.findAll({
@@ -85,16 +115,3 @@ const decoradorUsuario= async function(usuario){
 }
 
 module.exports.decoradorUsuario = decoradorUsuario;
-
-const login = async function(req, res){
-    const body = req.body;
-    let err, usuario;
-    [err, usuario] = await to(authService.authUser(req.body));
-    if(err) return ReE(res, err, 422);
-
-    [err, usuario] = await to(decoradorUsuario(usuario));
-    if(err) return ReE(res, err, 422);
-
-    return ReS(res, {token:usuario.getJWT(), usuario:usuario.toWeb()});
-}
-module.exports.login = login;
