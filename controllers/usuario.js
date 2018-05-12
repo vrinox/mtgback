@@ -93,7 +93,7 @@ const token = async function(req, res){
     [err, usuario] = await to(decoradorUsuario(usuario));
     if(err) return ReE(res, err, 422);
 
-    return ReS(res, {token:usuario.getJWT());
+    return ReS(res, {token:usuario.getJWT()});
 }
 module.exports.token = token;
 
