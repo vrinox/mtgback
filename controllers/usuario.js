@@ -2,6 +2,7 @@ const Usuario          = require('../models').Usuario;
 const Formato          = require('../models').Formato;
 const Mazo          = require('../models').Mazo;
 const authService   = require('./../services/AuthService');
+const mazoCtrl      = require('./mazo');
 
 const create = async function(req, res){
     res.setHeader('Content-Type', 'application/json');
@@ -123,6 +124,9 @@ const decoradorUsuario= async function(usuario){
     where:{"UsuarioId":usuario.dataValues.id}
   }));
   if(err) TE("error al buscar mazos de usuario "+usuario.dataValues.id,true);
+  mazos = await Promise.all(mazos.map(async(mazo)=>{
+    return await mazoCtrl.armarMazo(mazo);
+  }))
   usuario.dataValues.mazos = mazos;
   return usuario;
 }

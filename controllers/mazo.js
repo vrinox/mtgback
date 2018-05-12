@@ -176,3 +176,4 @@ const armarMazo = async function(mazo){
  }
 return mazo.toWeb();
 }
+module.exports.armarMazo = armarMazo;
