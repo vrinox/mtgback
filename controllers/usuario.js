@@ -84,6 +84,19 @@ const login = async function(req, res){
 }
 module.exports.login = login;
 
+const token = async function(req, res){
+    const body = req.body;
+    let err, usuario;
+    [err, usuario] = await to(authService.authUser(req.body));
+    if(err) return ReE(res, err, 422);
+
+    [err, usuario] = await to(decoradorUsuario(usuario));
+    if(err) return ReE(res, err, 422);
+
+    return ReS(res, {token:usuario.getJWT());
+}
+module.exports.token = token;
+
 const cambiarEstado = async function(req, res){
     const body = req.body;
     const user = req.user;
