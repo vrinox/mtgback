@@ -74,8 +74,10 @@ const getAll = async function(req, res){
     }));
     let mazosJson = mazos.map(async (mazo) => {
       mazo = await armarMazo(mazo);
+      console.log(mazo);
       return mazo;
     });
+    console.log(mazosJson);
     return ReS(res, {mazos:mazosJson});
 }
 module.exports.getAll = getAll;
