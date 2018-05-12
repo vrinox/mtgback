@@ -73,8 +73,7 @@ const getAll = async function(req, res){
       where:{"UsuarioId":usuario.id}
     }));
     let mazosJson = mazos.map(async (mazo) => {
-      mazo = await armarMazo(mazo);;
-      console.log(mazo)
+      mazo = await armarMazo(mazo);
       return mazo;
     });
     return ReS(res, {mazos:mazosJson});
@@ -127,7 +126,7 @@ const remove = async function(req, res){
 module.exports.remove = remove;
 
 const armarMazo = async function(mazo){
-  let MazoId = mazo.dataValues.id;
+  let MazoId = mazo.id;
   [err, cartas] = await to(DetalleMazo.findAll({
     "include":[{
       "model":Carta,
