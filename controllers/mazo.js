@@ -72,11 +72,11 @@ const getAll = async function(req, res){
       }],
       where:{"UsuarioId":usuario.id}
     }));
-    let mazosJson = await mazos.map(async (mazo) => {
+    let mazosJson = Promise.all(mazos.map(async (mazo) => {
       mazo = await armarMazo(mazo);
       console.log(mazo);
       return mazo;
-    });
+    }));
     console.log(mazosJson);
     return ReS(res, {mazos:mazosJson});
 }
