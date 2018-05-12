@@ -72,8 +72,8 @@ const getAll = async function(req, res){
       }],
       where:{"UsuarioId":usuario.id}
     }));
-    let mazosJson = mazos.map(mazo => {
-      return armarMazo(mazo);
+    let mazosJson = mazos.map(async (mazo) => {
+      return await armarMazo(mazo);
     });
     return ReS(res, {mazos:mazosJson});
 }
@@ -91,7 +91,7 @@ const get = async function(req, res){
     console.log(err);
     if(err) return ReE(res, "err encontrando mazo");
     //busco el detalle del mazo
-    mazo = armarMazo(mazo);
+    mazo = await armarMazo(mazo);
     return ReS(res, {mazo:mazo});
 }
 module.exports.get = get;
