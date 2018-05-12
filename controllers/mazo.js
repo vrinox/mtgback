@@ -125,6 +125,7 @@ const remove = async function(req, res){
 module.exports.remove = remove;
 
 const armarMazo = async function(mazo){
+  console.log("antes: ",mazo);
   let MazoId = mazo.dataValues.id;
   [err, cartas] = await to(DetalleMazo.findAll({
     "include":[{
@@ -173,5 +174,6 @@ const armarMazo = async function(mazo){
      manaCost: colores
    });
  }
+ console.log("despues:",mazo);
   return mazo.toWeb();
 }
