@@ -73,7 +73,9 @@ const getAll = async function(req, res){
       where:{"UsuarioId":usuario.id}
     }));
     let mazosJson = mazos.map(async (mazo) => {
-      return await armarMazo(mazo);
+      mazo = await armarMazo(mazo);;
+      console.log(mazo)
+      return mazo;
     });
     return ReS(res, {mazos:mazosJson});
 }
@@ -125,7 +127,6 @@ const remove = async function(req, res){
 module.exports.remove = remove;
 
 const armarMazo = async function(mazo){
-  console.log("antes: ",mazo);
   let MazoId = mazo.dataValues.id;
   [err, cartas] = await to(DetalleMazo.findAll({
     "include":[{
@@ -174,6 +175,5 @@ const armarMazo = async function(mazo){
      manaCost: colores
    });
  }
- console.log("despues:",mazo);
-  return mazo.toWeb();
+return mazo.toWeb();
 }
