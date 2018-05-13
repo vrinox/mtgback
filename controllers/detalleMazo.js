@@ -85,24 +85,30 @@ const eliminarCarta = async function(req, res){
 }
 module.exports.eliminarCarta = eliminarCarta;
 
-const decorarCarta = function(carta,tipo,numero){
-  const campos = ["types","subtypes","colorIdentity"];
-  if(tipo == "split"){
-    campos.forEach(campo=>{
-      if(carta.hasOwnProperty(campo) && carta[campo] != null){
-        carta[campo] = carta[campo].split('+');
-        if(typeof carta[campo] == "string"){
-          carta[campo] = [carta[campo]];
+const decorarCarta = function(carta,numero){
+  const propiedades = ["types","subtypes","colorIdentity"];
+  const poseePropiedad = false;
+    propiedades.forEach(propiedad=>{
+      //valido que el registro posea el propiedad a verificar
+      if(carta.hasOwnProperty("dataValues")){
+        if(carta.dataValues.hasOwnProperty(propiedad)){
+          poseePropiedad = true;
+        }
+      }else if(carta.hasOwnProperty(propiedad)){
+        poseePropiedad = true;
+      }
+      if(poseePropiedad && carta[propiedad] != null){
+        if(typeof carta[propiedad] == "string"){ //en caso de que sea string
+          if(carta[propiedad].includes('+')){
+            carta[propiedad] = carta[propiedad].split('+');
+          }else{
+            carta[propiedad] = [carta[propiedad]];
+          }
+        }else if(Array.isArray(carta[propiedad])){ //en caso de que sea array
+          carta[propiedad] = carta[propiedad].join('+');
         }
       }
     });
-  }else if(tipo == "join"){
-    campos.forEach(campo=>{
-      if(carta.hasOwnProperty(campo) && carta[campo] != null){
-        carta[campo] = carta[campo].join('+');
-      }
-    });
-  }
   return carta;
 }
 
