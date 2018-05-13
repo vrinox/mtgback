@@ -87,7 +87,7 @@ module.exports.eliminarCarta = eliminarCarta;
 
 const decorarCarta = function(carta,numero){
   const propiedades = ["types","subtypes","colorIdentity"];
-  const poseePropiedad = false;
+  let poseePropiedad = false;
     propiedades.forEach(propiedad=>{
       //valido que el registro posea el propiedad a verificar
       if(carta.hasOwnProperty("dataValues")){
