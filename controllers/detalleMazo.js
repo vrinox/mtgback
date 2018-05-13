@@ -86,7 +86,7 @@ const eliminarCarta = async function(req, res){
 module.exports.eliminarCarta = eliminarCarta;
 
 const decorarCarta = function(carta,tipo,numero){
-  console.log(numero);
+  console.log(numero+":",carta);
   const campos = ["types","subtypes","colorIdentity"];
   if(tipo == "split"){
     campos.forEach(campo=>{
