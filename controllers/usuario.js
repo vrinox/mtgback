@@ -115,6 +115,11 @@ const cambiarEstado = async function(req, res){
 }
 module.exports.cambiarEstado = cambiarEstado;
 
+const subirAvatar = async function(){
+
+}
+module.exports.subirAvatar = subirAvatar;
+
 const decoradorUsuario= async function(usuario){
   let err,mazos;
   [err, mazos] = await to(Mazo.findAll({

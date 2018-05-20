@@ -9,9 +9,10 @@ const rutas = function(router){
   //rutas privadas
   router.get(     '/usuario/:id',         passport.authenticate('jwt', {session:false}), UsuarioController.get);
   router.get(     '/usuario',             passport.authenticate('jwt', {session:false}), UsuarioController.get);
+  router.post(    '/usuario/:id/avatar',  passport.authenticate('jwt', {session:false}), UsuarioController.subirAvatar);
+  router.put(     '/usuario/:id/estado',  passport.authenticate('jwt', {session:false}), UsuarioController.cambiarEstado);
   router.put(     '/usuario/:id',         passport.authenticate('jwt', {session:false}), UsuarioController.update);     // U
   router.delete(  '/usuario',             passport.authenticate('jwt', {session:false}), UsuarioController.remove);     // D
-  router.put(     '/usuario/:id/estado',  passport.authenticate('jwt', {session:false}), UsuarioController.cambiarEstado);
 }
 
 module.exports = rutas;

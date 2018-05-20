@@ -1,32 +1,21 @@
 require('./config/config');     //instantiate configuration variables
 require('./global_functions');  //instantiate global functions
-
-console.log("Environment:", CONFIG.app)
-
+//middlewares y frameworks
 const express 		= require('express');
 const logger 	    = require('morgan');
 const bodyParser 	= require('body-parser');
 const passport    = require('passport');
-
-const v1 = require('./routes/v1');
-
+// //firebase
+// var firebase = require("firebase-admin");
+// var serviceAccount = require("config/firebase_secret.json");
+// firebase.initializeApp({
+//   credential: admin.credential.cert(serviceAccount),
+//   databaseURL: "https://direct-subset-204118.firebaseio.com"
+// });
+//Rutas
+const v1 = require('./routes/v1')(firebase);
 const app = express();
-const custom = function(req, res, next){
-  let body = req.body;
-  for(let propiedad in body){
-    if (body.hasOwnProperty(propiedad)) {
-      if(typeof body[propiedad] == "string"){
-        body[propiedad] = body[propiedad].toLowerCase();
-      }
-    }
-  }
-  if(CONFIG.log_body == 1){
-    console.log("-------------------");
-    console.log("Body:",body);
-    console.log("-------------------");
-  }
-  next();
-}
+const custom = require('./middleware/custom');
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
