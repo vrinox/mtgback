@@ -2,7 +2,7 @@
 const Usuario     = require('../models').Usuario;
 //servicios
 const authService = require('./../services/AuthService');
-const firebase    = require('../services/firebase')();
+const storage     = require('../services/firebase').storage();
 const decorar     = require('../services/decorador');
 
 const create = async function(req, res){
@@ -119,9 +119,9 @@ module.exports.cambiarEstado = cambiarEstado;
 const subirAvatar = async function(req, res){
   let archivo = req.file, usuario = req.user;
   console.log("file:",archivo);
-  console.log("admin:",firebase);
+  console.log("admin:",storage);
   //referencia al directorio donde se guarda los avatar
-  let dir = firebase.storage().ref().child("avatar");
+  let dir = storageRef.child("avatar");
   if (!archivo) {
     ReE(res, "error al subir la imagen", 400);
   }

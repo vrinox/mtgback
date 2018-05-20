@@ -1,11 +1,17 @@
+var firebase = require("firebase-admin");
+
 const firebase_init = function(){
   //firebase
-  var firebase = require("firebase-admin");
   var serviceAccount = require("../config/firebase_secret.json");
   firebase.initializeApp({
     credential: firebase.credential.cert(serviceAccount),
-    databaseURL: "https://direct-subset-204118.firebaseio.com"
+    databaseURL: "https://direct-subset-204118.firebaseio.com",
+    storageBucket:"gs://direct-subset-204118.appspot.com/"
   });
   return firebase;
 }
-module.exports = firebase_init;
+const storage = function(){
+  let firebase = firebase_init();
+  return firebase.storage();
+}
+module.exports.storage = storage;
