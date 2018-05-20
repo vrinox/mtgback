@@ -13,8 +13,6 @@ const v1 = function(){
   router.get('/', function(req, res, next) {
     res.json({status:"success", message:"MagicHub API", data:{"version_number":"v1.0.0"}})
   });
-
-
   //********* API DOCUMENTATION **********
   router.use('/docs/api.json',            express.static(path.join(__dirname, '/../public/v1/documentation/api.json')));
   router.use('/docs',                     express.static(path.join(__dirname, '/../public/v1/documentation/dist')));
