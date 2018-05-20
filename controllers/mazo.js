@@ -1,6 +1,5 @@
 const Mazo          = require('../models').Mazo;
 const DetalleMazo   = require('../models').DetalleMazo;
-const Carta         = require('../models').Carta;
 const Formato       = require('../models').Formato;
 const decorar       = require('../services/decorador');
 const mtg           = require('mtgsdk');

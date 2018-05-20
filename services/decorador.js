@@ -1,8 +1,8 @@
 //imports
 const Formato = require('../models').Formato;
 const Mazo    = require('../models').Mazo;
+const Carta   = require('../models').Carta;
 const DetalleMazo = require('../models').DetalleMazo;
-
 
 const usuario = async function(newUsuario){
   let err,mazos;
@@ -14,7 +14,7 @@ const usuario = async function(newUsuario){
   }));
   if(err) TE("error al buscar mazos de usuario "+newUsuario.dataValues.id,true);
   mazos = await Promise.all(mazos.map(async(newMazo)=>{
-    return await mazo(newMazo);
+    return await armarMazo(newMazo);
   }))
   newUsuario.dataValues.mazos = mazos;
   return newUsuario;
@@ -22,7 +22,7 @@ const usuario = async function(newUsuario){
 
 module.exports.usuario = usuario;
 
-const mazo = async function(newMazo){
+const armarMazo = async function(newMazo){
   let MazoId = newMazo.id;
   [err, cartas] = await to(DetalleMazo.findAll({
     "include":[{
@@ -51,7 +51,7 @@ const mazo = async function(newMazo){
   let colores = [];
   //organizo cada carta en su espacio
   mtgCartas.forEach(newCarta => {
-    newCarta = carta(newCarta,"split",112);
+    newCarta = decorarCarta(newCarta,"split",112);
     if(newCarta.colorIdentity){
       newCarta.colorIdentity.map(color=>{ colores.push(color) });
     }
@@ -74,9 +74,9 @@ const mazo = async function(newMazo){
    return newMazo.toWeb();
 }
 
-module.exports.mazo = mazo;
+module.exports.mazo = armarMazo;
 
-const carta = function(carta,numero){
+const decorarCarta = function(carta,numero){
   const propiedades = ["types","subtypes","colorIdentity"];
   let poseePropiedad = false;
     propiedades.forEach(propiedad=>{
@@ -103,4 +103,4 @@ const carta = function(carta,numero){
   return carta;
 }
 
-module.exports.carta = carta;
+module.exports.carta = decorarCarta;
