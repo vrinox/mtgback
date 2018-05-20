@@ -5,6 +5,7 @@ const express 		= require('express');
 const logger 	    = require('morgan');
 const bodyParser 	= require('body-parser');
 const passport    = require('passport');
+const custom      = require('./middleware/custom');
 // //firebase
 // var firebase = require("firebase-admin");
 // var serviceAccount = require("config/firebase_secret.json");
@@ -13,9 +14,8 @@ const passport    = require('passport');
 //   databaseURL: "https://direct-subset-204118.firebaseio.com"
 // });
 //Rutas
-const v1 = require('./routes/v1')(firebase);
+const v1 = require('./routes/v1');
 const app = express();
-const custom = require('./middleware/custom');
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
