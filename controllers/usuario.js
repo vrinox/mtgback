@@ -2,7 +2,7 @@
 const Usuario     = require('../models').Usuario;
 //servicios
 const authService = require('./../services/AuthService');
-const firebase    = require('../services/firebase');
+const firebase    = require('../services/firebase')();
 const decorar     = require('../services/decorador');
 
 const create = async function(req, res){
