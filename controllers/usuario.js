@@ -121,7 +121,7 @@ const subirAvatar = async function(req, res){
   if (!archivo) {
     ReE(res, "error al subir la imagen", 400);
   }else{
-    [err,img] = await to(upload(file,usuario));
+    [err,img] = await to(upload(archivo,usuario));
     if(err) ReE(res,err,400);
     // Create file metadata including the content type
     console.log("imagen:",img);
