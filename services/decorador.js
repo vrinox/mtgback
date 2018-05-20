@@ -56,9 +56,9 @@ const armarMazo = async function(newMazo){
       newCarta.colorIdentity.map(color=>{ colores.push(color) });
     }
     if(newCarta.dataValues.userMetadata.tipo == "main"){
-      newMazo.dataValues.main.push(carta);
+      newMazo.dataValues.main.push(newCarta);
     }else{
-      newMazo.dataValues.side.push(carta);
+      newMazo.dataValues.side.push(newCarta);
     }
   })
   //limpio los colores
