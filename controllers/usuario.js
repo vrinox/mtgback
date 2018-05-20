@@ -120,11 +120,12 @@ const subirAvatar = async function(req, res){
   let archivo = req.file, usuario = req.user;
   if (!archivo) {
     ReE(res, "error al subir la imagen", 400);
+  }else{
+    [err,img] = await to(upload(file,usuario));
+    if(err) ReE(res,err,400);
+    // Create file metadata including the content type
+    console.log("imagen:",img);
+    return ReS(res, {message:"imagen subida de manera satisfactoria"});
   }
-  [err,img] = await to(upload(file,usuario));
-  if(err) ReE(res,err,400);
-  // Create file metadata including the content type
-  console.log("imagen:",img);
-  return ReS(res, {message:"imagen subida de manera satisfactoria"});
 }
 module.exports.subirAvatar = subirAvatar;
