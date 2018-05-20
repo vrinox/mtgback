@@ -1,7 +1,7 @@
-const JwtStrategy       = require('passport-jwt').Strategy;
-const ExtractJwt        = require('passport-jwt').ExtractJwt;
-const Usuario           = require('../models').Usuario;
-const UsuarioController = require('../controllers/usuario');
+const JwtStrategy = require('passport-jwt').Strategy;
+const ExtractJwt  = require('passport-jwt').ExtractJwt;
+const Usuario     = require('../models').Usuario;
+const decorar     = require('../services/decorador');
 
 module.exports = function(passport){
     var opts = {};
@@ -16,7 +16,7 @@ module.exports = function(passport){
           return done(err, false);
         }
         if(usuario) {
-            [err, usuario] = await to(UsuarioController.decoradorUsuario(usuario));
+            [err, usuario] = await to(decorar.usuario(usuario));
             if(err) done(err, false);
             return done(null, usuario);
         }else{
