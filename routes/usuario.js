@@ -1,6 +1,13 @@
 const controlador = require('./../controllers/usuario');
 const passport    = require('passport');
-const multer      = require('../services/multer');
+const Multer = require('multer');
+const multer = Multer({
+    storage: Multer.memoryStorage(),
+    limits: {
+      fileSize: 5 * 1024 * 1024 // no larger than 5mb, you can change as needed.
+    }
+  });
+
 
 const rutas = function(router){
   //rutas de autenticacion
