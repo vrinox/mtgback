@@ -118,6 +118,8 @@ module.exports.cambiarEstado = cambiarEstado;
 
 const subirAvatar = async function(req, res){
   let archivo = req.file, usuario = req.user;
+  console.log("usuario:",usuario);
+  console.log("file:",archivo);
   //referencia al directorio donde se guarda los avatar
   let dir = firebase.ref().child("avatar");
   if (!archivo) {
