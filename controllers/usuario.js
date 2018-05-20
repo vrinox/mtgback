@@ -118,6 +118,7 @@ module.exports.cambiarEstado = cambiarEstado;
 
 const subirAvatar = async function(req, res){
   let archivo = req.file, usuario = req.user;
+  console.log(archivo);
   if (!archivo) {
     ReE(res, "error al subir la imagen", 400);
   }else{
