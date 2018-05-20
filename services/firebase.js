@@ -10,8 +10,9 @@ const firebase_init = function(){
   });
   return firebase;
 }
+
 const storage = function(){
   let firebase = firebase_init();
-  return firebase.storage();
+  return firebase.storage().bucket();
 }
 module.exports.storage = storage;
