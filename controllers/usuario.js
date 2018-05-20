@@ -121,7 +121,7 @@ const subirAvatar = async function(req, res){
   console.log("file:",archivo);
   console.log("admin:",firebase);
   //referencia al directorio donde se guarda los avatar
-  let dir = firebase.ref().child("avatar");
+  let dir = firebase.storage().ref().child("avatar");
   if (!archivo) {
     ReE(res, "error al subir la imagen", 400);
   }
