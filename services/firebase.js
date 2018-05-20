@@ -13,6 +13,6 @@ const firebase_init = function(){
 
 const storage = function(){
   let firebase = firebase_init();
-  return firebase.storage().bucket();
+  return firebase.storage().bucket().ref();
 }
 module.exports.storage = storage;
