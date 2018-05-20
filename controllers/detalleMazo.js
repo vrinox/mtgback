@@ -1,6 +1,7 @@
 const Mazo = require('../models').Mazo;
 const Carta = require('../models').Carta;
 const DetalleMazo = require('../models').DetalleMazo;
+const decorar     = require('../services/decorador');
 
 const agregarCarta = async function(req, res){
   let err, userMetadata, MazoId, oldCarta, newCarta, carta;
@@ -19,11 +20,11 @@ const agregarCarta = async function(req, res){
   if(err) ReE(res, err);
   //reviso si esta
   if(!newCarta){
-    oldCarta = decorarCarta(oldCarta,"join",1);
+    oldCarta = decorar.carta(oldCarta,"join",1);
     [err, newCarta] = await to(Carta.create(oldCarta));
     if(err) ReE(res, err);
-    newCarta = decorarCarta(newCarta,"split",2);
-    req.body = decorarCarta(req.body,"split",3);
+    newCarta = decorar.carta(newCarta,"split",2);
+    req.body = decorar.carta(req.body,"split",3);
   }
   userMetadata = oldCarta.userMetadata;
   userMetadata.idCarta = newCarta.id;
@@ -32,8 +33,8 @@ const agregarCarta = async function(req, res){
   [err, userMetadata] = await to(DetalleMazo.create(userMetadata));
   if(err) ReE(res, err);
   //preparo el envio
-  carta = decorarCarta(req.body,"join",4);
-  carta = decorarCarta(carta,"split",5);
+  carta = decorar.carta(req.body,"join",4);
+  carta = decorar.carta(carta,"split",5);
 
   carta.userMetadata = userMetadata.toWeb();
   //envio
@@ -84,32 +85,3 @@ const eliminarCarta = async function(req, res){
   return ReS(res, {message:'Carta Eliminada'}, 200);
 }
 module.exports.eliminarCarta = eliminarCarta;
-
-const decorarCarta = function(carta,numero){
-  const propiedades = ["types","subtypes","colorIdentity"];
-  let poseePropiedad = false;
-    propiedades.forEach(propiedad=>{
-      //valido que el registro posea el propiedad a verificar
-      if(carta.hasOwnProperty("dataValues")){
-        if(carta.dataValues.hasOwnProperty(propiedad)){
-          poseePropiedad = true;
-        }
-      }else if(carta.hasOwnProperty(propiedad)){
-        poseePropiedad = true;
-      }
-      if(poseePropiedad && carta[propiedad] != null){
-        if(typeof carta[propiedad] == "string"){ //en caso de que sea string
-          if(carta[propiedad].includes('+')){
-            carta[propiedad] = carta[propiedad].split('+');
-          }else{
-            carta[propiedad] = [carta[propiedad]];
-          }
-        }else if(Array.isArray(carta[propiedad])){ //en caso de que sea array
-          carta[propiedad] = carta[propiedad].join('+');
-        }
-      }
-    });
-  return carta;
-}
-
-module.exports.decorarCarta = decorarCarta;

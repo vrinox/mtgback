@@ -1,9 +1,9 @@
-const Mazo = require('../models').Mazo;
-const DetalleMazo = require('../models').DetalleMazo;
-const decorarCarta = require('./detalleMazo').decorarCarta;
-const Carta = require('../models').Carta;
-const Formato = require('../models').Formato;
-const mtg = require('mtgsdk');
+const Mazo          = require('../models').Mazo;
+const DetalleMazo   = require('../models').DetalleMazo;
+const Carta         = require('../models').Carta;
+const Formato       = require('../models').Formato;
+const decorar       = require('../services/decorador');
+const mtg           = require('mtgsdk');
 
 const create = async function(req, res){
     res.setHeader('Content-Type', 'application/json');
@@ -73,7 +73,7 @@ const getAll = async function(req, res){
       where:{"UsuarioId":usuario.id}
     }));
     let mazosJson = await Promise.all(mazos.map(async (mazo) => {
-      mazo = await armarMazo(mazo);
+      mazo = await decorar.mazo(mazo);
       return mazo;
     }));
     return ReS(res, {mazos:mazosJson});
@@ -92,7 +92,7 @@ const get = async function(req, res){
     console.log(err);
     if(err) return ReE(res, "err encontrando mazo");
     //busco el detalle del mazo
-    mazo = await armarMazo(mazo);
+    mazo = await decorar.mazo(mazo);
     return ReS(res, {mazo:mazo});
 }
 module.exports.get = get;
@@ -124,56 +124,3 @@ const remove = async function(req, res){
   return ReS(res, {message:'Mazo eliminado'}, 200);
 }
 module.exports.remove = remove;
-
-const armarMazo = async function(mazo){
-  let MazoId = mazo.id;
-  [err, cartas] = await to(DetalleMazo.findAll({
-    "include":[{
-      "model":Carta,
-      "as": "carta",
-    }],
-    "where":{"MazoId":MazoId}
-  }));
-  if(err) ReE(res, err);
-  const mtgCartas = cartas.map(oldCarta =>{
-    newCarta = oldCarta.carta;
-    newCarta.dataValues.userMetadata = {
-      cantidad: oldCarta.cantidad,
-      id      : oldCarta.id,
-      tipo    : oldCarta.tipo,
-      idCarta : oldCarta.idCarta,
-    }
-    return newCarta;
-  });
-
-  //inicializo los valores del main y side
-  mazo.dataValues.main = [];
-  mazo.dataValues.side = [];
-  //acumulo los colores
-  let seen = {};
-  let colores = [];
-  //organizo cada carta en su espacio
-  mtgCartas.forEach(carta => {
-    carta = decorarCarta(carta,"split",112);
-    if(carta.colorIdentity){
-      carta.colorIdentity.map(color=>{ colores.push(color) });
-    }
-    if(carta.dataValues.userMetadata.tipo == "main"){
-      mazo.dataValues.main.push(carta);
-    }else{
-      mazo.dataValues.side.push(carta);
-    }
-  })
-  //limpio los colores
-  colores = colores.filter(function(item) {
-     return seen.hasOwnProperty(item) ? false : (seen[item] = true);
- }).join("");
- //evaluo si mantiene los colores
- if(mazo.dataValues.manaCost != colores){
-   mazo.update({
-     manaCost: colores
-   });
- }
-return mazo.toWeb();
-}
-module.exports.armarMazo = armarMazo;

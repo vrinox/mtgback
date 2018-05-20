@@ -1,8 +1,9 @@
-const Usuario          = require('../models').Usuario;
-const Formato          = require('../models').Formato;
-const Mazo          = require('../models').Mazo;
-const authService   = require('./../services/AuthService');
-const mazoCtrl      = require('./mazo');
+//modelos
+const Usuario     = require('../models').Usuario;
+//servicios
+const authService = require('./../services/AuthService');
+const firebase    = require('../services/firebase');
+const decorar     = require('../services/decorador');
 
 const create = async function(req, res){
     res.setHeader('Content-Type', 'application/json');
@@ -39,7 +40,7 @@ const get = async function(req, res){
 
     if(!usuario) return ReE(res, "usuario no encontrando con id "+idUsuario);
 
-    [err, usuario] = await to(decoradorUsuario(usuario));
+    [err, usuario] = await to(decorar.usuario(usuario));
     if(err) next(err, false);
 
     return ReS(res, {usuario});
@@ -78,7 +79,7 @@ const login = async function(req, res){
     [err, usuario] = await to(authService.authUser(req.body));
     if(err) return ReE(res, err, 422);
 
-    [err, usuario] = await to(decoradorUsuario(usuario));
+    [err, usuario] = await to(decorar.usuario(usuario));
     if(err) return ReE(res, err, 422);
 
     return ReS(res, {token:usuario.getJWT(), usuario:usuario.toWeb()});
@@ -91,7 +92,7 @@ const token = async function(req, res){
     [err, usuario] = await to(authService.authUser(req.body));
     if(err) return ReE(res, err, 422);
 
-    [err, usuario] = await to(decoradorUsuario(usuario));
+    [err, usuario] = await to(decorar.usuario(usuario));
     if(err) return ReE(res, err, 422);
 
     return ReS(res, {token:usuario.getJWT()});
@@ -115,25 +116,26 @@ const cambiarEstado = async function(req, res){
 }
 module.exports.cambiarEstado = cambiarEstado;
 
-const subirAvatar = async function(){
+const subirAvatar = async function(req, res){
+  let archivo = req.file, usuario = req.user;
+  //referencia al directorio donde se guarda los avatar
+  let dir = firebase.ref().child("avatar");
+  if (!archivo) {
+    ReE(res, "error al subir la imagen", 400);
+  }
+  let newFileName = `${usuario.id}_${Date.now()}`;
+  // Create file metadata including the content type
+    let metadata = {
+      contentType   : archivo.mimetype,
+      customMetadata: {
+        'usuario':usuario.id
+      }
+    };
 
+    // Upload the file and metadata
+    [err, img] = await to(dir.child(newFileName+'.jpg').put(file, metadata));
+    if(err) ReE(res, err, 422);
+
+    return ReS(res, {message:"imagen subida de manera satisfactoria"};
 }
 module.exports.subirAvatar = subirAvatar;
-
-const decoradorUsuario= async function(usuario){
-  let err,mazos;
-  [err, mazos] = await to(Mazo.findAll({
-    include:[{
-      model:Formato
-    }],
-    where:{"UsuarioId":usuario.dataValues.id}
-  }));
-  if(err) TE("error al buscar mazos de usuario "+usuario.dataValues.id,true);
-  mazos = await Promise.all(mazos.map(async(mazo)=>{
-    return await mazoCtrl.armarMazo(mazo);
-  }))
-  usuario.dataValues.mazos = mazos;
-  return usuario;
-}
-
-module.exports.decoradorUsuario = decoradorUsuario;

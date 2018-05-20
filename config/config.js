@@ -16,8 +16,3 @@ CONFIG.log_body     = process.env.LOG_BODY      ||  1;
 
 CONFIG.jwt_encryption  = process.env.JWT_ENCRYPTION || 'mtgback';
 CONFIG.jwt_expiration  = process.env.JWT_EXPIRATION || '10000';
-
-// Aws CONFIG
-CONFIG.s3_bucket            = process.env.S3_BUCKET            || '';
-CONFIG.aws_acces_key_id     = process.env.AWS_ACCES_KEY_ID     || 'AKIAJCIGSR6PUQX5KTBQ';
-CONFIG.aws_secret_acces_key = process.env.AWS_SECRET_ACCES_KEY || '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';
