@@ -2,8 +2,8 @@
 const Usuario     = require('../models').Usuario;
 //servicios
 const authService = require('./../services/AuthService');
-const storage     = require('../services/firebase').storage();
 const decorar     = require('../services/decorador');
+const upload      = require('../services/upload').upload;
 
 const create = async function(req, res){
     res.setHeader('Content-Type', 'application/json');
@@ -118,27 +118,13 @@ module.exports.cambiarEstado = cambiarEstado;
 
 const subirAvatar = async function(req, res){
   let archivo = req.file, usuario = req.user;
-  console.log("file:",archivo);
-  console.log("admin:",storage);
-  //referencia al directorio donde se guarda los avatar
-  let dir = storage.child("avatar");
   if (!archivo) {
     ReE(res, "error al subir la imagen", 400);
   }
-  let newFileName = `${usuario.id}_${Date.now()}`;
+  [err,img] = await to(upload(file,usuario));
+  if(err) ReE(res,err,400);
   // Create file metadata including the content type
-    let metadata = {
-      contentType   : archivo.mimetype,
-      customMetadata: {
-        'usuario':usuario.id
-      }
-    };
-
-    // Upload the file and metadata
-    [err, img] = await to(dir.child(newFileName+'.jpg').put(file, metadata));
-    if(err) ReE(res, err, 422);
-
-    console.log("imagen:",img);
-    return ReS(res, {message:"imagen subida de manera satisfactoria"});
+  console.log("imagen:",img);
+  return ReS(res, {message:"imagen subida de manera satisfactoria"});
 }
 module.exports.subirAvatar = subirAvatar;
