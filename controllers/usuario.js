@@ -136,6 +136,7 @@ const subirAvatar = async function(req, res){
     [err, img] = await to(dir.child(newFileName+'.jpg').put(file, metadata));
     if(err) ReE(res, err, 422);
 
+    console.log("imagen:",img);
     return ReS(res, {message:"imagen subida de manera satisfactoria"});
 }
 module.exports.subirAvatar = subirAvatar;
