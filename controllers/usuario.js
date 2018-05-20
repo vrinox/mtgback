@@ -120,6 +120,7 @@ const subirAvatar = async function(req, res){
   let archivo = req.file, usuario = req.user;
   console.log("file:",archivo);
   console.log("admin:",storage);
+  let storageRef = storage.ref();
   //referencia al directorio donde se guarda los avatar
   let dir = storageRef.child("avatar");
   if (!archivo) {
