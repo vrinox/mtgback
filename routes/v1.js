@@ -1,8 +1,10 @@
 const express 			    = require('express');
 const router 			      = express.Router();
 const path              = require('path');
+const passport    = require('passport');
 
 const v1 = function(){
+  require('./../middleware/passport')(passport)
   //rutas externas
   require('./formato')(router);
   require('./duelo')(router)
