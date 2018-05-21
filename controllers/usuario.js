@@ -117,15 +117,11 @@ const cambiarEstado = async function(req, res){
 module.exports.cambiarEstado = cambiarEstado;
 
 const subirAvatar = async function(req, res){
-  let archivo = req.file, usuario = req.user;
+  let archivo = req.file, usuario = {id:6};
   if (!archivo) {
     ReE(res, "error al subir la imagen", 400);
   }else{
-    [err,img] = await to(upload(archivo,usuario));
-    if(err){
-      console.log(err);
-      ReE(res,err,400);
-    }
+    img = await upload(archivo,usuario);
     // Create file metadata including the content type
     console.log("imagen:",img);
     return ReS(res, {message:"imagen subida de manera satisfactoria"});

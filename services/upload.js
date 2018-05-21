@@ -1,7 +1,6 @@
 const bucket = require('../services/firebase').storage();
 
 const upload = (file,usuario) => {
-  usuario = {id:6};
   let prom = new Promise((resolve, reject) => {
     if (!file) {
       reject('No image file');
@@ -17,6 +16,7 @@ const upload = (file,usuario) => {
     });
 
     blobStream.on('error', (error) => {
+      console.log(error);
       reject('Something is wrong! Unable to upload at the moment.');
     });
 
