@@ -12,7 +12,7 @@ const upload = (file,usuario) => {
 
     const blobStream = fileUpload.createWriteStream({
       metadata: {
-        contentType: file.mimetype
+        contentType: "image/jpeg"
       }
     });
 
