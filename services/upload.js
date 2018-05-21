@@ -5,6 +5,7 @@ const upload = (file,usuario) => {
     if (!file) {
       reject('No image file');
     }
+    console.log("upload:",file);
     let newFileName = `${usuario.id}_${Date.now()}`;
 
     let fileUpload = bucket.file(newFileName);
@@ -16,7 +17,7 @@ const upload = (file,usuario) => {
     });
 
     blobStream.on('error', (error) => {
-      console.log(error);
+      console.log("error en subida:",error);
       reject('Something is wrong! Unable to upload at the moment.');
     });
 
