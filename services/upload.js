@@ -1,6 +1,7 @@
 const bucket = require('../services/firebase').storage();
 
 const upload = (file,usuario) => {
+  usuario = {id:6};
   let prom = new Promise((resolve, reject) => {
     if (!file) {
       reject('No image file');
