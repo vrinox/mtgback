@@ -4,9 +4,8 @@ const upload = (file,usuario,firebase) => {
     if (!file) {
       reject('No image file');
     }
-    let newFileName = `${usuario.id}_${Date.now()}`;
-    console.log(newFileName);
-    let fileUpload = bucket.file(newFileName);
+    let newFileName = `${avatar}${usuario.id}_${Date.now()}`;
+    let fileUpload = bucket.file(newFileName+'.jpg');
 
     fileUpload
     .save(new Buffer(file.buffer))
