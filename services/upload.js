@@ -8,25 +8,22 @@ const upload = (file,usuario,firebase) => {
     let newFileName = `${usuario.id}_${Date.now()}`;
 
     let fileUpload = bucket.file(newFileName);
-
-    const blobStream = fileUpload.createWriteStream({
+    console.log("fileUpload",fileUpload);
+    fileUpload.createWriteStream({
       metadata: {
         contentType: "image/jpeg"
       }
-    });
-
-    blobStream.on('error', (error) => {
-      console.log("error en subida:",error);
-      reject('Something is wrong! Unable to upload at the moment.');
-    });
-
-    blobStream.on('finish', () => {
-      // The public URL can be used to directly access the file via HTTP.
-      const url = format(`https://storage.googleapis.com/${bucket.name}/${fileUpload.name}`);
-      resolve(url);
-    });
-
-    blobStream.end(file.buffer);
+    })
+      .on('error', function(err) {
+        console.log("error en subida:",err);
+        reject('Something is wrong! Unable to upload at the moment.');
+      })
+      .on('finish', function() {
+        // The public URL can be used to directly access the file via HTTP.
+        const url = format(`https://storage.googleapis.com/${bucket.name}/${fileUpload.name}`);
+        resolve(url);
+      })
+      .end(file.buffer);
   });
   return prom;
 }
