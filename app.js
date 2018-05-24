@@ -8,7 +8,29 @@ const bodyParser 	= require('body-parser');
 const passport    = require('passport');
 const custom      = require('./middleware/custom');
 //servicios
-const firebase    = require('./services/firebase');
+var firebase = require("firebase-admin");
+var serviceAccount = require("./config/firebase_secret.json");
+firebase.initializeApp({
+  credential: firebase.credential.cert(serviceAccount),
+  databaseURL: "https://direct-subset-204118.firebaseio.com",
+  storageBucket:"gs://direct-subset-204118.appspot.com/"
+})
+
+firebase
+.storage()
+.bucket()
+.acl.get()
+.then(results => {
+  const acls = results[0];
+
+  acls.forEach(acl => {
+    console.log(`${acl.role}: ${acl.entity}`);
+  });
+})
+.catch(err => {
+  console.error('ERROR:', err);
+});
+
 //Rutas
 const v1 = require('./routes/v1')(firebase);
 const app = express();

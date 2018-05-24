@@ -28,7 +28,8 @@ if (CONFIG.DATABASE_URL) {
       host: CONFIG.db_host,
       dialect: CONFIG.db_dialect,
       port: CONFIG.db_port,
-      operatorsAliases: false
+      operatorsAliases: false,
+      logging: false
     });
   }
 

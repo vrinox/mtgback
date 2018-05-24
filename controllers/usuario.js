@@ -116,15 +116,17 @@ const cambiarEstado = async function(req, res){
 }
 module.exports.cambiarEstado = cambiarEstado;
 
-const subirAvatar = async function(req, res){
-  let archivo = req.file, usuario = {id:6};
-  if (!archivo) {
-    ReE(res, "error al subir la imagen", 400);
-  }else{
-    img = await upload(archivo,usuario);
-    // Create file metadata including the content type
-    console.log("imagen:",img);
-    return ReS(res, {message:"imagen subida de manera satisfactoria"});
+const subirAvatar = function(firebase){
+  return async function(req,res){
+    let archivo = req.file, usuario = {id:6};
+    if (!archivo) {
+      ReE(res, "error al subir la imagen", 400);
+    }else{
+      img = await upload(archivo,usuario,firebase);
+      // Create file metadata including the content type
+      console.log("imagen:",img);
+      return ReS(res, {message:"imagen subida de manera satisfactoria"});
+    }
   }
 }
 module.exports.subirAvatar = subirAvatar;

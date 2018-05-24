@@ -9,14 +9,14 @@ const multer = Multer({
   });
 
 
-const rutas = function(router){
+const rutas = function(router,firebase){
   //rutas de autenticacion
   router.post(    '/usuario',       controlador.create);                                                    // C
   router.post(    '/usuario/login', controlador.login);
   router.post(    '/usuario/token', controlador.token);
   //rutas privadas
   router.get(     '/usuario/:id',         passport.authenticate('jwt', {session:false}), controlador.get);
-  router.post(    '/usuario/:id/avatar',  multer.single('file')                        , controlador.subirAvatar);
+  router.post(    '/usuario/:id/avatar',  multer.single('file')                        , controlador.subirAvatar(firebase));
   router.put(     '/usuario/:id/estado',  passport.authenticate('jwt', {session:false}), controlador.cambiarEstado);
   router.put(     '/usuario/:id',         passport.authenticate('jwt', {session:false}), controlador.update);     // U
   router.delete(  '/usuario',             passport.authenticate('jwt', {session:false}), controlador.remove);     // D
