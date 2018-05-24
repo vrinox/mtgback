@@ -3,7 +3,6 @@ const Usuario     = require('../models').Usuario;
 //servicios
 const authService = require('./../services/AuthService');
 const decorar     = require('../services/decorador');
-const upload      = require('../services/upload').upload;
 
 const create = async function(req, res){
     res.setHeader('Content-Type', 'application/json');
