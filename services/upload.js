@@ -5,7 +5,7 @@ const upload = (file,usuario,firebase) => {
       reject('No image file');
     }
     let newFileName = `${usuario.id}_${Date.now()}`;
-
+    console.log(newFileName);
     let fileUpload = bucket.file(newFileName);
 
     fileUpload
