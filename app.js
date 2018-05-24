@@ -15,21 +15,7 @@ firebase.initializeApp({
   databaseURL: "https://direct-subset-204118.firebaseio.com",
   storageBucket:"direct-subset-204118.appspot.com/"
 })
-
-firebase
-.storage()
-.bucket()
-.acl.get()
-.then(results => {
-  const acls = results[0];
-
-  acls.forEach(acl => {
-    console.log(`${acl.role}: ${acl.entity}`);
-  });
-})
-.catch(err => {
-  console.error('ERROR:', err);
-});
+console.log(firebase.storage().bucket().name);
 
 //Rutas
 const v1 = require('./routes/v1')(firebase);

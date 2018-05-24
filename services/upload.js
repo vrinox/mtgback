@@ -6,7 +6,7 @@ const upload = (file,usuario,firebase) => {
     }
     let newFileName = `avatar${usuario.id}_${Date.now()}`;
     let fileUpload = bucket.file(newFileName);
-
+    console.log(bucket.name);
     fileUpload
     .save(new Buffer(file.buffer))
     .then((result) => {
