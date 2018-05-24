@@ -13,7 +13,7 @@ var serviceAccount = require("./config/firebase_secret.json");
 firebase.initializeApp({
   credential: firebase.credential.cert(serviceAccount),
   databaseURL: "https://direct-subset-204118.firebaseio.com",
-  storageBucket:"gs://direct-subset-204118.appspot.com/"
+  storageBucket:"direct-subset-204118.appspot.com/"
 })
 
 firebase
