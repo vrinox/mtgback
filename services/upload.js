@@ -8,7 +8,7 @@ const upload = (file,usuario,firebase) => {
     let newFileName = `${usuario.id}_${Date.now()}`;
 
     let fileUpload = bucket.file(newFileName);
-    console.log("fileUpload",fileUpload);
+    console.log("fileUpload",file.buffer);
     fileUpload.createWriteStream({
       metadata: {
         contentType: "image/jpeg"
