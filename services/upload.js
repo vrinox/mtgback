@@ -1,14 +1,13 @@
 const upload = (file,usuario,firebase) => {
   let bucket = firebase.storage().bucket();
+  console.log(bucket.name);
   let prom = new Promise((resolve, reject) => {
     if (!file) {
       reject('No image file');
     }
-    console.log("upload:",file);
     let newFileName = `${usuario.id}_${Date.now()}`;
 
     let fileUpload = bucket.file(newFileName);
-    console.log("fileUpload",file.buffer);
     fileUpload.createWriteStream({
       metadata: {
         contentType: "image/jpeg"
