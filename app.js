@@ -17,7 +17,7 @@ firebase.initializeApp({
 })
 
 //Rutas
-const v1 = require('./routes/v1')(firebase);
+const v1 = require('./routes/v1')();
 const app = express();
 app.use(logger('dev'));
 app.use(bodyParser.json());

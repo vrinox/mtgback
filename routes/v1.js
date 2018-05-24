@@ -3,12 +3,12 @@ const router 			      = express.Router();
 const path              = require('path');
 const passport    = require('passport');
 
-const v1 = function(firebase){
+const v1 = function(){
   require('./../middleware/passport')(passport)
   //rutas externas
   require('./formato')(router);
   require('./duelo')(router)
-  require('./usuario')(router,firebase);
+  require('./usuario')(router);
   require('./mazo')(router);
   require('./carta')(router);
   /* GET home page. */

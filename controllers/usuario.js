@@ -115,18 +115,3 @@ const cambiarEstado = async function(req, res){
     return ReS(res, {estado:usuario.toWeb()["estado"]})
 }
 module.exports.cambiarEstado = cambiarEstado;
-
-const subirAvatar = function(firebase){
-  return async function(req,res){
-    let archivo = req.file, usuario = {id:6};
-    if (!archivo) {
-      ReE(res, "error al subir la imagen", 400);
-    }else{
-      img = await upload(archivo,usuario,firebase);
-      // Create file metadata including the content type
-      console.log("imagen:",img);
-      return ReS(res, {message:"imagen subida de manera satisfactoria"});
-    }
-  }
-}
-module.exports.subirAvatar = subirAvatar;
