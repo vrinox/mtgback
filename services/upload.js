@@ -1,27 +1,30 @@
 const upload = (file,usuario,firebase) => {
   let bucket = firebase.storage().bucket();
+  console.log(bucket.name);
   let prom = new Promise((resolve, reject) => {
     if (!file) {
       reject('No image file');
     }
-    let newFileName = `avatar${usuario.id}_${Date.now()}`;
+    let newFileName = `${usuario.id}_${Date.now()}`;
+
     let fileUpload = bucket.file(newFileName);
-    console.log(bucket.name);
-    fileUpload
-    .save(new Buffer(file.buffer))
-    .then((result) => {
-      console.log("resultado",result);
-      resolve({
-        status: 'success',
-        data: Object.assign({}, fileUpload.metadata, {
-          downloadURL: `https://storage.googleapis.com/${bucket.name}/${newFileName}`,
-        })
-      });
+    console.log();
+    fileUpload.createWriteStream({
+      metadata: {
+        contentType: "image/jpeg"
+      },
+      resumable:false
     })
-    .catch(err => {
-      console.log("error en subida:",err);
-      reject(err)
-    });
+      .on('error', function(err) {
+        console.log("error en subida:",err);
+        reject('Something is wrong! Unable to upload at the moment.');
+      })
+      .on('finish', function() {
+        // The public URL can be used to directly access the file via HTTP.
+        const url = format(`https://storage.googleapis.com/${bucket.name}/${fileUpload.name}`);
+        resolve(url);
+      })
+      .end(file.buffer);
   });
   return prom;
 }
