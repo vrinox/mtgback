@@ -1,6 +1,22 @@
 const upload = (file,usuario,firebase) => {
   let bucket = firebase.storage().bucket();
-  console.log(bucket.name);
+
+  firebase
+    .storage()
+    .bucket()
+    .getFiles()
+    .then(results => {
+      const files = results[0];
+
+      console.log('Files:');
+      files.forEach(file => {
+        console.log(file.name);
+      });
+    })
+    .catch(err => {
+      console.error('ERROR:', err);
+    });
+    
   let prom = new Promise((resolve, reject) => {
     if (!file) {
       reject('No image file');
@@ -8,7 +24,6 @@ const upload = (file,usuario,firebase) => {
     let newFileName = `${usuario.id}_${Date.now()}`;
 
     let fileUpload = bucket.file(newFileName);
-    console.log();
     fileUpload.createWriteStream({
       metadata: {
         contentType: "image/jpeg"

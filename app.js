@@ -15,7 +15,6 @@ firebase.initializeApp({
   databaseURL: "https://direct-subset-204118.firebaseio.com",
   storageBucket:"direct-subset-204118.appspot.com/"
 })
-console.log(firebase.storage().bucket().name);
 
 //Rutas
 const v1 = require('./routes/v1')(firebase);
