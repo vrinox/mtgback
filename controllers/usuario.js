@@ -50,13 +50,22 @@ const update = async function(req, res){
     let err, usuario, data
     usuario = req.user;
     data = req.body;
-    usuario.set(data);
-
-    [err, usuario] = await to(usuario.save());
-    if(err){
-        if(err.message=='Validation error') err = 'The email address or phone number is already in use';
-        return ReE(res, err);
+    if(data.hasOwnProperty('cambios')){
+      //arreglo cambios
+      // {
+      //   nombre: nombre del campo a modificar
+      //   valor : valor a cambiar
+      // }
+      usuario = modificarCampos(usuario,data.cambios);
+    }else{
+      usuario.set(data);
+      [err, usuario] = await to(usuario.save());
+      if(err){
+          if(err.message=='Validation error') err = 'The email address or phone number is already in use';
+          return ReE(res, err);
+      }
     }
+
     return ReS(res, {message :'Updated User: '+usuario.email});
 }
 module.exports.update = update;
@@ -103,14 +112,22 @@ const cambiarEstado = async function(req, res){
     const user = req.user;
     let err, usuario;
     // TODO: activar todo lo necesario como las notificaciones entre otros
-
+    console.log(user);
     [err,usuario] = await to(Usuario.findOne({where:{"id":user.id}}));
     if(err) ReE(res, err, 422);
 
-    usuario.estado = body.estado;
-    [err,usuario] = await to(usuario.save({fields: ['estado']}));
-    if(err) ReE(res, err, 422);
-
+    usuario = selectiveUpdate(usuario,{"nombre":"estado","valor":body.estado});
     return ReS(res, {estado:usuario.toWeb()["estado"]})
 }
 module.exports.cambiarEstado = cambiarEstado;
+
+const modificarCampos = async function(usuario,fields){
+  const campos = field.map((field)=>{
+    usuario[field.nombre] = field.valor;
+    return field.nombre;
+  });
+  [err,usuario] = await to(usuario.save({"fields": campos}));
+  if(err) ReE(res, err, 422);
+
+  return usuario;
+}
