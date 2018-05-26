@@ -109,14 +109,10 @@ module.exports.token = token;
 
 const cambiarEstado = async function(req, res){
     const body = req.body;
-    const user = req.user;
-    let err, usuario;
+    let err, usuario =  req.user;
     // TODO: activar todo lo necesario como las notificaciones entre otros
-    console.log(user);
-    [err,usuario] = await to(Usuario.findOne({where:{"id":user.id}}));
-    if(err) ReE(res, err, 422);
 
-    usuario = selectiveUpdate(usuario,{"nombre":"estado","valor":body.estado});
+    usuario = modificarCampos(usuario,{"nombre":"estado","valor":body.estado});
     return ReS(res, {estado:usuario.toWeb()["estado"]})
 }
 module.exports.cambiarEstado = cambiarEstado;
