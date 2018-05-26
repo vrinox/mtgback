@@ -112,7 +112,7 @@ const cambiarEstado = async function(req, res){
     let err, usuario =  req.user;
     // TODO: activar todo lo necesario como las notificaciones entre otros
 
-    usuario = modificarCampos(usuario,{"nombre":"estado","valor":body.estado});
+    usuario = modificarCampos(usuario,[{"nombre":"estado","valor":body.estado}]);
     console.log(usuario);
     return ReS(res, {estado:usuario.toWeb()["estado"]})
 }
