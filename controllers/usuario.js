@@ -51,12 +51,8 @@ const update = async function(req, res){
     usuario = req.user;
     data = req.body;
     if(data.hasOwnProperty('cambios')){
-      //arreglo cambios
-      // {
-      //   nombre: nombre del campo a modificar
-      //   valor : valor a cambiar
-      // }
-      usuario = modificarCampos(usuario,data.cambios);
+      [err,usuario] = to(modificarCampos(usuario,data.cambios));
+      if(err) ReE(res, err);
     }else{
       usuario.set(data);
       [err, usuario] = await to(usuario.save());
@@ -65,7 +61,6 @@ const update = async function(req, res){
           return ReE(res, err);
       }
     }
-
     return ReS(res, {message :'Updated User: '+usuario.email});
 }
 module.exports.update = update;
