@@ -51,7 +51,7 @@ const update = async function(req, res){
     usuario = req.user;
     data = req.body;
     if(data.hasOwnProperty('cambios')){
-      [err,usuario] = to(modificarCampos(usuario,data.cambios));
+      [err,usuario] =await to(modificarCampos(usuario,data.cambios));
       if(err) ReE(res, err);
     }else{
       usuario.set(data);

@@ -25,6 +25,7 @@
     "sequelize": "^4.31.2",
     "sequelize-cli": "^3.0.0",
     "serve-favicon": "~2.4.5",
+    "socket.io": "^2.1.1",
     "validator": "^9.2.0"
   }
 }
