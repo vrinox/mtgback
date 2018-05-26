@@ -112,19 +112,21 @@ const cambiarEstado = async function(req, res){
     let err, usuario =  req.user;
     // TODO: activar todo lo necesario como las notificaciones entre otros
 
-    usuario = modificarCampos(usuario,[{"nombre":"estado","valor":body.estado}]);
-    console.log(usuario);
+    [err,usuario] =await to(modificarCampos(usuario,[{"nombre":"estado","valor":body.estado}]));
+    if(err) ReE(res, err, 422);
     return ReS(res, {estado:usuario.toWeb()["estado"]})
 }
 module.exports.cambiarEstado = cambiarEstado;
 
 const modificarCampos = async function(usuario,fields){
-  const campos = fields.map((field)=>{
-    usuario[field.nombre] = field.valor;
-    return field.nombre;
-  });
-  [err,usuario] = await to(usuario.save({"fields": campos}));
-  if(err) ReE(res, err, 422);
+  return new Promise(function(reject){
+    const campos = fields.map((field)=>{
+      usuario[field.nombre] = field.valor;
+      return field.nombre;
+    });
+    [err,usuario] = await to(usuario.save({"fields": campos}));
+    if(err) reject(err);
 
-  return usuario;
+    resolve(usuario);
+  });
 }
