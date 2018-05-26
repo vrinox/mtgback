@@ -61,7 +61,7 @@ const update = async function(req, res){
           return ReE(res, err);
       }
     }
-    return ReS(res, {message :'Updated User: '+usuario.email});
+    return ReS(res, {success:true,message:"actualizado"});
 }
 module.exports.update = update;
 
