@@ -119,7 +119,7 @@ const cambiarEstado = async function(req, res){
 module.exports.cambiarEstado = cambiarEstado;
 
 const modificarCampos = async function(usuario,fields){
-  const campos = field.map((field)=>{
+  const campos = fields.map((field)=>{
     usuario[field.nombre] = field.valor;
     return field.nombre;
   });
