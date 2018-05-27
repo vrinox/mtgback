@@ -12,4 +12,4 @@ const init = function(io){
     console.dir(socket.usuario);
   });
 }
-module.exports.init = init;
+module.exports = init;
