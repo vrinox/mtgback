@@ -1,3 +1,4 @@
+
 'use strict';
 const bcrypt 			= require('bcrypt');
 const bcrypt_p 			= require('bcrypt-promise');
@@ -16,6 +17,7 @@ module.exports = (sequelize, DataTypes) => {
         draw      : DataTypes.SMALLINT,
         imagesrc  : DataTypes.STRING,
         estado    : DataTypes.BOOLEAN,
+        deviceId  : DataTypes.STRING
     });
 
     Model.associate = function(models){
@@ -26,6 +28,7 @@ module.exports = (sequelize, DataTypes) => {
         this.hasMany(models.Lista);
         this.hasMany(models.Amigo);
         this.hasMany(models.Mazo);
+        this.hasMany(models.Notificacion)
         //pertenece
         this.belongsTo(models.Comunidad);
     };
@@ -65,6 +68,6 @@ module.exports = (sequelize, DataTypes) => {
         let json = this.toJSON();
         return json;
     };
-    
+
     return Model;
 };

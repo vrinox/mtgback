@@ -5,12 +5,12 @@ module.exports = (sequelize, DataTypes) => {
     imagesrc    : DataTypes.STRING,
     vencimiento : DataTypes.DATE,
     idRetador   : DataTypes.INTEGER,
-    idRetado   : DataTypes.INTEGER
+    idRetado    : DataTypes.INTEGER
   });
 
   Model.associate = function(models){
     this.belongsTo(models.Usuario,{ foreignKey:"idRetador",sourceKey:"id" });
-    this.belongsTo(models.Usuario,{ foreignKey:"idRetador",sourceKey:"id" });
+    this.belongsTo(models.Usuario,{ foreignKey:"idRetado",sourceKey:"id" });
     this.belongsTo(models.Formato);
     //tiene
     this.hasMany(models.Partida);

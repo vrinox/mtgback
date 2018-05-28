@@ -4,6 +4,18 @@ const Usuario     = require('../models').Usuario;
 const authService = require('./../services/AuthService');
 const decorar     = require('../services/decorador');
 
+const getAll = async function(req, res){
+  let err, usuarios, filtros = req.body.filtros;
+  [err, usuarios] = await to(Usuario.findAll({"where":filtros}))
+  if(err) ReE(res, err, 422);
+  usuarios =  usuarios.map((usuario)=>{
+    return usuario.toWeb();
+  });
+  ReS({success:true,usuarios:usuarios});
+}
+
+module.exports.getAll = getAll;
+
 const create = async function(req, res){
     res.setHeader('Content-Type', 'application/json');
     const body = req.body;

@@ -10,6 +10,9 @@ const init = function(io){
   });
   io.on('connection', (socket) => {
     console.dir(socket.usuario);
+    socket.on('error',(err)=>{
+      console.log("socket error:",err);
+    })
     require('./notificacion')(socket);
   });
 }
