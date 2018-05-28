@@ -72,7 +72,6 @@ const update = async function(req, res){
     let err, usuario, data
     usuario = req.user;
     data = req.body;
-    console.log("datos",data);
     if(data.hasOwnProperty('cambios')){
       [err,usuario] =await to(modificarCampos(usuario,data.cambios));
       if(err) ReE(res, err);
@@ -130,18 +129,17 @@ const cambiarEstado = async function(req, res){
     let err, usuario =  req.user;
     // TODO: activar todo lo necesario como las notificaciones entre otros
 
-    [err,usuario] =await to(modificarCampos(usuario,[{"nombre":"estado","valor":body.estado}]));
+    [err,usuario] =await to(modificarCampos(usuario,{"estado",body.estado}));
     if(err) ReE(res, err, 422);
     return ReS(res, {estado:usuario.toWeb()["estado"]})
 }
 module.exports.cambiarEstado = cambiarEstado;
 
 const modificarCampos = function(usuario,fields){
-  console.log("campos",fields);
   return new Promise(async function(resolve,reject){
-    const campos = fields.map((field)=>{
-      usuario[field.nombre] = field.valor;
-      return field.nombre;
+    const campos = Object.keys(fields).map((field)=>{
+      usuario[field] = fields[field];
+      return field;
     });
     [err,usuario] = await to(usuario.save({"fields": campos}));
     if(err) reject(err);
