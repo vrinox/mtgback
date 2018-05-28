@@ -135,6 +135,16 @@ const cambiarEstado = async function(req, res){
 }
 module.exports.cambiarEstado = cambiarEstado;
 
+const logout = async function(req, res){
+  let err, usuario =  req.user;
+  // TODO: activar todo lo necesario como las notificaciones entre otros
+
+  [err,usuario] =await to(modificarCampos(usuario,{"estado":body.estado,"deviceId":null}));
+  if(err) ReE(res, err, 422);
+  return ReS(res, {success:true,message:"sesion cerrada"});
+}
+module.exports.logout = logout;
+
 const modificarCampos = function(usuario,fields){
   return new Promise(async function(resolve,reject){
     const campos = Object.keys(fields).map((field)=>{
