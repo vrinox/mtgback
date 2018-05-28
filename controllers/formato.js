@@ -6,7 +6,7 @@ const create = async function(req, res){
     let formatoInfo = req.body;
 
     [err, formato] = await to(Formato.create(formatoInfo));
-    if(err) return ReE(res, err, 422);
+    if(err) return ReE(res, {success:false, error:err}, 422);
 
     let formatoJson = formato.toWeb();
 
@@ -46,7 +46,7 @@ const update = async function(req, res){
 
     [err, formato] = await to(formato.save());
     if(err){
-        return ReE(res, err);
+        return ReE(res, {success:false, error:err});
     }
     return ReS(res, {formato:formato.toWeb()});
 }

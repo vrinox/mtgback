@@ -8,7 +8,7 @@ const create = async function(req, res){
     dueloInfo = req.body;
 
     [err, duelo] = await to(Duelo.create(dueloInfo));
-    if(err) return ReE(res, err, 422);
+    if(err) return ReE(res, {success:false, error:err}, 422);
     usuario.addDuelo(duelo, {through:"retado"});
     retador.addDuelo(duelo, {through:"retador"});
     let dueloJson = duelo.toWeb();
@@ -52,7 +52,7 @@ const update = async function(req, res){
 
     [err, duelo] = await to(duelo.save());
     if(err){
-        return ReE(res, err);
+        return ReE(res, {success:false, error:err});
     }
     return ReS(res, {duelo:duelo.toWeb()});
 }

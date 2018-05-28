@@ -17,12 +17,12 @@ const agregarCarta = async function(req, res){
   oldCarta = req.body;
   //busco en caso de que esa carta ya este en la bd
   [err, newCarta] = await to(Carta.findOne({where:{id:oldCarta.id}}));
-  if(err) ReE(res, err);
+  if(err) ReE(res, {success:false, error:err});
   //reviso si esta
   if(!newCarta){
     oldCarta = decorar.carta(oldCarta,"join",1);
     [err, newCarta] = await to(Carta.create(oldCarta));
-    if(err) ReE(res, err);
+    if(err) ReE(res, {success:false, error:err});
     newCarta = decorar.carta(newCarta,"split",2);
     req.body = decorar.carta(req.body,"split",3);
   }
@@ -31,7 +31,7 @@ const agregarCarta = async function(req, res){
   userMetadata.MazoId = req.params.idMazo;
   //agrego al detalle
   [err, userMetadata] = await to(DetalleMazo.create(userMetadata));
-  if(err) ReE(res, err);
+  if(err) ReE(res, {success:false, error:err});
   //preparo el envio
   carta = decorar.carta(req.body,"join",4);
   carta = decorar.carta(carta,"split",5);
@@ -58,12 +58,12 @@ const actualizarCarta = async function(req, res){
   userMetadata.MazoId = req.params.idMazo;
   idCarta = req.params.idCarta;
   [err, oldCarta] = await to(DetalleMazo.findOne({where:{"id":idCarta}}));
-  if(err) ReE(res, err);
+  if(err) ReE(res, {success:false, error:err});
 
   oldCarta.set(userMetadata);
 
   [err, newCarta] = await to(oldCarta.save());
-  if(err)  return ReE(res, err);
+  if(err)  return ReE(res, {success:false, error:err});
 
   fullCarta = req.body;
   fullCarta.userMetadata = newCarta.toWeb();

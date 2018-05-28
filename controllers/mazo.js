@@ -13,7 +13,7 @@ const create = async function(req, res){
     mazoInfo.UsuarioId = usuario.id;
 
     [err, mazo] = await to(Mazo.create(mazoInfo));
-    if(err) return ReE(res, err, 422);
+    if(err) return ReE(res, {success:false, error:err}, 422);
     [err, mazo] = await to(Mazo.findOne({
       include:[{
         model:Formato
@@ -33,13 +33,13 @@ const duplicar = async function(req, res){
     let usuario = req.user;
 
     [err, cartas] = await to(DetalleMazo.findAll({where:{'MazoId':idMazo}}));
-    if(err) ReE(res, err);
+    if(err) ReE(res, {success:false, error:err});
 
     mazoInfo = req.body
     mazoInfo.UsuarioId = usuario.id;
 
     [err, newMazo] = await to(Mazo.create(mazoInfo));
-    if(err) return ReE(res, err, 422);
+    if(err) return ReE(res, {success:false, error:err}, 422);
 
     cartas = cartas.map(carta=>{
       return newCarta ={
@@ -55,7 +55,7 @@ const duplicar = async function(req, res){
       include:[{model:Formato}],
       where:{id:newMazo.id}
     }));
-    if(err) ReE(res, err);
+    if(err) ReE(res, {success:false, error:err});
 
     return ReS(res,{mazo:newMazo.toWeb()}, 201);
 }
@@ -105,7 +105,7 @@ const update = async function(req, res){
     mazo.set(req.body);
 
     [err, mazo] = await to(mazo.save());
-    if(err)  return ReE(res, err);
+    if(err)  return ReE(res, {success:false, error:err});
 
     return ReS(res, {mazo:mazo.toWeb()});
 }

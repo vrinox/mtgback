@@ -7,7 +7,7 @@ const getAll = async function(req, res){
   res.setHeader('Content-Type', 'application/json');
   let err, amigos, usuario = req.user;
   [err, amigos] = await to(usuario.getAmigos());
-  if(err) ReE(res, err, 422);
+  if(err) ReE(res, {success:false, error:err}, 422);
 
   amigos = amigos.map(async (amigo)=>{
     return amigo.toWeb();
@@ -28,7 +28,7 @@ const crearInvitacion = async function(req, res){
     "estado":"P",
     "UsuarioId": receptor.id
   }));
-  if(err) ReE(res, err, 422);
+  if(err) ReE(res, {success:false, error:err}, 422);
   [err, invitacion] = await to(Invitacion.create({
     "tipo"          : "A", //amistad
     "idInvitado"    : emisor.id,
@@ -36,7 +36,7 @@ const crearInvitacion = async function(req, res){
     "vencimiento"   : now.setDate(now.getDate() + 30),
     "NotificacionId": notificacion.id
   }));
-  if(err) ReE(res, err, 422);
+  if(err) ReE(res, {success:false, error:err}, 422);
   enviarInvitacion(emisor,receptor,notificacion,invitacion);
   ReS(res, {success:true,message:"invitacion enviada de forma exitosa"});
 }

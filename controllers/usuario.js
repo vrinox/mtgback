@@ -15,15 +15,13 @@ const getAll = async function(req, res){
       $like:'%'+filtros[each]+'%'
     }
   });
-  console.log(newFiltros);
   [err, usuarios] = await to(Usuario.findAll({"where":newFiltros}))
-  if(err) ReE(res, err, 422);
+  if(err) ReE(res, {success:false, error:err}, 422);
   usuarios =  usuarios.map((usuario)=>{
     return usuario.toWeb();
   });
   ReS(res,{success:true,usuarios:usuarios});
 }
-
 module.exports.getAll = getAll;
 
 const create = async function(req, res){
@@ -36,11 +34,11 @@ const create = async function(req, res){
     }else{
         let err, usuario,validado;
         [err, validado] = await to(authService.verificar(body));
-        if(err) return ReE(res, err, 422);
+        if(err) return ReE(res, {success:false, error:err}, 422);
         if(validado.success){
           console.log("validacion: validado");
           [err, usuario] = await to(authService.createUser(body));
-          if(err) return ReE(res, err, 422);
+          if(err) return ReE(res, {success:false, error:err}, 422);
         }else{
           console.log("validacion: ",validado.message);
           return ReE(res, validado.message, 200);
@@ -74,13 +72,13 @@ const update = async function(req, res){
     data = req.body;
     if(data.hasOwnProperty('cambios')){
       [err,usuario] =await to(modificarCampos(usuario,data.cambios));
-      if(err) ReE(res, err);
+      if(err) ReE(res, {success:false, error:err});
     }else{
       usuario.set(data);
       [err, usuario] = await to(usuario.save());
       if(err){
           if(err.message=='Validation error') err = 'The email address or phone number is already in use';
-          return ReE(res, err);
+          return ReE(res, {success:false, error:err});
       }
     }
     return ReS(res, {success:true,message:"actualizado"});
@@ -102,10 +100,10 @@ const login = async function(req, res){
     const body = req.body;
     let err, usuario;
     [err, usuario] = await to(authService.authUser(req.body));
-    if(err) return ReE(res, err, 422);
+    if(err) return ReE(res, {success:false, error:err}, 422);
 
     [err, usuario] = await to(decorar.usuario(usuario));
-    if(err) return ReE(res, err, 422);
+    if(err) return ReE(res, {success:false, error:err}, 422);
 
     return ReS(res, {token:usuario.getJWT(), usuario:usuario.toWeb()});
 }
@@ -115,10 +113,10 @@ const token = async function(req, res){
     const body = req.body;
     let err, usuario;
     [err, usuario] = await to(authService.authUser(req.body));
-    if(err) return ReE(res, err, 422);
+    if(err) return ReE(res, {success:false, error:err}, 422);
 
     [err, usuario] = await to(decorar.usuario(usuario));
-    if(err) return ReE(res, err, 422);
+    if(err) return ReE(res, {success:false, error:err}, 422);
 
     return ReS(res, {token:usuario.getJWT()});
 }
@@ -130,7 +128,7 @@ const cambiarEstado = async function(req, res){
     // TODO: activar todo lo necesario como las notificaciones entre otros
 
     [err,usuario] =await to(modificarCampos(usuario,{"estado":body.estado}));
-    if(err) ReE(res, err, 422);
+    if(err) ReE(res, {success:false, error:err}, 422);
     return ReS(res, {estado:usuario.toWeb()["estado"]})
 }
 module.exports.cambiarEstado = cambiarEstado;
@@ -140,7 +138,7 @@ const logout = async function(req, res){
   // TODO: activar todo lo necesario como las notificaciones entre otros
 
   [err,usuario] =await to(modificarCampos(usuario,{"estado":false,"deviceId":null}));
-  if(err) ReE(res, err, 422);
+  if(err) ReE(res, {success:false, error:err},200);
   return ReS(res, {success:true,message:"sesion cerrada"});
 }
 module.exports.logout = logout;
