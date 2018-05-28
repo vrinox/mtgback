@@ -5,8 +5,19 @@ const authService = require('./../services/AuthService');
 const decorar     = require('../services/decorador');
 
 const getAll = async function(req, res){
-  let err, usuarios, filtros = req.body.filtros;
-  [err, usuarios] = await to(Usuario.findAll({"where":filtros}))
+  let err, usuarios,
+  filtros = req.body.filtros,
+  newFiltros = {
+    $or:{}
+  };
+
+  Object.keys(filtros).forEach((each)=>{
+    newFiltros.$or[each]={
+      $like:'%'+filtros[each]+'%';
+    }
+  });
+  console.log(newFiltros);
+  [err, usuarios] = await to(Usuario.findAll({"where":newFiltros}))
   if(err) ReE(res, err, 422);
   usuarios =  usuarios.map((usuario)=>{
     return usuario.toWeb();
