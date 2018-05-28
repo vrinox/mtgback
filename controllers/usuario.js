@@ -139,7 +139,7 @@ const logout = async function(req, res){
   let err, usuario =  req.user;
   // TODO: activar todo lo necesario como las notificaciones entre otros
 
-  [err,usuario] =await to(modificarCampos(usuario,{"estado":body.estado,"deviceId":null}));
+  [err,usuario] =await to(modificarCampos(usuario,{"estado":false,"deviceId":null}));
   if(err) ReE(res, err, 422);
   return ReS(res, {success:true,message:"sesion cerrada"});
 }
