@@ -21,7 +21,6 @@ module.exports = (sequelize, DataTypes) => {
     });
 
     Model.associate = function(models){
-        //this.Noticias = this.hasMany(models.Noticia,{through: 'noticia_usuario'})
         //tiene
         this.hasMany(models.Noticia);
         this.hasMany(models.Chat);

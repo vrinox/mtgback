@@ -5,8 +5,8 @@ const rutas = function(router){
   router.post(    '/usuario'       , controlador.create);
   router.post(    '/usuario/login' , controlador.login);
   router.post(    '/usuario/token' , controlador.token);
-  router.post(    '/usuario/logout', passport.authenticate('jwt', {session:false}), controlador.logout);
   //rutas privadas
+  router.get(     '/usuario/:id/logout',  passport.authenticate('jwt', {session:false}), controlador.logout);
   router.get(     '/usuario/:id',         passport.authenticate('jwt', {session:false}), controlador.get);
   router.post(    '/usuarios',            passport.authenticate('jwt', {session:false}), controlador.getAll);
   router.put(     '/usuario/:id/estado',  passport.authenticate('jwt', {session:false}), controlador.cambiarEstado);
