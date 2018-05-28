@@ -72,6 +72,7 @@ const update = async function(req, res){
     let err, usuario, data
     usuario = req.user;
     data = req.body;
+    console.log("datos",data);
     if(data.hasOwnProperty('cambios')){
       [err,usuario] =await to(modificarCampos(usuario,data.cambios));
       if(err) ReE(res, err);
@@ -136,6 +137,7 @@ const cambiarEstado = async function(req, res){
 module.exports.cambiarEstado = cambiarEstado;
 
 const modificarCampos = function(usuario,fields){
+  console.log("campos",fields);
   return new Promise(async function(resolve,reject){
     const campos = fields.map((field)=>{
       usuario[field.nombre] = field.valor;
