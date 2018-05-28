@@ -10,10 +10,9 @@ const getAll = async function(req, res){
   newFiltros = {
     $or:{}
   };
-
   Object.keys(filtros).forEach((each)=>{
     newFiltros.$or[each]={
-      $like:'%'+filtros[each]+'%';
+      $like:'%'+filtros[each]+'%'
     }
   });
   console.log(newFiltros);
