@@ -8,7 +8,10 @@ const getAll = async function(req, res){
   let err, usuarios,
   filtros = req.body.filtros,
   newFiltros = {
-    $or:{}
+    $or:{},
+    $not:{
+      "id":req.user.id
+    }
   };
   Object.keys(filtros).forEach((each)=>{
     newFiltros.$or[each]={
