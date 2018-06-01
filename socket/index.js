@@ -10,7 +10,7 @@ const init = function(io){
     next();
   });
   io.on('connection', (socket) => {
-    console.dir(socket.usuario);
+    console.log('usuario conectado');
     socket.on('error',(err)=>{
       console.log("socket error:",err);
     });
@@ -22,6 +22,7 @@ const init = function(io){
       }else{
           socket.usuario = usuario;
           socket.emit("auth",{success:true});
+          console.log("usuario auntenticado:"socket.usuario.username);
       }
     });
     require('./notificacion')(socket);
