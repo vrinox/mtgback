@@ -12,7 +12,7 @@ const getAll = async function(req, res){
   amigos = amigos.map(async (amigo)=>{
     return amigo.toWeb();
   })
-  return ReS(res, {formatos:formatosJson});
+  return ReS(res, {"success":true,"amigos":amigos});
 }
 
 module.exports.getAll = getAll;
@@ -20,13 +20,13 @@ module.exports.getAll = getAll;
 const crearInvitacion = async function(req, res){
   let err, notificacion, invitacion
   emisor    = req.usuario,
-  receptor  = req.body.invitado,
+  receptorId= req.body.invitado,
   now       = new Date();
   [err,notificacion] = await to(Notificacion.create({
     "titulo":"invitacion de amistad",
-    "contenido":invitador.username+" quiere ser tu amigo",
+    "contenido":emisor.username+" quiere ser tu amigo",
     "estado":"P",
-    "UsuarioId": receptor.id
+    "UsuarioId": receptorId
   }));
   if(err) ReE(res, {success:false, error:err}, 422);
   [err, invitacion] = await to(Invitacion.create({
@@ -37,16 +37,16 @@ const crearInvitacion = async function(req, res){
     "NotificacionId": notificacion.id
   }));
   if(err) ReE(res, {success:false, error:err}, 422);
-  enviarInvitacion(emisor,receptor,notificacion,invitacion);
+  enviarInvitacion(emisor,receptorId,notificacion,invitacion);
   ReS(res, {success:true,message:"invitacion enviada de forma exitosa"});
 }
 
 module.exports.crearInvitacion = crearInvitacion;
 
-const enviarInvitacion = async function(emisor,receptor,notificacion,invitacion){
+const enviarInvitacion = async function(emisor,receptorId,notificacion,invitacion){
   //enviar envitacion  y por socket
   io.sockets.map((socket)=>{
-    if(socket.usuario.id === receptor.id){
+    if(socket.usuario.id === receptorId){
       console.log(socket.usuario);
       // TODO: falta agregar la invitacion a la bd y ademas falta agregar el push
       socket.emit("invitacion:amigo",{
