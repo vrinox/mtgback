@@ -18,6 +18,7 @@ const getAll = async function(req, res){
       $like:'%'+filtros[each]+'%'
     }
   });
+  console.log("filtros:",newFiltros);
   [err, usuarios] = await to(Usuario.findAll({"where":newFiltros}))
   if(err) ReE(res, {success:false, error:err}, 422);
   usuarios =  usuarios.map((usuario)=>{
