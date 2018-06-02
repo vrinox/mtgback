@@ -43,7 +43,7 @@ const crearInvitacion = async function(req, res){
 
 module.exports.crearInvitacion = crearInvitacion;
 
-const enviarInvitacion = function(emisor,receptorId,notificacion,invitacion,io){
+const enviarInvitacion = async function(emisor,receptorId,notificacion,invitacion,io){
   //enviar invitacion por push y por socket
   let receptor, enviado = false;
   var sockets = io.sockets.sockets;
