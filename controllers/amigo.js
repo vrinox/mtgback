@@ -50,7 +50,7 @@ const enviarInvitacion = async function(emisor,receptorId,notificacion,invitacio
     if(socket.usuario.id === receptorId){
       console.log("SOCKET: usuario "+socket.usuario.username+" encontrado");
       socket.emit("notificacion",{
-        success: true;
+        success: true,
         data:{
             "tipo"        :"invitacion"
             "emisor"      :emisor.id,
