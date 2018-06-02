@@ -43,10 +43,10 @@ const crearInvitacion = async function(req, res){
 
 module.exports.crearInvitacion = crearInvitacion;
 
-const enviarInvitacion = async function(emisor,receptorId,notificacion,invitacion){
+const enviarInvitacion = function(emisor,receptorId,notificacion,invitacion){
   //enviar invitacion por push y por socket
   let receptor, enviado = false;
-  io.sockets.forEach((socket)=>{
+  io.sockets.forEach( async (socket)=>{
     if(socket.usuario.id === receptorId){
       console.log("SOCKET: usuario "+socket.usuario.username+" encontrado");
       socket.emit("notificacion",{
