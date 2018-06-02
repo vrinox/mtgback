@@ -1,7 +1,6 @@
 const Amigo       = require('../models').Amigo;
 const Invitacion  = require('../models').Invitacion;
 const Notificacion= require('../models').Notificacion;
-const io          = require('socket.io');
 
 const getAll = async function(req, res){
   res.setHeader('Content-Type', 'application/json');
@@ -37,16 +36,19 @@ const crearInvitacion = async function(req, res){
     "NotificacionId": notificacion.id
   }));
   if(err) ReE(res, {success:false, error:err}, 422);
-  enviarInvitacion(emisor,receptorId,notificacion,invitacion);
+  var io = req.app.get('socketio');
+  enviarInvitacion(emisor,receptorId,notificacion,invitacion,io);
   ReS(res, {success:true,message:"invitacion enviada de forma exitosa"});
 }
 
 module.exports.crearInvitacion = crearInvitacion;
 
-const enviarInvitacion = function(emisor,receptorId,notificacion,invitacion){
+const enviarInvitacion = function(emisor,receptorId,notificacion,invitacion,io){
   //enviar invitacion por push y por socket
   let receptor, enviado = false;
-  io.sockets.forEach( async (socket)=>{
+  var sockets = io.sockets.sockets;
+  for(var socketId in sockets){
+    var socket = sockets[socketId];
     if(socket.usuario.id === receptorId){
       console.log("SOCKET: usuario "+socket.usuario.username+" encontrado");
       socket.emit("notificacion",{
@@ -60,15 +62,15 @@ const enviarInvitacion = function(emisor,receptorId,notificacion,invitacion){
       });
       enviado = true;
     }
-    if(!enviado){
-      [err, receptor] = await to(Usuario.findOne({"where":{"id":receptorId}}));
-      if(err) console.log("Error:",err);
-      if(receptor.deviceId){
-        console.log("receptor deviceId",receptor.deviceId);
-        // TODO:agregar el push
-      }else{
-        console.log("no posee deviceId");
-      }
+  }
+  if(!enviado){
+    [err, receptor] = await to(Usuario.findOne({"where":{"id":receptorId}}));
+    if(err) console.log("Error:",err);
+    if(receptor.deviceId){
+      console.log("receptor deviceId",receptor.deviceId);
+      // TODO:agregar el push
+    }else{
+      console.log("no posee deviceId");
     }
-  });
+  }
 }
