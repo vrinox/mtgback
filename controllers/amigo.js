@@ -46,9 +46,8 @@ module.exports.crearInvitacion = crearInvitacion;
 
 const enviarInvitacion = async function(emisor,receptorId,notificacion,invitacion){
   //enviar invitacion por push y por socket
-  let receptor, enviado = false, sockets = io.sockets.clients();
-  console.log("SOCKET: server",io.sockets);
-  console.log("SOCKET: clientes",sockets);
+  let receptor, enviado = false;
+  console.log("SOCKET: server",io);
   // for(var socketId in sockets){
   //   var socket = sockets[socketId];
   //   if(socket.usuario.id === receptorId){

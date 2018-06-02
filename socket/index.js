@@ -22,7 +22,9 @@ const init = function(io){
       }else{
           socket.usuario = usuario;
           socket.emit("auth",{success:true});
-          console.log("Socket: usuario "+socket.usuario.username+" auntenticado");
+          console.log("SOCKET: usuario "+socket.usuario.username+" auntenticado");
+          console.log("SOCKET: clientes",io.sockets.clients());
+          console.log("SOCKET: sockets",io.sockets);
       }
     });
     require('./notificacion')(socket);
