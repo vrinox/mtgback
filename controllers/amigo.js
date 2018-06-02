@@ -52,7 +52,7 @@ const enviarInvitacion = async function(emisor,receptorId,notificacion,invitacio
       socket.emit("notificacion",{
         success: true,
         data:{
-            "tipo"        :"invitacion"
+            "tipo"        :"invitacion",
             "emisor"      :emisor.id,
             "notificacion":notificacion.toWeb(),
             "invitacion"  :invitacion.toWeb()
