@@ -1,8 +1,7 @@
 const Usuario = require('../models').Usuario;
-var server = {
-  io      : null,
-  clientes: null
-};
+var Servidor = {};
+Servidor.clientes = [];
+
 const init = function(io){
   server.io = io;
   //en caso de uso de handshake
@@ -28,11 +27,11 @@ const init = function(io){
           socket.usuario = usuario;
           socket.emit("auth",{success:true});
           console.log("SOCKET: usuario "+socket.usuario.username+" auntenticado");
-          server.clientes = io.sockets.clientes();
+          Servidor.clientes.push(socket);
       }
     });
     require('./notificacion')(socket);
   });
 }
 module.exports.init = init;
-module.exports.server = server;
+module.exports.Servidor = Servidor;

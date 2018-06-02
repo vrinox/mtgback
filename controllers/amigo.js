@@ -1,7 +1,7 @@
 const Amigo       = require('../models').Amigo;
 const Invitacion  = require('../models').Invitacion;
 const Notificacion= require('../models').Notificacion;
-const socketServer= require('../socket').server;
+const socketServer= require('../socket').Servidor;
 
 
 const getAll = async function(req, res){
