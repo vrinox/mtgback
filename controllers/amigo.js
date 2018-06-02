@@ -1,5 +1,5 @@
 const Amigo       = require('../models').Amigo;
-const Invitacion  = require('../models').invitacion
+const Invitacion  = require('../models').Invitacion;
 const Notificacion= require('../models').Notificacion;
 const io          = require('socket.io');
 
