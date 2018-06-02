@@ -47,31 +47,27 @@ module.exports.crearInvitacion = crearInvitacion;
 const enviarInvitacion = async function(emisor,receptorId,notificacion,invitacion){
   //enviar invitacion por push y por socket
   let receptor, enviado = false;
-  console.log("SOCKET: server",socketServer.clientes);
-  // for(var socketId in sockets){
-  //   var socket = sockets[socketId];
-  //   if(socket.usuario.id === receptorId){
-  //     console.log("SOCKET: usuario "+socket.usuario.username+" encontrado");
-  //     socket.emit("notificacion",{
-  //       success: true,
-  //       data:{
-  //           "tipo"        :"invitacion",
-  //           "emisor"      :emisor.id,
-  //           "notificacion":notificacion.toWeb(),
-  //           "invitacion"  :invitacion.toWeb()
-  //       }
-  //     });
-  //     enviado = true;
-  //   }
-  // }
-  // if(!enviado){
-  //   [err, receptor] = await to(Usuario.findOne({"where":{"id":receptorId}}));
-  //   if(err) console.log("Error:",err);
-  //   if(receptor.deviceId){
-  //     console.log("receptor deviceId",receptor.deviceId);
-  //     // TODO:agregar el push
-  //   }else{
-  //     console.log("no posee deviceId");
-  //   }
-  // }
+  socketServer
+    .getCliente(receptorId)
+    .then((receptor)=>{
+      if(receptor){
+        console.log("SOCKET: usuario "+receptor.usuario.username+" encontrado");
+        receptor.emit("notificacion",{
+          success: true,
+          data:{
+              "tipo"        :"invitacion",
+              "emisor"      :emisor.id,
+              "notificacion":notificacion.toWeb(),
+              "invitacion"  :invitacion.toWeb()
+          }
+        });
+      }else{
+        if(receptor.usuario.deviceId){
+          console.log("receptor deviceId",receptor.deviceId);
+          // TODO:agregar el push
+        }else{
+          console.log("no posee deviceId");
+        }
+      }
+    });
 }

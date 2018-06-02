@@ -3,6 +3,21 @@ var Servidor = {};
 Servidor.clientes = [];
 Servidor.io       = null;
 
+Servidor.getCliente = function(usuarioId){
+  return new Promise((resolve,reject)=>{
+    let encontrado = false;
+    this.clientes.forEach((socket)=>{
+      if(socket.usuario.id === usuarioId){
+        resolve(socket);
+      }
+    });
+    if(!encontrado) resolve(null);
+  });
+}
+
+Servidor.inicializarEventos = function(socket){
+  require('./notificacion')(socket);
+}
 const init = function(io){
   Servidor.io = io;
   //en caso de uso de handshake
@@ -29,9 +44,9 @@ const init = function(io){
           socket.emit("auth",{success:true});
           console.log("SOCKET: usuario "+socket.usuario.username+" auntenticado");
           Servidor.clientes.push(socket);
+          Servidor.inicializarEventos(socket);
       }
     });
-    require('./notificacion')(socket);
   });
 }
 module.exports.init = init;
