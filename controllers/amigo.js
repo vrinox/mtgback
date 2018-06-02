@@ -52,7 +52,6 @@ const enviarInvitacion = async function(emisor,receptorId,notificacion,invitacio
     .then((receptor)=>{
       if(receptor){
         console.log("SOCKET: usuario "+receptor.usuario.username+" encontrado");
-        receptor.emit("notificacion",{success:true,message:"prueba"});
         let data = {
             "tipo"        :"invitacion",
             "emisor"      :emisor.id,
