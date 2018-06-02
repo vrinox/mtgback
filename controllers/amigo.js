@@ -19,7 +19,7 @@ module.exports.getAll = getAll;
 
 const crearInvitacion = async function(req, res){
   let err, notificacion, invitacion
-  emisor    = req.usuario,
+  emisor    = req.user,
   receptorId= req.body.invitado,
   now       = new Date();
   [err,notificacion] = await to(Notificacion.create({
