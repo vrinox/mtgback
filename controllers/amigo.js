@@ -1,7 +1,7 @@
 const Amigo       = require('../models').Amigo;
 const Invitacion  = require('../models').Invitacion;
 const Notificacion= require('../models').Notificacion;
-const io          = require('socket.io');
+const socketServer= require('../socket').server;
 
 
 const getAll = async function(req, res){
@@ -47,7 +47,7 @@ module.exports.crearInvitacion = crearInvitacion;
 const enviarInvitacion = async function(emisor,receptorId,notificacion,invitacion){
   //enviar invitacion por push y por socket
   let receptor, enviado = false;
-  console.log("SOCKET: server",io);
+  console.log("SOCKET: server",socketServer.clientes);
   // for(var socketId in sockets){
   //   var socket = sockets[socketId];
   //   if(socket.usuario.id === receptorId){
