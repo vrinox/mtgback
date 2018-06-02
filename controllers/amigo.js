@@ -62,7 +62,7 @@ const enviarInvitacion = async function(emisor,receptorId,notificacion,invitacio
         //       "notificacion":notificacion.toWeb(),
         //       "invitacion"  :invitacion.toWeb()
         //   }
-        });
+        //});
       }else{
         if(receptor.usuario.deviceId){
           console.log("receptor deviceId",receptor.deviceId);
