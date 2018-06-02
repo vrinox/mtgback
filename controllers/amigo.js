@@ -52,14 +52,16 @@ const enviarInvitacion = async function(emisor,receptorId,notificacion,invitacio
     .then((receptor)=>{
       if(receptor){
         console.log("SOCKET: usuario "+receptor.usuario.username+" encontrado");
-        receptor.emit("notificacion",{
-          success: true,
-          data:{
-              "tipo"        :"invitacion",
-              "emisor"      :emisor.id,
-              "notificacion":notificacion.toWeb(),
-              "invitacion"  :invitacion.toWeb()
-          }
+        receptor.emit("msg",{success:true,message:"prueba"});
+        receptor.emit("notificacion",{success:true,message:"prueba"});
+        // receptor.emit("notificacion",{
+        //   success: true,
+        //   data:{
+        //       "tipo"        :"invitacion",
+        //       "emisor"      :emisor.id,
+        //       "notificacion":notificacion.toWeb(),
+        //       "invitacion"  :invitacion.toWeb()
+        //   }
         });
       }else{
         if(receptor.usuario.deviceId){
