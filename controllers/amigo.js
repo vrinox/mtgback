@@ -44,13 +44,12 @@ const crearInvitacion = async function(req, res){
 module.exports.crearInvitacion = crearInvitacion;
 
 const enviarInvitacion = async function(emisor,receptorId,notificacion,invitacion){
-  //enviar envitacion  y por socket
-  io.sockets.map((socket)=>{
+  //enviar invitacion por push y por socket
+  let receptor, enviado = false;
+  io.sockets.forEach((socket)=>{
     if(socket.usuario.id === receptorId){
-      console.log(socket.usuario);
-      // TODO: falta agregar la invitacion a la bd y ademas falta agregar el push
-      socket.emit("notificacion",
-      {
+      console.log("SOCKET: usuario "+socket.usuario.username+" encontrado");
+      socket.emit("notificacion",{
         success: true;
         data:{
             "tipo"        :"invitacion"
@@ -59,6 +58,17 @@ const enviarInvitacion = async function(emisor,receptorId,notificacion,invitacio
             "invitacion"  :invitacion.toWeb()
         }
       });
+      enviado = true;
+    }
+    if(!enviado){
+      [err, receptor] = await to(Usuario.findOne({"where":{"id":receptorId}}));
+      if(err) console.log("Error:",err);
+      if(receptor.deviceId){
+        console.log("receptor deviceId",receptor.deviceId);
+        // TODO:agregar el push
+      }else{
+        console.log("no posee deviceId");
+      }
     }
   });
 }
