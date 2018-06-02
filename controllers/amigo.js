@@ -49,11 +49,15 @@ const enviarInvitacion = async function(emisor,receptorId,notificacion,invitacio
     if(socket.usuario.id === receptorId){
       console.log(socket.usuario);
       // TODO: falta agregar la invitacion a la bd y ademas falta agregar el push
-      socket.emit("notificacion",{
-        "tipo"        :"invitacion"
-        "emisor"      :emisor.id,
-        "notificacion":notificacion.toWeb(),
-        "invitacion"  :invitacion.toWeb()
+      socket.emit("notificacion",
+      {
+        success: true;
+        data:{
+            "tipo"        :"invitacion"
+            "emisor"      :emisor.id,
+            "notificacion":notificacion.toWeb(),
+            "invitacion"  :invitacion.toWeb()
+        }
       });
     }
   });
