@@ -1,9 +1,10 @@
 const Usuario = require('../models').Usuario;
 var Servidor = {};
 Servidor.clientes = [];
+Servidor.io       = null;
 
 const init = function(io){
-  server.io = io;
+  Servidor.io = io;
   //en caso de uso de handshake
   io.use(async (socket,next)=>{
     const UID = socket.handshake.query.usuario;
