@@ -50,7 +50,6 @@ const crearInvitacion = async function(req, res){
 module.exports.crearInvitacion = crearInvitacion;
 
 const enviarInvitacion = async function(emisor,receptorId,notificacion,invitacion){
-  console.log("DATA:",invitacion,notificacion);
   //enviar invitacion por push y por socket
   let receptor, enviado = false;
   pushServer
@@ -65,7 +64,7 @@ const enviarInvitacion = async function(emisor,receptorId,notificacion,invitacio
 
       if(receptor.usuario.deviceId){
         let oneSignal = pushServer.onesignal;
-        console.log("receptor deviceId",receptor.usuario.deviceId);
+        console.log("oneSignal:",oneSignal);
         var push = new OneSignal.Notification({
           "contents": {
               "en" : notificacion.contenido,
@@ -81,7 +80,7 @@ const enviarInvitacion = async function(emisor,receptorId,notificacion,invitacio
           "android_group_message": "Invitaciones de amistad"
         });
         push.setTargetDevices([receptor.deviceId]);
-        onesignal.cliente.sendNotification(push)
+        onesignal.client.sendNotification(push)
           .then((response)=>{
             console.log(response.data, response.httpResponse.statusCode);
           })
