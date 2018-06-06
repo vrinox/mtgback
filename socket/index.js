@@ -26,7 +26,7 @@ Servidor.getCliente =  function(usuarioId){
         usuario:null,
         emit: null
       };
-      [err, wrapper.usuario] = await to(Usuario.findOne({"where":{"id":usuarioId}}));
+      wapper.usuario = this.getUsuario(usuarioId);
       if(wrapper.usuario){
         resolve(wrapper);
       }else{
@@ -35,6 +35,11 @@ Servidor.getCliente =  function(usuarioId){
     }
   });
 }
+Servidor.getUsuario = async function(usuarioId){
+  let err, usuario;
+  [err, usuario] = await to(Usuario.findOne({"where":{"id":usuarioId}}));
+  return usuario;
+};
 
 Servidor.inicializarEventos = function(socket){
   require('./notificacion')(socket);

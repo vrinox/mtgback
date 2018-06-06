@@ -53,7 +53,7 @@ const enviarInvitacion = async function(emisor,receptorId,notificacion,invitacio
   //enviar invitacion por push y por socket
   let receptor, enviado = false;
   pushServer
-    .getCliente(receptorId)
+    .getUsuario(receptorId)
     .then((receptor)=>{
       let data = {
           "tipo"        :"invitacion",
@@ -62,7 +62,7 @@ const enviarInvitacion = async function(emisor,receptorId,notificacion,invitacio
           "invitacion"  :invitacion
       };
 
-      if(receptor.usuario.deviceId){
+      if(receptor.deviceId){
         let oneSignal = pushServer.onesignal;
         var push = new OneSignal.Notification({
           "contents": {
@@ -70,18 +70,17 @@ const enviarInvitacion = async function(emisor,receptorId,notificacion,invitacio
               "es" : notificacion.contenido
           }
         });
-        push.setTargetDevices([receptor.usuario.deviceId]);
+        push.setTargetDevices([receptor.deviceId]);
 
         push.setParameter("headings",{
           "en" : notificacion.titulo,
           "es" : notificacion.titulo
         });
         push.setParameter("data", data);
-        push.setParameter("large_icon",receptor.usuario.imagesrc);
+        push.setParameter("large_icon",emisor.imagesrc);
         push.setParameter("android_group",oneSignal.groupKeys.INVITACION_AMIGO);
         push.setParameter("android_group_message", "Invitaciones de amistad");
 
-        console.dir("ONESIGNAL: push",push);
         oneSignal.client.sendNotification(push)
           .then((response)=>{
             console.log("ONESIGNAL: notificacion enviada",response.data, response.httpResponse.statusCode)
