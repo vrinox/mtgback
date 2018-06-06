@@ -68,7 +68,7 @@ const enviarInvitacion = async function(emisor,receptorId,notificacion,invitacio
               "es" : notificacion.contenido
           },
           "headings":{
-            "en" : notificacion.titulo
+            "en" : notificacion.titulo,
             "es" : notificacion.titulo
           },
           "data": data,
