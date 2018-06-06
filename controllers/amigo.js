@@ -70,7 +70,7 @@ const enviarInvitacion = async function(emisor,receptorId,notificacion,invitacio
           "headings":{
             "en" : notificacion.titulo
             "es" : notificacion.titulo
-          }
+          },
           "data": data,
           "large_icon": receptor.usuario.imagesrc,
           "android_group": oneSignal.groupKeys.INVITACION_AMIGO,
