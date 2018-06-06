@@ -13,7 +13,9 @@ const getAll = async function(req, res){
     }));
     if(err) ReE(res,{"success":false,"error":err});
     notificaciones = formatos.map(notificacion => {
-      return notificacion.toWeb();
+      let newNot = notificacion.toWeb();
+      newNot.invitacion = notificacion.getInvitacions();
+      return newNot;
     });
     return ReS(res, {"success":true,"notificaciones":notificaciones});
 }
