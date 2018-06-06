@@ -1,4 +1,4 @@
-const Notification  = require('../models').Notification;
+const Notificacion  = require('../models').Notificacion;
 const Invitacion    = require('../models').Invitacion;
 
 const getAll = async function(req, res){
