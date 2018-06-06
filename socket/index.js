@@ -23,7 +23,7 @@ Servidor.getCliente = async function(usuarioId){
     if(!encontrado){
       let err,
       wrapper = {
-        usuario:null;
+        usuario:null,
         emit: null
       };
       [err, wrapper.usuario] = await to(Usuario.findOne({"where":{"id":usuarioId}}));
