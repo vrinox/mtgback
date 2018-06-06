@@ -12,8 +12,8 @@ Servidor.onesignal= {
   }
 };
 
-Servidor.getCliente = async function(usuarioId){
-  return new Promise((resolve,reject)=>{
+Servidor.getCliente =  function(usuarioId){
+  return new Promise(async (resolve,reject)=>{
     let encontrado = false;
     this.clientes.forEach((socket)=>{
       if(socket.usuario.id === usuarioId){
