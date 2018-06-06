@@ -39,9 +39,12 @@ const crearInvitacion = async function(req, res){
     "vencimiento"   : now.setDate(now.getDate() + 30),
     "NotificacionId": notificacion.id
   }));
-  if(err) ReE(res, {success:false, error:err}, 422);
-  enviarInvitacion(emisor,receptorId,notificacion.toWeb(),invitacion.toWeb());
-  ReS(res, {success:true,message:"invitacion enviada de forma exitosa"});
+  if(err){
+    ReE(res, {success:false, error:err}, 422);
+  } else{
+    enviarInvitacion(emisor,receptorId,notificacion.toWeb(),invitacion.toWeb());
+    ReS(res, {success:true,message:"invitacion enviada de forma exitosa"});
+  }
 }
 
 module.exports.crearInvitacion = crearInvitacion;
