@@ -7,14 +7,7 @@ const logger 	    = require('morgan');
 const bodyParser 	= require('body-parser');
 const passport    = require('passport');
 const custom      = require('./middleware/custom');
-//servicios
-var firebase = require("firebase-admin");
-var serviceAccount = require("./config/firebase_secret.json");
-firebase.initializeApp({
-  credential: firebase.credential.cert(serviceAccount),
-  databaseURL: "https://direct-subset-204118.firebaseio.com",
-  storageBucket:"direct-subset-204118.appspot.com/"
-})
+
 
 //Rutas
 const v1 = require('./routes/v1')();

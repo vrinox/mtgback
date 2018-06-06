@@ -2,6 +2,7 @@ const Usuario = require('../models').Usuario;
 var Servidor = {};
 Servidor.clientes = [];
 Servidor.io       = null;
+Servidor.onesignal= null;
 
 Servidor.getCliente = function(usuarioId){
   return new Promise((resolve,reject)=>{
@@ -18,9 +19,29 @@ Servidor.getCliente = function(usuarioId){
 Servidor.inicializarEventos = function(socket){
   require('./notificacion')(socket);
 }
+
 const init = function(io){
   Servidor.io = io;
-  //en caso de uso de handshake
+  initSocket(io);
+  initOneSignal();
+}
+const initOneSignal = function(){
+  if(CONFIG.environment == "prod"){
+    console.log("-------------","onesignal:ON","----------------");
+    var oneClient = new OneSignal.Client({
+      userAuthKey: CONFIG.onesignal.userAuthKey,
+      app: { appAuthKey: CONFIG.onesignal.appAuthKey, appId: CONFIG.onesignal.appId }
+    });
+    oneClient.viewDevices('limit=100&offset=0', function (err, httpResponse, data) {
+        console.log(data);
+        if(err) console.log("error_ONESIGNAL",err);
+    });
+    Servidor.onesignal = oneClient;
+  }else{
+    console.log("-------------","onesignal:OFF","----------------");
+  }
+};
+const initSocket = function(io){
   io.use(async (socket,next)=>{
     const UID = socket.handshake.query.usuario;
     let err,usuario;

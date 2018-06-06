@@ -7,11 +7,12 @@ var basename  = path.basename(__filename);
 var db        = {};
 
 var sequelize;
-if (CONFIG.DATABASE_URL) {
+if (CONFIG.databaseUrl) {
     console.log("--------------");
     console.log("SERVIDOR");
+    console.log("--------------");
     // the application is executed on Heroku ... use the postgres database
-    var match = CONFIG.DATABASE_URL.match(/postgres:\/\/([^:]+):([^@]+)@([^:]+):(\d+)\/(.+)/);
+    var match = CONFIG.databaseUrl.match(/postgres:\/\/([^:]+):([^@]+)@([^:]+):(\d+)\/(.+)/);
     sequelize = new Sequelize(match[5], match[1], match[2], {
         dialect:  'postgres',
         protocol: 'postgres',
