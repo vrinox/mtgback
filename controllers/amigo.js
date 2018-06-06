@@ -80,11 +80,12 @@ const enviarInvitacion = async function(emisor,receptorId,notificacion,invitacio
           "android_group_message": "Invitaciones de amistad"
         });
         push.setTargetDevices([receptor.usuario.deviceId]);
-        oneSignal.client.sendNotification(push)
-          .then((response)=>{
-            console.log(response.data, response.httpResponse.statusCode);
-          })
-          .catch((err)=>{console.log("error enviando push",err)});
+        console.log("ONESIGNAL: push",push);
+        // oneSignal.client.sendNotification(push)
+        //   .then((response)=>{
+        //     console.log("ONESIGNAL: notificacion enviada",response.data, response.httpResponse.statusCode)
+        //   })
+        //   .catch((err)=>{console.log("error enviando push",err)});
       }else{
         console.log("no posee deviceId");
       }
