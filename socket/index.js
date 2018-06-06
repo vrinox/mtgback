@@ -1,4 +1,5 @@
 const Usuario = require('../models').Usuario;
+var OneSignal = require('onesignal-node');
 var Servidor = {};
 Servidor.clientes = [];
 Servidor.io       = null;
