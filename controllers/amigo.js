@@ -79,7 +79,7 @@ const enviarInvitacion = async function(emisor,receptorId,notificacion,invitacio
           "android_group": oneSignal.groupKeys.INVITACION_AMIGO,
           "android_group_message": "Invitaciones de amistad"
         });
-        push.setTargetDevices([receptor.deviceId]);
+        push.setTargetDevices([receptor.usuario.deviceId]);
         oneSignal.client.sendNotification(push)
           .then((response)=>{
             console.log(response.data, response.httpResponse.statusCode);
