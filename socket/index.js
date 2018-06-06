@@ -1,11 +1,18 @@
 const Usuario = require('../models').Usuario;
-var OneSignal = require('onesignal-node');
+const OneSignal = require('onesignal-node');
 var Servidor = {};
 Servidor.clientes = [];
 Servidor.io       = null;
-Servidor.onesignal= null;
+Servidor.onesignal= {
+  client:null,
+  groupKeys:{
+    "INVITACION_AMIGO":1,
+    "INVITACION_DUELO":2,
+    "MENSAJE":3
+  }
+};
 
-Servidor.getCliente = function(usuarioId){
+Servidor.getCliente = async function(usuarioId){
   return new Promise((resolve,reject)=>{
     let encontrado = false;
     this.clientes.forEach((socket)=>{
@@ -13,7 +20,19 @@ Servidor.getCliente = function(usuarioId){
         resolve(socket);
       }
     });
-    if(!encontrado) resolve(null);
+    if(!encontrado){
+      let err,
+      wrapper = {
+        usuario:null;
+        emit: null
+      };
+      [err, wrapper.usuario] = await to(Usuario.findOne({"where":{"id":usuarioId}}));
+      if(wrapper.usuario){
+        resolve(wrapper);
+      }else{
+        resolve(null);
+      }
+    }
   });
 }
 
@@ -22,7 +41,6 @@ Servidor.inicializarEventos = function(socket){
 }
 
 const init = function(io){
-  Servidor.io = io;
   initSocket(io);
   initOneSignal();
 }
@@ -32,10 +50,6 @@ const initOneSignal = function(){
     var oneClient = new OneSignal.Client({
       userAuthKey: CONFIG.onesignal.userAuthKey,
       app: { appAuthKey: CONFIG.onesignal.appAuthKey, appId: CONFIG.onesignal.appId }
-    });
-    oneClient.viewDevices('limit=100&offset=0', function (err, httpResponse, data) {
-        console.log(data);
-        if(err) console.log("error_ONESIGNAL",err);
     });
     Servidor.onesignal = oneClient;
   }else{
@@ -70,6 +84,7 @@ const initSocket = function(io){
       }
     });
   });
+  Servidor.io = io;
 }
 module.exports.init = init;
 module.exports.Servidor = Servidor;

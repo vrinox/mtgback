@@ -1,7 +1,9 @@
+const OneSignal = require('onesignal-node');
+
 const Amigo       = require('../models').Amigo;
 const Invitacion  = require('../models').Invitacion;
 const Notificacion= require('../models').Notificacion;
-const socketServer= require('../socket').Servidor;
+const pushServer  = require('../socket').Servidor;
 
 
 const getAll = async function(req, res){
@@ -47,29 +49,41 @@ module.exports.crearInvitacion = crearInvitacion;
 const enviarInvitacion = async function(emisor,receptorId,notificacion,invitacion){
   //enviar invitacion por push y por socket
   let receptor, enviado = false;
-  socketServer
+  pushServer
     .getCliente(receptorId)
     .then((receptor)=>{
-      if(receptor){
-        console.log("SOCKET: usuario "+receptor.usuario.username+" encontrado");
-        let data = {
-            "tipo"        :"invitacion",
-            "emisor"      :emisor.id,
-            "notificacion":notificacion.toWeb(),
-            "invitacion"  :invitacion.toWeb()
-        };
-        console.log(data);
-        receptor.emit("notificacion",{
-          "success": true,
-          "data":data
+      let data = {
+          "tipo"        :"invitacion",
+          "emisor"      :emisor.id,
+          "notificacion":notificacion.toWeb(),
+          "invitacion"  :invitacion.toWeb()
+      };
+
+      if(receptor.usuario.deviceId){
+        let oneSignal = pushServer.oneSignal;
+        console.log("receptor deviceId",receptor.deviceId);
+        var notificacion = new OneSignal.Notification({
+          "contents": {
+              "en" : notificacion.contenido,
+              "es" : notificacion.contenido
+          },
+          "headings":{
+            "en" : notificacion.titulo
+            "es" : notificacion.titulo
+          }
+          "data": data,
+          "large_icon": receptor.usuario.imagesrc,
+          "android_group": oneSignal.groupKeys.INVITACION_AMIGO,
+          "android_group_message": "Invitaciones de amistad"
         });
+        notificacion.setTargetDevices([receptor.deviceId]);
+        onesignal.cliente.sendNotification(notificacion)
+          .then((response)=>{
+            console.log(response.data, response.httpResponse.statusCode);
+          })
+          .catch((err)=>{console.log("error enviando push",err)});
       }else{
-        if(receptor.usuario.deviceId){
-          console.log("receptor deviceId",receptor.deviceId);
-          // TODO:agregar el push
-        }else{
-          console.log("no posee deviceId");
-        }
+        console.log("no posee deviceId");
       }
     });
 }
