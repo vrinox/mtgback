@@ -40,13 +40,14 @@ const crearInvitacion = async function(req, res){
     "NotificacionId": notificacion.id
   }));
   if(err) ReE(res, {success:false, error:err}, 422);
-  enviarInvitacion(emisor,receptorId,notificacion,invitacion);
+  enviarInvitacion(emisor,receptorId,notificacion.toWeb(),invitacion.toWeb());
   ReS(res, {success:true,message:"invitacion enviada de forma exitosa"});
 }
 
 module.exports.crearInvitacion = crearInvitacion;
 
 const enviarInvitacion = async function(emisor,receptorId,notificacion,invitacion){
+  console.log("DATA:",invitacion,notificacion);
   //enviar invitacion por push y por socket
   let receptor, enviado = false;
   pushServer
@@ -55,8 +56,8 @@ const enviarInvitacion = async function(emisor,receptorId,notificacion,invitacio
       let data = {
           "tipo"        :"invitacion",
           "emisor"      :emisor.id,
-          "notificacion":notificacion.toWeb(),
-          "invitacion"  :invitacion.toWeb()
+          "notificacion":notificacion,
+          "invitacion"  :invitacion
       };
 
       if(receptor.usuario.deviceId){
