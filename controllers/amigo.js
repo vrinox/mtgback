@@ -64,7 +64,7 @@ const enviarInvitacion = async function(emisor,receptorId,notificacion,invitacio
       };
 
       if(receptor.usuario.deviceId){
-        let oneSignal = pushServer.oneSignal;
+        let oneSignal = pushServer.onesignal;
         console.log("receptor deviceId",receptor.usuario.deviceId);
         var push = new OneSignal.Notification({
           "contents": {
