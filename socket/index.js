@@ -51,7 +51,7 @@ const initOneSignal = function(){
       userAuthKey: CONFIG.onesignal.userAuthKey,
       app: { appAuthKey: CONFIG.onesignal.appAuthKey, appId: CONFIG.onesignal.appId }
     });
-    Servidor.onesignal = oneClient;
+    Servidor.onesignal.client = oneClient;
   }else{
     console.log("-------------","onesignal:OFF","----------------");
   }
