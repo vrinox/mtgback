@@ -66,7 +66,7 @@ const enviarInvitacion = async function(emisor,receptorId,notificacion,invitacio
       if(receptor.usuario.deviceId){
         let oneSignal = pushServer.oneSignal;
         console.log("receptor deviceId",receptor.usuario.deviceId);
-        var newNotification = new OneSignal.Notification({
+        var push = new OneSignal.Notification({
           "contents": {
               "en" : notificacion.contenido,
               "es" : notificacion.contenido
@@ -80,8 +80,8 @@ const enviarInvitacion = async function(emisor,receptorId,notificacion,invitacio
           "android_group": oneSignal.groupKeys.INVITACION_AMIGO,
           "android_group_message": "Invitaciones de amistad"
         });
-        newNotification.setTargetDevices([receptor.deviceId]);
-        onesignal.cliente.sendNotification(newNotification)
+        push.setTargetDevices([receptor.deviceId]);
+        onesignal.cliente.sendNotification(push)
           .then((response)=>{
             console.log(response.data, response.httpResponse.statusCode);
           })
