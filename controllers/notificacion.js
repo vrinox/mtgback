@@ -52,7 +52,9 @@ const aceptar = async function(req, res){
     invitacion.destroy(),
     //guardo los cambios en la notificacion
     notificacion.save()
-  );
+  ).catch((err)=>{
+    console.log(err);
+  });
   return Res(res, {"success":true,"message":"amigo agregado"});
 }
 module.exports.aceptar = aceptar;
@@ -72,7 +74,10 @@ const rechazar = async function(req, res){
     invitacion.destroy(),
     //guardo los cambios en la notificacion
     notificacion.save()
-  );
+  ).catch((err)=>{
+    console.log(err);
+  });
+  console.log(result);
   return Res(res, {"success":true,"message":"invitacion rechazada"})
 }
 module.exports.rechazar = rechazar;
