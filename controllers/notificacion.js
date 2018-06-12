@@ -10,11 +10,10 @@ const getAll = async function(req, res){
       where:{UsuarioId:usuario.id}
     }));
     if(err) ReE(res,{"success":false,"error":err});
-    notificaciones = notificaciones.map(async (notificacion) => {
+    notificaciones = await notificaciones.map(async (notificacion) => {
       let newNot = notificacion.toWeb();
       if(notificacion.Invitacions.length){
         let anfitrion = await notificacion.Invitacions[0].getUsuario();
-        console.log("anfitrion",anfitrion);
         newNot.anfitrion = anfitrion.toWeb();
       }
       return newNot;
