@@ -77,7 +77,7 @@ const rechazar = async function(req, res){
   ).catch((err)=>{
     console.log(err);
   });
-  console.log(result);
+  console.log(operaciones);
   return Res(res, {"success":true,"message":"invitacion rechazada"})
 }
 module.exports.rechazar = rechazar;
