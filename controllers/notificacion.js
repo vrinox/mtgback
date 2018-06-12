@@ -14,7 +14,7 @@ const getAll = async function(req, res){
       let newNot = notificacion.toWeb();
       if(notificacion.Invitacions.length){
         console.log(notificacion.Invitacion);
-        let afitrion = notificacion.Invitacions[0].getUsuario();
+        let anfitrion = notificacion.Invitacions[0].getUsuario();
         console.log(anfitrion);
         newNot.anfitrion = anfitrion.toWeb();
       }
