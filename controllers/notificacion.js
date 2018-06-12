@@ -11,8 +11,7 @@ const getAll = async function(req, res){
     }));
     if(err) ReE(res,{"success":false,"error":err});
     notificaciones = notificaciones.map(notificacion => {
-      let afitrion = notificacion.Invitacions.getUsuario();
-      console.log(anfitrion);
+      console.log(notificacion.Invitacions);
       let newNot = notificacion.toWeb();
       return newNot;
     });
