@@ -33,9 +33,9 @@ const aceptar = async function(req, res){
   }))
   if(err) return ReE(res, {success:false, error:err},422);
 
-  let notificacion = invitacion.Notificacion;
-  anfitrion : invitacion.idInvitado;
-  invitado  : notificacion.UsuarioId;
+  let notificacion = invitacion.Notificacion,
+  anfitrion = invitacion.idInvitado,
+  invitado  = notificacion.UsuarioId;
   operaciones = await Promise.all([
     //creo amigo en la lista del invitado
     Amigo.create({
