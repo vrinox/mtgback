@@ -47,7 +47,7 @@ const aceptar = async function(req, res){
     Amigo.create({
       idAmigo   : invitado,
       UsuarioId : anfitrion,
-    })
+    }),
     //destruyo la invitacion
     invitacion.destroy(),
     //guardo los cambios en la notificacion
