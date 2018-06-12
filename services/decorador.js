@@ -109,6 +109,7 @@ const decorarInvitacion = async function(notificacion){
       let newNot = notificacion.toWeb();
       let anfitrion = await notificacion.Invitacions[0].getUsuario();
       newNot.anfitrion = {
+        id      : anfitrion.id,
         nombre  : anfitrion.nombre,
         apellido: anfitrion.apellido,
         username: anfitrion.username,
