@@ -11,11 +11,13 @@ const getAll = async function(req, res){
     }));
     if(err) ReE(res,{"success":false,"error":err});
     notificaciones = notificaciones.map(notificacion => {
-      console.log(notificacion);
-      let afitrion = notificacion.Invitacions[0].getUsuario();
-      console.log(anfitrion);
       let newNot = notificacion.toWeb();
-      newNot.anfitrion = anfitrion.toWeb();
+      if(notificacion.Invitacions.length){
+        console.log(notificacion.Invitacion);
+        let afitrion = notificacion.Invitacions[0].getUsuario();
+        console.log(anfitrion);
+        newNot.anfitrion = anfitrion.toWeb();
+      }
       return newNot;
     });
     return ReS(res, {"success":true,"notificaciones":notificaciones});
