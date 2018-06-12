@@ -1,6 +1,6 @@
 const Notificacion  = require('../models').Notificacion;
 const Invitacion    = require('../models').Invitacion;
-
+const decorar       = require('../services/decorador');
 const getAll = async function(req, res){
     res.setHeader('Content-Type', 'application/json');
     let err, notificaciones,
@@ -10,15 +10,15 @@ const getAll = async function(req, res){
       where:{UsuarioId:usuario.id}
     }));
     if(err) ReE(res,{"success":false,"error":err});
-    notificaciones = notificaciones.map(async (notificacion) => {
-      let newNot = notificacion.toWeb();
+    notificaciones = await Promise.all(notificaciones.map(async (notificacion)=>{
+      let newNot;
       if(notificacion.Invitacions.length){
-        let anfitrion = await notificacion.Invitacions[0].getUsuario();
-        newNot.anfitrion = anfitrion.toWeb();
+        newNot = await decorar.invitacion(notificacion);
+      }else{
+        newNot = notificacion.toweb();
       }
-      console.log(newNot);
       return newNot;
-    });
+    }));
     console.log("luego:",notificaciones);
     return ReS(res, {"success":true,"notificaciones":notificaciones});
 }

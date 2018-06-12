@@ -102,5 +102,14 @@ const decorarCarta = function(carta,numero){
     });
   return carta;
 }
-
 module.exports.carta = decorarCarta;
+
+const decorarInvitacion = async function(notificacion){
+    return new Promise((resolve,reject)=>{
+      let newNot = notificacion.toWeb();
+      newNot.anfitrion = await notificacion.Invitacions[0].getUsuario();
+      resolve(newNot);
+    });
+}
+
+module.exports.invitacion = decorarInvitacion;
