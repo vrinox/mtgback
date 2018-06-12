@@ -116,7 +116,6 @@ const decorarInvitacion = async function(notificacion){
         imagesrc: anfitrion.imagesrc,
         deviceId: anfitrion.deviceId
       }
-      newNot.anfitrion.clave="";
       resolve(newNot);
     });
 }
