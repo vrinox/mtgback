@@ -8,7 +8,7 @@ const getAll = async function(req, res){
     [err, notificaciones] = await to(Notificacion.findAll({
       include:[{
         model:Invitacion
-      }]
+      }],
       where:{
         UsuarioId:usuario.id
       }
