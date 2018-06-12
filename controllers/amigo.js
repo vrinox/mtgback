@@ -1,6 +1,7 @@
 const OneSignal = require('onesignal-node');
 
 const Amigo       = require('../models').Amigo;
+const Usuario     = require('../models').Usuario;
 const Invitacion  = require('../models').Invitacion;
 const Notificacion= require('../models').Notificacion;
 const pushServer  = require('../socket').Servidor;
@@ -9,11 +10,14 @@ const pushServer  = require('../socket').Servidor;
 const getAll = async function(req, res){
   res.setHeader('Content-Type', 'application/json');
   let err, amigos, usuario = req.user;
-  [err, amigos] = await to(usuario.getAmigos());
+  [err, amigos] = await to(Amigo.findAll({
+    "include":[{"model":Usuario],
+    "where":{"UsuarioId":usuario.id}
+  }));
   if(err) ReE(res, {success:false, error:err}, 422);
 
   amigos = amigos.map(async (amigo)=>{
-    return amigo.toWeb();
+    return amigo.Usuario.toWeb();
   })
   return ReS(res, {"success":true,"amigos":amigos});
 }
