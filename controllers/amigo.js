@@ -11,7 +11,7 @@ const getAll = async function(req, res){
   res.setHeader('Content-Type', 'application/json');
   let err, amigos, usuario = req.user;
   [err, amigos] = await to(Amigo.findAll({
-    "include":[{"model":Usuario],
+    "include":[{"model":Usuario}],
     "where":{"UsuarioId":usuario.id}
   }));
   if(err) ReE(res, {success:false, error:err}, 422);
