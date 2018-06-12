@@ -10,14 +10,16 @@ const getAll = async function(req, res){
       where:{UsuarioId:usuario.id}
     }));
     if(err) ReE(res,{"success":false,"error":err});
-    notificaciones = await notificaciones.map(async (notificacion) => {
+    notificaciones = notificaciones.map(async (notificacion) => {
       let newNot = notificacion.toWeb();
       if(notificacion.Invitacions.length){
         let anfitrion = await notificacion.Invitacions[0].getUsuario();
         newNot.anfitrion = anfitrion.toWeb();
       }
+      console.log(newNot);
       return newNot;
     });
+    console.log("luego:",notificaciones);
     return ReS(res, {"success":true,"notificaciones":notificaciones});
 }
 module.exports.getAll = getAll;
