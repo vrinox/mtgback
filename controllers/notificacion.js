@@ -37,7 +37,7 @@ const aceptar = async function(req, res){
   notificacion.estado = 'L';
   anfitrion : invitacion.idInvitado;
   invitado  : notificacion.UsuarioId;
-  operaciones = await Promise.all(
+  operaciones = await Promise.all([
     //creo amigo en la lista del invitado
     Amigo.create({
       idAmigo   : anfitrion,
@@ -52,7 +52,7 @@ const aceptar = async function(req, res){
     invitacion.destroy(),
     //guardo los cambios en la notificacion
     notificacion.save()
-  ).catch((err)=>{
+  ]).catch((err)=>{
     console.log(err);
   });
   return Res(res, {"success":true,"message":"amigo agregado"});
@@ -69,11 +69,11 @@ const rechazar = async function(req, res){
 
   let notificacion = invitacion.Notificacion;
   notificacion.estado = 'L';
-  operaciones = await Promise.all(
+  operaciones = await Promise.all([
     //destruyo la invitacion
     invitacion.destroy(),
     //guardo los cambios en la notificacion
-    notificacion.save()
+    notificacion.save()]
   ).catch((err)=>{
     console.log(err);
   });
