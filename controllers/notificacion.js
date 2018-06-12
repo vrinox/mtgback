@@ -15,7 +15,7 @@ const getAll = async function(req, res){
       if(notificacion.Invitacions.length){
         newNot = await decorar.invitacion(notificacion);
       }else{
-        newNot = notificacion.toweb();
+        newNot = notificacion.toWeb();
       }
       return newNot;
     }));
