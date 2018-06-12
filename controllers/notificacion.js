@@ -1,3 +1,7 @@
+const OneSignal = require('onesignal-node');
+
+const pushServer  = require('../socket').Servidor;
+
 const Notificacion  = require('../models').Notificacion;
 const Invitacion    = require('../models').Invitacion;
 const Amigo         = require('../models').Amigo;
@@ -50,7 +54,9 @@ const aceptar = async function(req, res){
     //destruyo la invitacion
     invitacion.destroy(),
     //guardo los cambios en la notificacion
-    notificacion.destroy()
+    notificacion.destroy(),
+    //envio respuesta
+    enviarRespuestaInvitacion(anfitrion,usuario)
   ]).catch((err)=>{
     console.log(err);
   });
@@ -78,3 +84,37 @@ const rechazar = async function(req, res){
   return ReS(res, {"success":true,"message":"invitacion rechazada"})
 }
 module.exports.rechazar = rechazar;
+
+const enviarRespuestaInvitacion = function(receptorId,emisor){
+  return new Promise(async (resolve,reject)=>{
+    pushServer
+      .getUsuario(receptorId)
+      .then((receptor)=>{
+        if(receptor.deviceId){
+          let oneSignal = pushServer.onesignal;
+          let push = new OneSignal.Notification({
+            "contents": {
+                "en" : emisor.username+' acepto tu invitacion de amistad',
+                "es" : emisor.username+' acepto tu invitacion de amistad'
+            }
+          });
+          push.setTargetDevices([receptor.deviceId]);
+          push.setParameter("headings",{
+            "en" : "Nuevo amigo",
+            "es" : "Nuevo amigo"
+          });
+          push.setParameter("large_icon",emisor.imagesrc);
+          push.setParameter("android_group",oneSignal.groupKeys.INVITACION_AMIGO);
+          push.setParameter("android_group_message", "Invitaciones de amistad");
+
+          oneSignal.client.sendNotification(push)
+            .then((response)=>{
+              console.log("ONESIGNAL: notificacion enviada",response.data, response.httpResponse.statusCode)
+            })
+            .catch((err)=>{console.log("error enviando push",err)});
+        }else{
+          console.log("no posee deviceId");
+        }
+      })
+  });
+}
