@@ -105,9 +105,10 @@ const decorarCarta = function(carta,numero){
 module.exports.carta = decorarCarta;
 
 const decorarInvitacion = async function(notificacion){
-    return new Promise((resolve,reject)=>{
+    return new Promise(async (resolve,reject)=>{
       let newNot = notificacion.toWeb();
       newNot.anfitrion = await notificacion.Invitacions[0].getUsuario();
+      newNot.anfitrion.clave="";
       resolve(newNot);
     });
 }
