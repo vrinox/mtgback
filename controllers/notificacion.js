@@ -34,7 +34,6 @@ const aceptar = async function(req, res){
   if(err) return ReE(res, {success:false, error:err},422);
 
   let notificacion = invitacion.Notificacion;
-  notificacion.estado = 'L';
   anfitrion : invitacion.idInvitado;
   invitado  : notificacion.UsuarioId;
   operaciones = await Promise.all([
@@ -51,7 +50,7 @@ const aceptar = async function(req, res){
     //destruyo la invitacion
     invitacion.destroy(),
     //guardo los cambios en la notificacion
-    notificacion.save()
+    notificacion.destroy()
   ]).catch((err)=>{
     console.log(err);
   });
@@ -68,12 +67,11 @@ const rechazar = async function(req, res){
   if(err) return ReE(res, {success:false, error:err},422);
 
   let notificacion = invitacion.Notificacion;
-  notificacion.estado = 'L';
   operaciones = await Promise.all([
     //destruyo la invitacion
     invitacion.destroy(),
     //guardo los cambios en la notificacion
-    notificacion.save()]
+    notificacion.destroy()]
   ).catch((err)=>{
     console.log(err);
   });
