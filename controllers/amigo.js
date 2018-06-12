@@ -15,10 +15,11 @@ const getAll = async function(req, res){
     "where":{"UsuarioId":usuario.id}
   }));
   if(err) ReE(res, {success:false, error:err}, 422);
-
-  amigos = amigos.map(async (amigo)=>{
+  console.log(amigos);
+  amigos = await Promise.all(amigos.map(async (amigo)=>{
     return amigo.Usuario.toWeb();
-  })
+  }));
+  console.log("despues:",amigos);
   return ReS(res, {"success":true,"amigos":amigos});
 }
 
