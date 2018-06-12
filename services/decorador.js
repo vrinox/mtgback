@@ -116,6 +116,8 @@ const decorarInvitacion = async function(notificacion){
         imagesrc: anfitrion.imagesrc,
         deviceId: anfitrion.deviceId
       }
+      newNot.invitacion = newNot.notificacion.Invitacions[0].toWeb();
+      delete newNot.Invitacions;
       resolve(newNot);
     });
 }
