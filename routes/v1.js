@@ -7,6 +7,7 @@ const v1 = function(){
   require('./../middleware/passport')(passport)
   //rutas externas
   require('./amigo')(router);
+  require('./chat')(router);
   require('./formato')(router);
   require('./duelo')(router)
   require('./usuario')(router);
