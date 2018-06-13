@@ -4,6 +4,7 @@ module.exports = (sequelize, DataTypes) => {
     contenido : DataTypes.STRING,
     idEmisor  : DataTypes.INTEGER,
     idReceptor: DataTypes.INTEGER,
+    estado    : DataTypes.STRING //Pendendiente, Servidor, Recivido, Leido
   });
 
   Model.associate = function(models){
