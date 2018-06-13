@@ -92,6 +92,9 @@ const enviarRespuestaInvitacion = function(receptorId,emisor){
       .then((receptor)=>{
         if(receptor.deviceId){
           let oneSignal = pushServer.onesignal;
+          let data = {
+            "tipo"  : "amigo"
+          }
           let push = new OneSignal.Notification({
             "contents": {
                 "en" : emisor.username+' acepto tu invitacion de amistad',
@@ -103,6 +106,7 @@ const enviarRespuestaInvitacion = function(receptorId,emisor){
             "en" : "Nuevo amigo",
             "es" : "Nuevo amigo"
           });
+          push.setParameter("data", data);
           push.setParameter("large_icon",emisor.imagesrc);
           push.setParameter("android_group",oneSignal.groupKeys.INVITACION_AMIGO);
           push.setParameter("android_group_message", "Invitaciones de amistad");

@@ -23,7 +23,6 @@ module.exports = (sequelize, DataTypes) => {
     Model.associate = function(models){
         //tiene
         this.hasMany(models.Noticia);
-        this.hasMany(models.Chat);
         this.hasMany(models.Lista);
         this.hasMany(models.Amigo);
         this.hasMany(models.Mazo);
