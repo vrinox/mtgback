@@ -49,7 +49,10 @@ const getAll = async function(req, res){
         },
         order: [ [ 'createdAt', 'DESC' ]]
       }));
-      chat.mensajes = mensajes.map((mensaje)=>{return mensaje.toWeb()});
+      console.log("MENSAJES:",mensajes);
+      if(mensajes){
+        chat.mensajes = mensajes.map((mensaje)=>{return mensaje.toWeb()});
+      }
       return chat;
     }));
     return ReS(res, {chats:chats,success:true});
