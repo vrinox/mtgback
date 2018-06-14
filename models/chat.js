@@ -7,7 +7,6 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   Model.associate = function(models){
-      // TODO: asociar
       this.belongsTo(models.Usuario, {foreignKey:"idUsuario1", sourceKey:"id"});
       this.belongsTo(models.Usuario, {foreignKey:"idUsuario2", sourceKey:"id"});
   };

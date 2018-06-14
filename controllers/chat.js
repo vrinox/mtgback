@@ -1,4 +1,5 @@
 const Chat = require('../models').Chat;
+const Mensaje = require('../models').Mensaje;
 
 const create = async function(req, res){
     res.setHeader('Content-Type', 'application/json');
@@ -25,9 +26,18 @@ const getAll = async function(req, res){
         ]
       }
     }));
-    chats = formatos.map(chat => {
-      return chat.toWeb();
-    });
+    chats = await Promise.all(formatos.map(async(chat) => {
+      let mensajes;
+      [err,mensajes] = await to(Mensaje.findAll({
+        limit: 20,
+        where: {
+          "ChatId":chat.id
+        },
+        order: [ [ 'createdAt', 'DESC' ]]
+      }));
+      chat.mensajes = mensajes.map((mensaje)=>{return mensaje.toWeb()});
+      return chat;
+    }));
     return ReS(res, {chats:chats,success:true});
 }
 module.exports.getAll = getAll;
