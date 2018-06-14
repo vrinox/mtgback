@@ -26,7 +26,7 @@ const getAll = async function(req, res){
         ]
       }
     }));
-    chats = await Promise.all(formatos.map(async(chat) => {
+    chats = await Promise.all(chats.map(async(chat) => {
       let mensajes;
       [err,mensajes] = await to(Mensaje.findAll({
         limit: 20,
