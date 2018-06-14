@@ -1,5 +1,6 @@
 const Chat = require('../models').Chat;
 const Mensaje = require('../models').Mensaje;
+const Usuario = require('../models').Usuario;
 
 const create = async function(req, res){
     res.setHeader('Content-Type', 'application/json');
