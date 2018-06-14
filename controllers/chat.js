@@ -9,6 +9,12 @@ const create = async function(req, res){
     [err, chat] = await to(Chat.create(Info));
     if(err) return ReE(res, {success:false, error:err}, 422);
 
+    const newId = chat.id;
+    [err, chat] = await to(Chat.findOne({
+      include:{all:true},
+      where:{"id":newId}
+    }));
+
     return ReS(res,{chat:chat.toWeb(),success:true}, 201);
 }
 module.exports.create = create;
@@ -19,6 +25,7 @@ const getAll = async function(req, res){
     usuario = req.user;
 
     [err, chats] = await to(Chat.findAll({
+      include:{all:true},
       where:{
         $or:[
           {idUsuario1:usuario.id},

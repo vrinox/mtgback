@@ -18,7 +18,6 @@ const getAll = async function(req, res){
   amigos = await Promise.all(amigos.map(async (amigo)=>{
     return amigo.Usuario.toWeb();
   }));
-  console.log("despues:",amigos);
   return ReS(res, {"success":true,"amigos":amigos});
 }
 
