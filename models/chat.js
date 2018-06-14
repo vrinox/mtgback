@@ -7,8 +7,8 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   Model.associate = function(models){
-      this.belongsTo(models.Usuario, {foreignKey:"idUsuario1", sourceKey:"id"});
-      this.belongsTo(models.Usuario, {foreignKey:"idUsuario2", sourceKey:"id"});
+      this.belongsTo(models.Usuario, {as: "usuario1",foreignKey:"idUsuario1", sourceKey:"id"});
+      this.belongsTo(models.Usuario, {as: "usuario2",foreignKey:"idUsuario2", sourceKey:"id"});
   };
 
   Model.prototype.toWeb = function (pw) {

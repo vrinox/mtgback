@@ -11,7 +11,10 @@ const create = async function(req, res){
 
     const newId = chat.id;
     [err, chat] = await to(Chat.findOne({
-      include:{all:true},
+      include:[
+        {"model":Usuario,"as":"usuario1"},
+        {"model":Usuario,"as":"usuario2"}
+      ],
       where:{"id":newId}
     }));
 
@@ -25,7 +28,10 @@ const getAll = async function(req, res){
     usuario = req.user;
 
     [err, chats] = await to(Chat.findAll({
-      include:{all:true},
+      include:[
+        {"model":Usuario,"as":"usuario1"},
+        {"model":Usuario,"as":"usuario2"}
+      ],
       where:{
         $or:[
           {idUsuario1:usuario.id},
