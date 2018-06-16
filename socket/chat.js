@@ -2,7 +2,7 @@ const OneSignal = require('onesignal-node');
 
 module.exports = function(socket,server){
   socket.on("add-message",(data)=>{
-    console.log(data);
+    console.log("SOCKET: "+data.UID+" mensaje recibido por servidor");
     data.estado = 'S';
     socket.emit("msg:server",data);
     server
