@@ -1,7 +1,8 @@
 //imports
-const Formato = require('../models').Formato;
-const Mazo    = require('../models').Mazo;
-const Carta   = require('../models').Carta;
+const Formato     = require('../models').Formato;
+const Mazo        = require('../models').Mazo;
+const Carta       = require('../models').Carta;
+const Mensaje     = require('../models').Mensaje;
 const DetalleMazo = require('../models').DetalleMazo;
 
 const usuario = async function(newUsuario){
