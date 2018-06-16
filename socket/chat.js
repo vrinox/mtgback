@@ -9,6 +9,7 @@ module.exports = function(socket,server){
       .getCliente(data.receptor.id)
       .then((cliente)=>{
         if(cliente.emit){
+          console.log("SOCKET: mensaje enviado a "+cliente.usuario.username);
           cliente.emit('add-message',data);
         }else{
           let texto;
