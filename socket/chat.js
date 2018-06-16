@@ -8,8 +8,8 @@ module.exports = function(socket,server){
     server
       .getCliente(data.receptor.id)
       .then((cliente)=>{
-        if(cliente.socket){
-          cliente.socket.emit('add-message',data);
+        if(cliente.emit){
+          cliente.emit('add-message',data);
         }else{
           let texto;
           if(data.contenido.lenght > 20){
@@ -24,7 +24,7 @@ module.exports = function(socket,server){
                 "es" : texto
             }
           });
-          push.setTargetDevices([receptor.deviceId]);
+          push.setTargetDevices([data.receptor.deviceId]);
 
           push.setParameter("headings",{
             "en" : data.emisor.username+' te ha enviado un mensaje',
