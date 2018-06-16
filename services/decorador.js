@@ -121,5 +121,22 @@ const decorarInvitacion = async function(notificacion){
       resolve(newNot);
     });
 }
-
 module.exports.invitacion = decorarInvitacion;
+
+const decorarChat = async function(chat){
+  let mensajes;
+  [err,mensajes] = await to(Mensaje.findAll({
+    limit: 20,
+    where: {
+      "ChatId":chat.id
+    },
+    order: [ [ 'createdAt', 'DESC' ]]
+  }));
+  if(mensajes){
+    chat.mensajes = mensajes.map((mensaje)=>{return mensaje.toWeb()});
+  }else{
+    chat.mensajes = [];
+  }
+  return chat;
+}
+module.exports.chat = decorarChat;
