@@ -43,6 +43,7 @@ Servidor.getUsuario = async function(usuarioId){
 
 Servidor.inicializarEventos = function(socket){
   require('./notificacion')(socket);
+  require('./chat')(socket,this);
 }
 
 const init = function(io){

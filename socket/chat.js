@@ -1,4 +1,4 @@
-module.exports = function(socket){
+module.exports = function(socket,server){
   socket.on("add-message",(data)=>{
     console.log(data);
     data.estado = 'S';

@@ -52,6 +52,8 @@ const getAll = async function(req, res){
       console.log("MENSAJES:",mensajes);
       if(mensajes){
         chat.mensajes = mensajes.map((mensaje)=>{return mensaje.toWeb()});
+      }else{
+        chat.mensajes = [];
       }
       return chat;
     }));
