@@ -134,10 +134,25 @@ const decorarChat = async function(chat){
     order: [ [ 'createdAt', 'DESC' ]]
   }));
   if(mensajes){
-    chat.mensajes = mensajes.map((mensaje)=>{return mensaje.toWeb()});
+    chat.mensajes = mensajes.map((mensaje)=>{
+      return decorarMensaje(mensaje,chat.usuario1,chat.usuario2).toWeb();
+    });
   }else{
     chat.mensajes = [];
   }
   return chat;
 }
 module.exports.chat = decorarChat;
+
+const decorarMensaje = function(mensaje,usuario1,usuario2){
+  let emisor,receptor;
+  if(mensaje.idEmisor == usuario1.id){
+    mensaje.emisor = usuario1;
+    mensaje.receptor = usuario2;
+  }else{
+    mensaje.emisor = usuario2;
+    mensaje.receptor = usuario1;
+  }
+  return mensaje;
+}
+module.exports.mensaje = decorarMensaje;
