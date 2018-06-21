@@ -41,6 +41,17 @@ Servidor.getUsuario = async function(usuarioId){
   return usuario;
 };
 
+Servidor.add = async function(socket){
+  let index = this.clientes.findIndex((each)=>{
+    return each.usuario.id == socket.usuario.id;
+  });
+  if(index === -1){
+    this.clientes.push(socket);
+  }else{
+    this.clientes.splice(index,1,socket);
+  }
+  console.log("SOCKET: añadido o actualiado "+socket.usuario.username);
+}
 Servidor.inicializarEventos = function(socket){
   require('./notificacion')(socket);
   require('./chat')(socket,this);
@@ -82,11 +93,11 @@ const initSocket = function(io){
       if(err){
         socket.emit('auth',{"success":false,"error":err});
       }else{
-          socket.usuario = usuario;
-          socket.emit("auth",{success:true});
-          console.log("SOCKET: usuario "+socket.usuario.username+" auntenticado");
-          Servidor.clientes.push(socket);
-          Servidor.inicializarEventos(socket);
+        socket.usuario = usuario;
+        socket.emit("auth",{success:true});
+        console.log("SOCKET: usuario "+socket.usuario.username+" auntenticado");
+        Servidor.add(socket);
+        Servidor.inicializarEventos(socket);
       }
     });
   });
