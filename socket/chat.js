@@ -6,10 +6,8 @@ module.exports = async function(socket,server){
   socket.on("add-message",async (data)=>{
     data.estado = 's';
     let err,mensaje = decorar.mensajeDB(data);
-    console.log("MENSAJE:data",mensaje);
     [err, mensaje] = await to(Mensaje.create(mensaje));
     if(err){
-      console.log("SOCKET:error",err);
       socket.emit("msg:estado",{success:false,error:err})
     }else{
       data.id = mensaje.id;
@@ -34,6 +32,7 @@ module.exports = async function(socket,server){
                   "es" : texto
               }
             });
+            console.log("DEVICE",data.receptor);
             push.setTargetDevices([data.receptor.deviceId]);
 
             push.setParameter("headings",{
