@@ -5,6 +5,7 @@ module.exports = async function(socket,server){
   socket.on("add-message",async (data)=>{
     data.estado = 'S';
     let err,mensaje;
+    console.log("MENSAJE:data",data);
     [err, mensaje] = await to(Mensaje.create(data));
     if(err){
       console.log("SOCKET:error",err);
