@@ -162,7 +162,7 @@ const extraerMensaje = function(mensaje){
     ChatId    : mensaje.ChatId,
     idEmisor  : mensaje.idEmisor,
     idReceptor: mensaje.idReceptor,
-    estado    : mesaje.estado,
+    estado    : mensaje.estado,
     contenido : mensaje.contenido
   };
 }
