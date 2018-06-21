@@ -10,7 +10,7 @@ module.exports = async function(socket,server){
       socket.emit("msg:estado",{success:false,error:err})
     }else{
       data.id = mensaje.id;
-      socket.emit("msg:estado",{success:true,mensaje:data);
+      socket.emit("msg:estado",{success:true,mensaje:data});
       server
         .getCliente(data.receptor.id)
         .then((cliente)=>{
