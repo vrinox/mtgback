@@ -156,3 +156,14 @@ const decorarMensaje = function(mensaje,usuario1,usuario2){
   return mensaje;
 }
 module.exports.mensaje = decorarMensaje;
+
+const extraerMensaje = function(mensaje){
+  return {
+    ChatId    : mensaje.ChatId,
+    idEmisor  : mensaje.idEmisor,
+    idReceptor: mensaje.idReceptor,
+    estado    : mesaje.estado,
+    contenido : mensaje.contenido
+  };
+}
+module.exports.mensajeDB = extraerMensaje;
