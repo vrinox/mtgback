@@ -42,9 +42,8 @@ Servidor.getUsuario = async function(usuarioId){
 };
 
 Servidor.add = function(socket){
-  this.clientes = this.clientes
-    .filter((cliente)=>{return cliente != socket.usuario.id})
-    .push(socket);
+  this.clientes = this.clientes.filter((cliente)=>{return cliente != socket.usuario.id});
+  this.clientes.push(socket);
 }
 Servidor.remove = function(socket){
     console.log("CLIENTES",this.clientes);
