@@ -47,7 +47,7 @@ Servidor.add = function(socket){
     .push(socket);
 }
 Servidor.remove = function(socket){
-    console.log("SOCKET: cliente "+socket.usuario.username+" removido");
+    console.log("CLIENTES",this.clientes);
     this.clientes = this.clientes.filter((cliente)=>{return cliente != socket.usuario.id});
     console.log(this.clientes.map((cliente)=>{return cliente.usuario}));
 }
