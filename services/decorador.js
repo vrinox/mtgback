@@ -136,7 +136,7 @@ const decorarChat = async function(chat){
     where: {
       "ChatId":chat.id
     },
-    order: [ 'createdAt', 'DESC' ]
+    order: [[ 'createdAt', 'DESC' ]]
   }));
   if(mensajes.length){
     chat.dataValues.mensajes = mensajes;
