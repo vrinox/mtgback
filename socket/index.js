@@ -42,24 +42,14 @@ Servidor.getUsuario = async function(usuarioId){
 };
 
 Servidor.add = function(socket){
-  let index = this.clientes.findIndex((each)=>{
-    return each.usuario.id == socket.usuario.id;
-  });
-  if(index === -1){
-    this.clientes.push(socket);
-  }else{
-    this.clientes.splice(index,1,socket);
-  }
+  this.clientes = this.clientes
+    .filter((cliente)=>{return cliente != socket.usuario.id})
+    .push(socket);
 }
 Servidor.remove = function(socket){
-  let index = this.clientes.findIndex((each)=>{
-    return each.usuario.id == socket.usuario.id;
-  });
-  if(index !== -1){
     console.log("SOCKET: cliente "+socket.usuario.username+" removido");
-    this.clientes.splice(index,0);
-    console.log(this.clientes);
-  }
+    this.clientes = this.clientes.filter((cliente)=>{return cliente != socket.usuario.id});
+    console.log(this.clientes.map((cliente)=>{return cliente.usuario}));
 }
 
 Servidor.inicializarEventos = function(socket){
