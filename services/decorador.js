@@ -133,7 +133,7 @@ const decorarChat = async function(chat){
     },
     order: [ [ 'createdAt', 'DESC' ]]
   }));
-  if(mensajes.lenght){
+  if(mensajes.length){
     chat.dataValues.mensajes = mensajes.map((mensaje)=>{
       return decorarMensaje(mensaje,chat.usuario1,chat.usuario2).toWeb();
     });
