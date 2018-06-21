@@ -7,6 +7,7 @@ module.exports = async function(socket,server){
     let err,mensaje;
     [err, mensaje] = await to(Mensaje.create(data));
     if(err){
+      console.log("SOCKET:error",err);
       socket.emit("msg:estado",{success:false,error:err})
     }else{
       data.id = mensaje.id;
