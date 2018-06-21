@@ -2,7 +2,7 @@ const OneSignal = require('onesignal-node');
 const Mensaje   = require('../models').Mensaje;
 
 module.exports = async function(socket,server){
-  socket.on("add-message",(data)=>{
+  socket.on("add-message",async (data)=>{
     data.estado = 'S';
     let err,mensaje;
     [err, mensaje] = await to(Mensaje.create(data));
