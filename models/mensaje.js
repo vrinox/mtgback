@@ -9,8 +9,8 @@ module.exports = (sequelize, DataTypes) => {
 
   Model.associate = function(models){
       this.belongsTo(models.Chat);
-      this.belongsTo(models.Usuario,{ foreignKey:"idReceptor" ,sourceKey:"id" });
-      this.belongsTo(models.Usuario,{ foreignKey:"idEmisor"   ,sourceKey:"id" });
+      this.belongsTo(models.Usuario,{ foreignKey:"idReceptor",as:"receptor" ,sourceKey:"id" });
+      this.belongsTo(models.Usuario,{ foreignKey:"idEmisor"  ,as:"emisor"   ,sourceKey:"id" });
   };
 
   Model.prototype.toWeb = function (pw) {

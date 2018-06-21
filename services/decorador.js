@@ -1,6 +1,7 @@
 //imports
 const Formato     = require('../models').Formato;
 const Mazo        = require('../models').Mazo;
+const Usuario     = require('../models').Usuario;
 const Carta       = require('../models').Carta;
 const Mensaje     = require('../models').Mensaje;
 const DetalleMazo = require('../models').DetalleMazo;
@@ -127,16 +128,18 @@ module.exports.invitacion = decorarInvitacion;
 const decorarChat = async function(chat){
   let mensajes;
   [err,mensajes] = await to(Mensaje.findAll({
+    include:[
+      {"model":Usuario,"as":"emisor"},
+      {"model":Usuario,"as":"receptor"}
+    ],
     limit: 20,
     where: {
       "ChatId":chat.id
     },
-    order: [ [ 'createdAt', 'DESC' ]]
+    order: [ 'createdAt', 'DESC' ]
   }));
   if(mensajes.length){
-    chat.dataValues.mensajes = mensajes.map((mensaje)=>{
-      return decorarMensaje(mensaje,chat.usuario1,chat.usuario2).toWeb();
-    });
+    chat.dataValues.mensajes = mensajes;
   }else{
     chat.dataValues.mensajes = [];
   }
@@ -144,19 +147,6 @@ const decorarChat = async function(chat){
   return chat;
 }
 module.exports.chat = decorarChat;
-
-const decorarMensaje = function(mensaje,usuario1,usuario2){
-  let emisor,receptor;
-  if(mensaje.idEmisor == usuario1.id){
-    mensaje.emisor = usuario1;
-    mensaje.receptor = usuario2;
-  }else{
-    mensaje.emisor = usuario2;
-    mensaje.receptor = usuario1;
-  }
-  return mensaje;
-}
-module.exports.mensaje = decorarMensaje;
 
 const extraerMensaje = function(mensaje){
   return {
