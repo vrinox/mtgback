@@ -54,7 +54,7 @@ module.exports = async function(socket,server){
   //recibido
   socket.on("msg:recibido",async (msg)=>{
     let err,mensaje;
-    [err, mensaje] = await to(Mensaje.findOne({where:{"id":msg.id}));
+    [err, mensaje] = await to(Mensaje.findOne({where:{"id":msg.id}}));
     if(!err){
       mensaje.estado = msg.estado;
       [err, mensaje] = await to(mensaje.save());
