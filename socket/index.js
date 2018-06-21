@@ -50,7 +50,6 @@ Servidor.add = async function(socket){
   }else{
     this.clientes.splice(index,1,socket);
   }
-  console.log("SOCKET: añadido o actualiado "+socket.usuario.username);
 }
 Servidor.inicializarEventos = function(socket){
   require('./notificacion')(socket);
