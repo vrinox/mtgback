@@ -41,7 +41,7 @@ Servidor.getUsuario = async function(usuarioId){
   return usuario;
 };
 
-Servidor.add = async function(socket){
+Servidor.add = function(socket){
   let index = this.clientes.findIndex((each)=>{
     return each.usuario.id == socket.usuario.id;
   });
@@ -51,6 +51,17 @@ Servidor.add = async function(socket){
     this.clientes.splice(index,1,socket);
   }
 }
+Servidor.remove = function(socket){
+  let index = this.clientes.findIndex((each)=>{
+    return each.usuario.id == socket.usuario.id;
+  });
+  if(index !== -1){
+    console.log("SOCKET: cliente "+socket.usuario.username+" removido");
+    this.clientes.splice(index,0);
+    console.log(this.clientes);
+  }
+}
+
 Servidor.inicializarEventos = function(socket){
   require('./notificacion')(socket);
   require('./chat')(socket,this);
@@ -99,6 +110,9 @@ const initSocket = function(io){
         Servidor.inicializarEventos(socket);
       }
     });
+    socket.on('disconnect',()=>{
+      Servidor.remove(socket);
+    })
   });
   Servidor.io = io;
 }
