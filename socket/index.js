@@ -46,9 +46,8 @@ Servidor.add = function(socket){
   this.clientes.push(socket);
 }
 Servidor.remove = function(socket){
-    console.log("CLIENTES",this.clientes);
     this.clientes = this.clientes.filter((cliente)=>{return cliente != socket.usuario.id});
-    console.log(this.clientes.map((cliente)=>{return cliente.usuario}));
+    console.log(this.clientes.map((cliente)=>{return cliente.usuario.username}));
 }
 
 Servidor.inicializarEventos = function(socket){
