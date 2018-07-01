@@ -52,8 +52,28 @@ const get = async function(req, res){
     res.setHeader('Content-Type', 'application/json');
 
     [err, chat] = await to(Chat.findOne({where:{"id":req.params.id}}));
-    if(err) return ReE(res, "err encontrando formato");
+    if(err) return ReE(res, "err encontrando chat");
 
     return ReS(res, {chat:chat.toWeb(),success:true});
 }
 module.exports.get = get;
+
+const getMsg = async function(req,res){
+  let mensajes,ChatId = req.params.id;
+  [err,mensajes] = await to(Mensaje.findAll({
+    include:[
+      {"model":Usuario,"as":"emisor"},
+      {"model":Usuario,"as":"receptor"}
+    ],
+    limit: 20,
+    where: {
+      "ChatId":ChatId
+    },
+    order: [[ 'createdAt', 'DESC' ]]
+  }));
+  if(err) return ReE(res, err);
+  mensajes = mensajes.map((mensaje)=>{
+    return mensaje.toWeb();
+  })
+  return ReS(res, {"mensajes":mensajes,"success":true});
+}

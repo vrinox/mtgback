@@ -125,29 +125,6 @@ const decorarInvitacion = async function(notificacion){
 }
 module.exports.invitacion = decorarInvitacion;
 
-const decorarChat = async function(chat){
-  let mensajes;
-  [err,mensajes] = await to(Mensaje.findAll({
-    include:[
-      {"model":Usuario,"as":"emisor"},
-      {"model":Usuario,"as":"receptor"}
-    ],
-    limit: 20,
-    where: {
-      "ChatId":chat.id
-    },
-    order: [[ 'createdAt', 'DESC' ]]
-  }));
-  if(mensajes.length){
-    chat.dataValues.mensajes = mensajes;
-  }else{
-    chat.dataValues.mensajes = [];
-  }
-  console.log("CHAT",chat);
-  return chat;
-}
-module.exports.chat = decorarChat;
-
 const extraerMensaje = function(mensaje){
   return {
     ChatId    : mensaje.ChatId,
