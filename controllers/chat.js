@@ -42,7 +42,7 @@ const getAll = async function(req, res){
       }
     }));
     chats = await Promise.all(chats.map(async(chat) => {
-        return decorar.chat(chat);
+        return chat.toWeb();
     }));
     return ReS(res, {chats:chats,success:true});
 }
