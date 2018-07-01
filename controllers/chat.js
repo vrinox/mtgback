@@ -77,3 +77,4 @@ const getMsg = async function(req,res){
   })
   return ReS(res, {"mensajes":mensajes,"success":true});
 }
+module.exports.getMsg = getMsg;
