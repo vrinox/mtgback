@@ -38,12 +38,11 @@ module.exports = async function(socket,server){
               "en" : data.emisor.username+' te ha enviado un mensaje',
               "es" : data.emisor.username+' te ha enviado un mensaje'
             });
-            push.setParameter("data", data);
+            push.setParameter("data", decorar.mensajeDB(data));
             push.setParameter("large_icon",data.emisor.imagesrc);
             push.setParameter("android_group",oneSignal.groupKeys.MENSAJE);
             push.setParameter("android_group_message", "Mensajes nuevos");
 
-            console.log(data);
             oneSignal.client.sendNotification(push)
               .then((response)=>{
                 console.log("ONESIGNAL: mensaje enviado",response.data, response.httpResponse.statusCode)
