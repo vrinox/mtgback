@@ -32,8 +32,8 @@ module.exports = async function(socket,server){
                   "es" : texto
               }
             });
-            console.log("DEVICE",cliente.deviceId);
-            push.setTargetDevices([data.receptor.deviceId]);
+            console.log("DEVICE",cliente.usuario.deviceId);
+            push.setTargetDevices([cliente.usuario.deviceId]);
 
             push.setParameter("headings",{
               "en" : data.emisor.username+' te ha enviado un mensaje',
