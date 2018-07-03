@@ -26,7 +26,7 @@ Servidor.getCliente =  function(usuarioId){
         usuario:null,
         emit: null
       };
-      wrapper.usuario = this.getUsuario(usuarioId);
+      wrapper.usuario = await this.getUsuario(usuarioId);
       if(wrapper.usuario){
         resolve(wrapper);
       }else{
