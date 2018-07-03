@@ -35,19 +35,18 @@ const create = async function(req, res){
     } else if(!body.clave){
         return ReE(res, 'Por favor ingrese una clave para registrarse');
     }else{
-        let err, usuario,validado;
-        [err, validado] = await to(authService.verificar(body));
+      let err, usuario,validado;
+      [err, validado] = await to(authService.verificar(body));
+      if(err) return ReE(res, {success:false, error:err}, 422);
+      if(validado.success){
+        console.log("validacion: validado");
+        [err, usuario] = await to(authService.createUser(body));
         if(err) return ReE(res, {success:false, error:err}, 422);
-        if(validado.success){
-          console.log("validacion: validado");
-          [err, usuario] = await to(authService.createUser(body));
-          if(err) return ReE(res, {success:false, error:err}, 422);
-        }else{
-          console.log("validacion: ",validado.message);
-          return ReE(res, validado.message, 200);
-        }
-
-        return ReS(res, {message:'nuevo usuario creado satisfactoriamente.', usuario:usuario.toWeb(), token:usuario.getJWT()}, 201);
+      }else{
+        console.log("validacion: ",validado.message);
+        return ReE(res, validado.message, 200);
+      }
+      return ReS(res, {message:'nuevo usuario creado satisfactoriamente.', usuario:usuario.toWeb(), token:usuario.getJWT()}, 201);
     }
 }
 module.exports.create = create;

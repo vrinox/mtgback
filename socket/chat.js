@@ -32,7 +32,7 @@ module.exports = async function(socket,server){
                   "es" : texto
               }
             });
-            console.log("DEVICE",data.receptor.deviceId);
+            console.log("DEVICE",cliente.deviceId);
             push.setTargetDevices([data.receptor.deviceId]);
 
             push.setParameter("headings",{
