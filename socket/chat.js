@@ -32,7 +32,6 @@ module.exports = async function(socket,server){
                   "es" : texto
               }
             });
-            console.log("DEVICE",cliente.usuario);
             push.setTargetDevices([cliente.usuario.deviceId]);
 
             push.setParameter("headings",{
@@ -44,6 +43,7 @@ module.exports = async function(socket,server){
             push.setParameter("android_group",oneSignal.groupKeys.MENSAJE);
             push.setParameter("android_group_message", "Mensajes nuevos");
 
+            console.log(data);
             oneSignal.client.sendNotification(push)
               .then((response)=>{
                 console.log("ONESIGNAL: mensaje enviado",response.data, response.httpResponse.statusCode)
