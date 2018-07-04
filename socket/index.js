@@ -90,7 +90,7 @@ const initSocket = function(io){
     //solicitud de autenticacion
     setTimeout(()=>{
       socket.emit("autenticate");
-    },300);
+    },1000);
     socket.on('error',(err)=>{
       console.log("Socket error:",err);
     });
