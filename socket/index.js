@@ -42,11 +42,17 @@ Servidor.getUsuario = async function(usuarioId){
 };
 
 Servidor.add = function(socket){
-  this.clientes = this.clientes.filter((cliente)=>{return cliente.usuario.id != socket.usuario.id});
+  this.remove(socket);
   this.clientes.push(socket);
 }
 Servidor.remove = function(socket){
-    this.clientes = this.clientes.filter((cliente)=>{return cliente.usuario.id != socket.usuario.id});
+  this.clientes = this.clientes.filter((cliente)=>{
+    if(socket.usuario){
+        return cliente.usuario.id != socket.usuario.id
+    }else{
+      return false;
+    }
+  });
 }
 
 Servidor.inicializarEventos = function(socket){
