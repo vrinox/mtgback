@@ -86,7 +86,7 @@ const initSocket = function(io){
     next();
   });
   io.on('connection', (socket) => {
-    console.log('Socket: usuario conectado');
+    console.log('-----------------------','SOCKET: usuario conectado','-----------------------');
     //solicitud de autenticacion
     setTimeout(()=>{
       socket.emit("autenticate");
@@ -102,7 +102,7 @@ const initSocket = function(io){
       }else{
         socket.usuario = usuario;
         socket.emit("auth",{success:true});
-        console.log("SOCKET: usuario "+socket.usuario.username+" auntenticado");
+        console.log('-----------------------',"SOCKET: usuario "+socket.usuario.username+" auntenticado",'-----------------------');
         Servidor.add(socket);
         Servidor.inicializarEventos(socket);
       }
