@@ -146,7 +146,6 @@ const logout = async function(req, res){
 module.exports.logout = logout;
 
 const modificarCampos = function(usuario,fields){
-  console.log("Actualizar",fields);
   return new Promise(async function(resolve,reject){
     const campos = Object.keys(fields).map((field)=>{
       usuario[field] = fields[field];
