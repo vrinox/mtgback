@@ -88,7 +88,9 @@ const initSocket = function(io){
   io.on('connection', (socket) => {
     console.log('Socket: usuario conectado');
     //solicitud de autenticacion
-    socket.emit("autenticate");
+    setTimeout(()=>{
+      socket.emit("autenticate");
+    },300);
     socket.on('error',(err)=>{
       console.log("Socket error:",err);
     });
