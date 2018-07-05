@@ -56,7 +56,7 @@ const aceptar = async function(req, res){
     //guardo los cambios en la notificacion
     notificacion.destroy(),
     //envio respuesta
-    enviarRespuestaInvitacion(anfitrion,usuario)
+    enviarRespuestaInvitacion(anfitrion,invitado)
   ]).catch((err)=>{
     console.log(err);
   });
