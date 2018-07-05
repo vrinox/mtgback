@@ -57,6 +57,7 @@ module.exports = async function(socket,server){
   });
   //recibido
   socket.on("msg:recibido",async (msg)=>{
+    console.log("MENSAJE:Recibido por "+msg.receptor.username);
     let err,mensaje;
     [err, mensaje] = await to(Mensaje.findOne({where:{"id":msg.id}}));
     if(!err){
