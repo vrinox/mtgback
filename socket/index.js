@@ -101,7 +101,7 @@ const initSocket = function(io){
     }
   });
   io.on('connection', (socket) => {
-    console.log('Socket: usuario conectado');
+    console.log('Socket: usuario '+socket.usuario.username+' conectado');
     socket.on('error',(err)=>{
       console.log("Socket error:",err);
     });
