@@ -79,39 +79,31 @@ const initOneSignal = function(){
 const initSocket = function(io){
   io.use(async (socket,next)=>{
     if(!socket.usuario){
-      if(socket.handshake.query.usuario){
-        const UID = socket.handshake.query.usuario;
-        let err,usuario;
-        [err,usuario] = await to(Usuario.findOne({"where":{"id":UID}}));
-        if(err) next(new Error('Socket: authentication error'));
-        socket.usuario = usuario;
+      if(socket.handshake.query){
+        if(socket.handshake.query.usuario){
+          console.log("SOCKET:MIDDLEWARE",socket.handshake.query);
+          const UID = socket.handshake.query.usuario;
+          let err,usuario;
+          [err,usuario] = await to(Usuario.findOne({"where":{"id":UID}}));
+          if(err) next(new Error('Socket: authentication error'));
+          socket.usuario = usuario;
+          Servidor.add(socket);
+          Servidor.inicializarEventos(socket);
+          next();
+        }else{
+          next(new Error('Authentication error'));
+        }
       }else{
-        socket.emit("autenticate");
+        next(new Error('Authentication error'));
       }
+    }else{
+      next();
     }
-    next();
   });
   io.on('connection', (socket) => {
     console.log('Socket: usuario conectado');
-    //solicitud de autenticacion
-    setTimeout(()=>{
-      socket.emit("autenticate");
-    },1000)
     socket.on('error',(err)=>{
       console.log("Socket error:",err);
-    });
-    //auth en caso que no se pueda usar
-    socket.on('auth',async (data)=>{
-      [err,usuario] = await to(Usuario.findOne({"where":{"id":data.usuario}}));
-      if(err){
-        socket.emit('auth',{"success":false,"error":err});
-      }else{
-        socket.usuario = usuario;
-        socket.emit("auth",{success:true});
-        console.log("SOCKET: usuario "+socket.usuario.username+" auntenticado");
-        Servidor.add(socket);
-        Servidor.inicializarEventos(socket);
-      }
     });
     socket.on('disconnect',()=>{
       Servidor.remove(socket);
