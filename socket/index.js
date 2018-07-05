@@ -101,11 +101,12 @@ const initSocket = function(io){
     }
   });
   io.on('connection', (socket) => {
-    console.log('Socket: usuario '+socket.usuario.username+' conectado');
+    console.log('SOCKET: usuario '+socket.usuario.username+' conectado');
     socket.on('error',(err)=>{
       console.log("Socket error:",err);
     });
     socket.on('disconnect',()=>{
+      console.log('SOCKET: usuario '+socket.usuario.username+' desconectado');
       Servidor.remove(socket);
     })
   });
