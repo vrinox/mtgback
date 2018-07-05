@@ -113,10 +113,12 @@ const enviarRespuestaInvitacion = function(receptorId,emisor){
 
           oneSignal.client.sendNotification(push)
             .then((response)=>{
+              resolve();
               console.log("ONESIGNAL: notificacion enviada",response.data, response.httpResponse.statusCode)
             })
             .catch((err)=>{console.log("error enviando push",err)});
         }else{
+          reject();
           console.log("no posee deviceId");
         }
       })
