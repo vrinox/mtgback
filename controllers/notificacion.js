@@ -30,7 +30,7 @@ const getAll = async function(req, res){
 module.exports.getAll = getAll;
 
 const aceptar = async function(req, res){
-  let err, invitacion;
+  let err, invitacion, usuario = req.user;
   [err, invitacion] = await to(Invitacion.findOne({
     include:[{model:Notificacion}],
     where:{id:req.params.id}
@@ -56,7 +56,7 @@ const aceptar = async function(req, res){
     //guardo los cambios en la notificacion
     notificacion.destroy(),
     //envio respuesta
-    enviarRespuestaInvitacion(anfitrion,invitado)
+    enviarRespuestaInvitacion(anfitrion,usuario)
   ]).catch((err)=>{
     console.log(err);
   });
