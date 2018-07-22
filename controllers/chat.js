@@ -20,7 +20,7 @@ const create = async function(req, res){
       where:{"id":newId}
     }));
 
-    return ReS(res,{chat:decorar.chat(chat).toWeb(),success:true}, 201);
+    return ReS(res,{chat:chat.toWeb(),success:true}, 201);
 }
 module.exports.create = create;
 
