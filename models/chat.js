@@ -20,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
     let [error,resultado] = await to(this.findAll({
       where:{
         [Op.or]: [{"idUsuario1": receptorId}, {"idUsuario2": receptorId}],
-        [Op.and]: ["tipo":tipo]
+        [Op.and]: [{"tipo":tipo}]
       }
     }))
     return [error,resultado];
