@@ -8,9 +8,12 @@ const create = async function(req, res){
     let err, chats;
     let Info = req.body;
 
-    [err, chat] = await to(Chat.create(Info));
-    if(err) return ReE(res, {success:false, error:err}, 422);
-
+    [err, chat] = await to(Chat.findForType(Info));
+    console.log(err,chat);
+    if(err){
+      [err, chat] = await to(Chat.create(Info));
+      if(err) return ReE(res, {success:false, error:err}, 422);
+    }
     const newId = chat.id;
     [err, chat] = await to(Chat.findOne({
       include:[
