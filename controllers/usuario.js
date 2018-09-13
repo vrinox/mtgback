@@ -15,7 +15,7 @@ const getAll = async function(req, res){
   };
   Object.keys(filtros).forEach((each)=>{
     newFiltros.$or[each]={
-      $like:'%'+filtros[each]+'%'
+      $like:'%'+filtros[each].toLowerCase()+'%'
     }
   });
   [err, usuarios] = await to(Usuario.findAll({"where":newFiltros}))
