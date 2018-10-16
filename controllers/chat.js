@@ -11,7 +11,7 @@ const create = async function(req, res){
 
     [err, chat] = await to(findForType(Info.usuario2.id,Info.tipo));
     console.log(chat);
-    if(!chat){
+    if(!chat.length){
       [err, chat] = await to(Chat.create(Info));
       if(err) return ReE(res, {success:false, error:err}, 422);
     }
@@ -91,6 +91,5 @@ const findForType = async function(receptorId,tipo){
       [Op.and]: [{"tipo":tipo}]
     }
   }))
-  console.log("resultado busqueda",resultado);
-  return [error,resultado];
+  return resultado;
 }
