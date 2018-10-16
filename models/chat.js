@@ -16,14 +16,5 @@ module.exports = (sequelize, DataTypes) => {
       let json = this.toJSON();
       return json;
   };
-  Model.prototype.findForType = async function(receptorId,tipo){
-    let [error,resultado] = await to(this.findAll({
-      where:{
-        [Op.or]: [{"idUsuario1": receptorId}, {"idUsuario2": receptorId}],
-        [Op.and]: [{"tipo":tipo}]
-      }
-    }))
-    return [error,resultado];
-  }
   return Model;
 };

@@ -8,7 +8,7 @@ const create = async function(req, res){
     let err, chats;
     let Info = req.body;
 
-    [err, chat] = await to(Chat.findForType(Info));
+    [err, chat] = await to(findForType(Info.usuario2.id,Info.tipo));
     console.log(err,chat);
     if(err){
       [err, chat] = await to(Chat.create(Info));
@@ -81,3 +81,13 @@ const getMsg = async function(req,res){
   return ReS(res, {"mensajes":mensajes,"success":true});
 }
 module.exports.getMsg = getMsg;
+
+const findForType = async function(receptorId,tipo){
+  let [error,resultado] = await to(Chat.findAll({
+    where:{
+      [Op.or]: [{"idUsuario1": receptorId}, {"idUsuario2": receptorId}],
+      [Op.and]: [{"tipo":tipo}]
+    }
+  }))
+  return [error,resultado];
+}
