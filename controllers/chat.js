@@ -5,10 +5,10 @@ const decorar   = require('../services/decorador');
 const Sequelize = require('sequelize');
 
 const create = async function(req, res){
+    //2: creo pel chat
     res.setHeader('Content-Type', 'application/json');
     let err, chats;
     let Info = req.body;
-
     [err, chat] = await to(findForType(Info.usuario2.id,Info.tipo));
     console.log(chat);
     if(!chat.length){
