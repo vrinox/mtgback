@@ -86,6 +86,10 @@ module.exports.getMsg = getMsg;
 const findForType = async function(receptorId,tipo){
   var Op = Sequelize.Op;
   let [error,resultado] = await to(Chat.findAll({
+    include:[
+      {"model":Usuario,"as":"usuario1"},
+      {"model":Usuario,"as":"usuario2"}
+    ],
     where:{
       [Op.or]: [{"idUsuario1": receptorId}, {"idUsuario2": receptorId}],
       [Op.and]: [{"tipo":tipo}]
