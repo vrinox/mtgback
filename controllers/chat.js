@@ -2,6 +2,7 @@ const Chat    = require('../models').Chat;
 const Mensaje = require('../models').Mensaje;
 const Usuario = require('../models').Usuario;
 const decorar = require('../services/decorador');
+const Op      = require('sequelize').Op;
 
 const create = async function(req, res){
     res.setHeader('Content-Type', 'application/json');

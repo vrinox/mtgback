@@ -1,6 +1,6 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  var Op = sequelize.Op;
+  
   var Model = sequelize.define('Chat', {
     tipo        : DataTypes.STRING, //existen 3 tipos de chat 'B' = battleChat, "M" = mensajeChat, "T"=tradeChat
     idUsuario1  : DataTypes.INTEGER,
