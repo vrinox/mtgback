@@ -23,7 +23,7 @@ const create = async function(req, res){
       ],
       where:{"id":newId}
     }));
-
+    console.log("chat a enviar",chat);
     return ReS(res,{chat:chat.toWeb(),success:true}, 201);
 }
 module.exports.create = create;
