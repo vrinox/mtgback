@@ -1,8 +1,8 @@
-const Chat    = require('../models').Chat;
-const Mensaje = require('../models').Mensaje;
-const Usuario = require('../models').Usuario;
-const decorar = require('../services/decorador');
-const Op      = require('sequelize').Op;
+const Chat      = require('../models').Chat;
+const Mensaje   = require('../models').Mensaje;
+const Usuario   = require('../models').Usuario;
+const decorar   = require('../services/decorador');
+const Sequelize = require('sequelize');
 
 const create = async function(req, res){
     res.setHeader('Content-Type', 'application/json');
@@ -84,6 +84,7 @@ const getMsg = async function(req,res){
 module.exports.getMsg = getMsg;
 
 const findForType = async function(receptorId,tipo){
+  var Op = Sequelize.Op;
   let [error,resultado] = await to(Chat.findAll({
     where:{
       [Op.or]: [{"idUsuario1": receptorId}, {"idUsuario2": receptorId}],
