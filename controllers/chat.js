@@ -91,5 +91,6 @@ const findForType = async function(receptorId,tipo){
       [Op.and]: [{"tipo":tipo}]
     }
   }))
+  console.log("resultado busqueda",resultado);
   return [error,resultado];
 }
