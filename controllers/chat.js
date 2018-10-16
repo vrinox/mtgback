@@ -10,7 +10,7 @@ const create = async function(req, res){
     let Info = req.body;
 
     [err, chat] = await to(findForType(Info.usuario2.id,Info.tipo));
-    console.log(err,chat);
+    console.log("error de busqueda",err,chat);
     if(err){
       [err, chat] = await to(Chat.create(Info));
       if(err) return ReE(res, {success:false, error:err}, 422);
