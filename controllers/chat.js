@@ -10,7 +10,7 @@ const create = async function(req, res){
     let err, chats;
     let Info = req.body;
     [err, chat] = await to(findForType(Info.usuario2.id,Info.tipo));
-    console.log(chat);
+    console.log("resultado de busqueda",chat);
     if(!chat.length){
       [err, chat] = await to(Chat.create(Info));
       if(err) return ReE(res, {success:false, error:err}, 422);
@@ -54,7 +54,13 @@ module.exports.getAll = getAll;
 const get = async function(req, res){
     res.setHeader('Content-Type', 'application/json');
 
-    [err, chat] = await to(Chat.findOne({where:{"id":req.params.id}}));
+    [err, chat] = await to(Chat.findOne({
+      include:[
+        {"model":Usuario,"as":"usuario1"},
+        {"model":Usuario,"as":"usuario2"}
+      ],
+      where:{"id":req.params.id}
+    }));
     if(err) return ReE(res, "err encontrando chat");
 
     return ReS(res, {chat:chat.toWeb(),success:true});
