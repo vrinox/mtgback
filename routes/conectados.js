@@ -6,3 +6,4 @@ const rutas = function(router){
 		res.json({status:"success", data:Servidor.clientes});
 	});
 }
+module.exports = rutas;
