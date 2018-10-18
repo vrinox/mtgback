@@ -14,6 +14,8 @@ const v1 = function(){
   require('./mazo')(router);
   require('./carta')(router);
   require('./notificacion')(router);
+  //prueba solo en desarrollo
+  require('./conectados')(router);
   /* GET home page. */
   router.get('/', function(req, res, next) {
     res.json({status:"success", message:"MagicHub API", data:{"version_number":"v1.0.0"}})
