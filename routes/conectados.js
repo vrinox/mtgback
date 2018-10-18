@@ -4,14 +4,13 @@ const rutas = function(router){
   router.get(  '/conectados' ,  (req, res)=>{
 		let clientes = Servidor.clientes.map((cliente)=>{
 			return {
-				Socket:{
-					id:cliente.id
-				},
-				usuario: cliente.usuario.dataValues
+					id			: cliente.usuario.dataValues.id,
+					nombre	: cliente.usuario.dataValues.username,
+					socket	:	cliente.id
 			};
 		})
 		res.statusCode = 200;//send the appropriate status code
-		res.json({status:"success", data:clientes});
+		res.json({usuarios:clientes.length, clientes:clientes});
 	});
 }
 module.exports = rutas;
