@@ -5,7 +5,7 @@ const rutas = function(router){
 		let clientes = Servidor.clientes.map((cliente)=>{
 			return {
 				Socket:{
-					id:cliente.id;
+					id:cliente.id
 				},
 				usuario: cliente.usuario.dataValues
 			};
