@@ -2,6 +2,7 @@ const Servidor = require('../socket').Servidor;
 
 const rutas = function(router){
   router.get(  '/conectados' ,  (req, res)=>{
+    console.log(Servidor.clientes);
 		let clientes = Servidor.clientes.map((cliente)=>{
 			return {
 					id			: cliente.usuario.dataValues.id,
