@@ -78,8 +78,11 @@ const initOneSignal = function(){
 };
 const initSocket = function(io){
   io.use(async (socket,next)=>{
+    //se pregunta el socket no posee usuario relacionado
     if(!socket.usuario){
+      //posee handshake
       if(socket.handshake.query){
+        //dentro del hanshake posee el id del usuario
         if(socket.handshake.query.usuario){
           console.log("SOCKET:MIDDLEWARE",socket.handshake.query);
           const UID = socket.handshake.query.usuario;
@@ -87,6 +90,7 @@ const initSocket = function(io){
           [err,usuario] = await to(Usuario.findOne({"where":{"id":UID}}));
           if(err) next(new Error('Socket: authentication error'));
           socket.usuario = usuario;
+          socket.emit("autenticado",true);
           Servidor.add(socket);
           Servidor.inicializarEventos(socket);
           next();
