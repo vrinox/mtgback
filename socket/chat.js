@@ -18,7 +18,7 @@ module.exports = async function(socket,server){
           if(cliente.emit){
             //4: envio mensaje
             cliente.emit('add-message',data);
-            console.log("SOCKET: mensaje enviado a "+cliente.usuario.username);
+            console.log("SOCKET: mensaje enviado a "+cliente.usuario.username+" id: "+cliente.id);
           }else{
             let texto;
             if(data.contenido.lenght > 20){

@@ -90,7 +90,6 @@ const initSocket = function(io){
           [err,usuario] = await to(Usuario.findOne({"where":{"id":UID}}));
           if(err) next(new Error('Socket: authentication error'));
           socket.usuario = usuario;
-          console.log("este es el cambio");
           socket.emit("autenticado",{data:"autenticado"});
           console.log("SOCKET: id ",socket.id);
           Servidor.add(socket);
