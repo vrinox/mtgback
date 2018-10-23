@@ -58,7 +58,7 @@ module.exports = async function(socket,server){
   });
   //recibido
   socket.on("msg:recibido",async (msg)=>{
-    console.log("MENSAJE:Recibido por "+msg.receptor.username);
+    console.log("SOCKET: Mensaje Recibido por "+msg.receptor.username);
     let err,mensaje;
     [err, mensaje] = await to(Mensaje.findOne({where:{"id":msg.id}}));
     if(!err){
@@ -69,6 +69,7 @@ module.exports = async function(socket,server){
       .getCliente(msg.emisor.id)
       .then((cliente)=>{
         if(cliente.emit){
+          console.log("SOCKET: Cambio de estado enviado "+cliente.usuario.username+" id: "+cliente.id);
           cliente.emit('msg:estado',{success:true,mensaje:msg});
         }
       });
