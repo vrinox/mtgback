@@ -71,7 +71,7 @@ const armarMazo = async function(newMazo){
 }
 module.exports.mazo = armarMazo;
 
-const armarLista = function(lista){
+const armarLista = async function(lista){
   let ListaId = lista.id;
   [err, cartas] = await to(DetalleLista.findAll({
     "include":[{
