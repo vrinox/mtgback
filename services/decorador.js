@@ -1,10 +1,12 @@
 //imports
 const Formato     = require('../models').Formato;
 const Mazo        = require('../models').Mazo;
+const Lista       = require('../models').Lista;
 const Usuario     = require('../models').Usuario;
 const Carta       = require('../models').Carta;
 const Mensaje     = require('../models').Mensaje;
 const DetalleMazo = require('../models').DetalleMazo;
+const DetalleLista= require('../models').DetalleLista;
 
 const usuario = async function(newUsuario){
   let err,mazos;
@@ -21,7 +23,6 @@ const usuario = async function(newUsuario){
   newUsuario.dataValues.mazos = mazos;
   return newUsuario;
 }
-
 module.exports.usuario = usuario;
 
 const armarMazo = async function(newMazo){
@@ -35,14 +36,7 @@ const armarMazo = async function(newMazo){
   }));
   if(err) ReE(res, err);
   const mtgCartas = cartas.map(oldCarta =>{
-    newCarta = oldCarta.carta;
-    newCarta.dataValues.userMetadata = {
-      cantidad: oldCarta.cantidad,
-      id      : oldCarta.id,
-      tipo    : oldCarta.tipo,
-      idCarta : oldCarta.idCarta,
-    }
-    return newCarta;
+    return rellenarCarta(oldCarta);
   });
 
   //inicializo los valores del main y side
@@ -75,8 +69,42 @@ const armarMazo = async function(newMazo){
    }
    return newMazo.toWeb();
 }
-
 module.exports.mazo = armarMazo;
+
+const armarLista = function(lista){
+  let ListaId = lista.id;
+  [err, cartas] = await to(DetalleLista.findAll({
+    "include":[{
+      "model":Carta,
+      "as": "carta",
+    }],
+    "where":{"ListaId":ListaId}
+  }));
+  if(err) ReE(res, err);
+  const mtgCartas = cartas.map(oldCarta =>{
+    return rellenarCarta(oldCarta);
+  });
+  mtgCartas.forEach(newCarta => {
+    newCarta = decorarCarta(newCarta,"split",112);
+    if(newCarta.colorIdentity){
+      newCarta.colorIdentity.map(color=>{ colores.push(color) });
+    }
+    lista.dataValues.main.push(newCarta);
+  })
+  return lista.toWeb();
+}
+module.exports.lista = armarLista;
+
+const rellenarCarta = function(oldCarta){
+  let newCarta = oldCarta.carta;
+  newCarta.dataValues.userMetadata = {
+    cantidad: oldCarta.cantidad,
+    id      : oldCarta.id,
+    tipo    : oldCarta.tipo,
+    idCarta : oldCarta.idCarta,
+  }
+  return newCarta;
+}
 
 const decorarCarta = function(carta,numero){
   const propiedades = ["types","subtypes","colorIdentity"];

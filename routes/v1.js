@@ -12,6 +12,7 @@ const v1 = function(){
   require('./duelo')(router)
   require('./usuario')(router);
   require('./mazo')(router);
+  require('./lista')(router);
   require('./carta')(router);
   require('./notificacion')(router);
   //prueba solo en desarrollo

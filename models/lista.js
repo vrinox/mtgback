@@ -2,10 +2,9 @@
 module.exports = (sequelize, DataTypes) => {
   var Model = sequelize.define('Lista', {
     /*
-      Existen 3 tipos de lista
-      'T' = lista de cambio o tradeList
-      "M" = mensajeChat,
-      "T" = tradeChat
+      Existen 2 tipos de lista
+      'T' = lista de cambio o tradeList,
+      "W" = Wihslist
     */
       tipo: DataTypes.STRING
   });
