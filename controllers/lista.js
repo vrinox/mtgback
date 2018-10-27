@@ -6,12 +6,12 @@ const mtg           = require('mtgsdk');
 const create = async function(req, res){
     res.setHeader('Content-Type', 'application/json');
     let err, lista;
-    let tipo = req.body.tipo;
+    let listaInfo = req.body;
     let usuario = req.user;
 
-    mazoInfo.UsuarioId = usuario.id;
+    listaInfo.UsuarioId = usuario.id;
 
-    [err, lista] = await to(Lista.create({tipo:tipo}));
+    [err, lista] = await to(Lista.create(listaInfo));
     if(err) return ReE(res, {success:false, error:err}, 422);
 
     let listaJson = lista.toWeb();
@@ -28,7 +28,7 @@ const getAll = async function(req, res){
       where:{"UsuarioId":usuario.id}
     }));
     let listasJson = await Promise.all(listas.map(async (lista) => {
-      mazo = await decorar.lista(lista);
+      lista = await decorar.lista(lista);
       return lista;
     }));
     return ReS(res, {listas:listasJson});
@@ -44,7 +44,7 @@ const get = async function(req, res){
     }));
     console.log(err);
     if(err) return ReE(res, "err encontrando lista");
-    //busco el detalle del mazo
+    //busco el detalle del lista
     lista = await decorar.lista(lista);
     return ReS(res, {"lista":lista});
 }
@@ -54,7 +54,7 @@ const update = async function(req, res){
     let err, lista;
 
     [err, lista] = await to(Lista.findOne({where:{"id":req.params.idLista}}));
-    if(err) return ReE(res, "err encontrando mazo");
+    if(err) return ReE(res, "err encontrando Lista");
 
     lista.set(req.body);
 
@@ -68,12 +68,12 @@ module.exports.update = update;
 const remove = async function(req, res){
   let err, lista;
 
-  [err, lista] = await to(Lista.findOne({where:{"id":req.params.idMazo}}));
-  if(err) return ReE(res, "err encontrando mazo");
+  [err, lista] = await to(Lista.findOne({where:{"id":req.params.idLista}}));
+  if(err) return ReE(res, "err encontrando Lista");
 
   [err, lista] = await to(lista.destroy());
-  if(err) return ReE(res, 'Ha ocurrido un error mientras se eliminama el mazo');
+  if(err) return ReE(res, 'Ha ocurrido un error mientras se eliminama el Lista');
 
-  return ReS(res, {message:'Mazo eliminado'}, 200);
+  return ReS(res, {message:'Lista eliminado'}, 200);
 }
 module.exports.remove = remove;
