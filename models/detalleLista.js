@@ -7,6 +7,7 @@ module.exports = (sequelize, DataTypes) => {
 
   Model.associate = function(models){
       this.belongsTo(models.Lista);
+      this.belongsTo(models.Carta,{foreignKey:"idCarta",sourceKey:"id", as:"carta"})
   };
 
   Model.prototype.toWeb = function (pw) {
