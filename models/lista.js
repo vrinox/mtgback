@@ -11,7 +11,6 @@ module.exports = (sequelize, DataTypes) => {
 
   Model.associate = function(models){
       this.belongsTo(models.Usuario);
-      this.hasMany(models.DetalleLista);
   };
 
   Model.prototype.toWeb = function (pw) {

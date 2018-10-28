@@ -30,7 +30,7 @@ if (CONFIG.databaseUrl) {
       dialect: CONFIG.db_dialect,
       port: CONFIG.db_port,
       operatorsAliases: false,
-      logging: false
+      logging: true
     });
   }
 
