@@ -19,9 +19,16 @@ const usuario = async function(newUsuario){
     where:{"UsuarioId":newUsuario.dataValues.id}
   }));
   if(err) TE("error al buscar listas del usuario "+newUsuario.dataValues.id,true);
-  listas = await Promise.all(listas.map(async(newLista)=>{
-    return await armarLista(newLista);
-  }))
+  [listas,mazos] = await Promise.all(
+    [
+      Promise.all(listas.map(async(newLista)=>{
+        return await armarLista(newLista);
+      })),
+      Promise.all(mazos.map(async(newMazo)=>{
+        return await armarMazo(newMazo);
+      }))
+    ]
+  );
   newUsuario.dataValues.mazos = mazos;
   newUsuario.dataValues.listas = listas;
   return newUsuario;
