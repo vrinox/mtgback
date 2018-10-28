@@ -2,25 +2,28 @@
 const Formato     = require('../models').Formato;
 const Mazo        = require('../models').Mazo;
 const Lista       = require('../models').Lista;
-const Usuario     = require('../models').Usuario;
 const Carta       = require('../models').Carta;
-const Mensaje     = require('../models').Mensaje;
 const DetalleMazo = require('../models').DetalleMazo;
 const DetalleLista= require('../models').DetalleLista;
 
 const usuario = async function(newUsuario){
-  let err,mazos;
+  let err,mazos,listas;
   [err, mazos] = await to(Mazo.findAll({
     include:[{
       model:Formato
     }],
     where:{"UsuarioId":newUsuario.dataValues.id}
   }));
-  if(err) TE("error al buscar mazos de usuario "+newUsuario.dataValues.id,true);
-  mazos = await Promise.all(mazos.map(async(newMazo)=>{
-    return await armarMazo(newMazo);
+  if(err) TE("error al buscar mazos del usuario "+newUsuario.dataValues.id,true);
+  [err, listas] = await to(Lista.findAll({
+    where:{"UsuarioId":newUsuario.dataValues.id}
+  }));
+  if(err) TE("error al buscar listas del usuario "+newUsuario.dataValues.id,true);
+  listas = await Promise.all(listas.map(async(newLista)=>{
+    return await armarLista(newLista);
   }))
   newUsuario.dataValues.mazos = mazos;
+  newUsuario.dataValues.listas = listas;
   return newUsuario;
 }
 module.exports.usuario = usuario;
