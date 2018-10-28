@@ -91,6 +91,7 @@ const armarLista = async function(lista){
     "where":{"ListaId":ListaId}
   }));
   if(err) console.log(err);
+  lista.dataValues.cartas = [];
   const mtgCartas = cartas.map(oldCarta =>{
     return rellenarCarta(oldCarta);
   });
