@@ -83,7 +83,7 @@ const armarLista = async function(lista){
     }],
     "where":{"ListaId":ListaId}
   }));
-  if(err) ReE(res, err);
+  if(err) console.log(err);
   const mtgCartas = cartas.map(oldCarta =>{
     return rellenarCarta(oldCarta);
   });
