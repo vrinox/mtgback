@@ -96,10 +96,7 @@ const armarLista = async function(lista){
   });
   mtgCartas.forEach(newCarta => {
     newCarta = decorarCarta(newCarta,"split",112);
-    if(newCarta.colorIdentity){
-      newCarta.colorIdentity.map(color=>{ colores.push(color) });
-    }
-    lista.dataValues.main.push(newCarta);
+    lista.dataValues.cartas.push(newCarta);
   })
   return lista.toWeb();
 }
