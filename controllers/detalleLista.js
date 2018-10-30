@@ -5,6 +5,7 @@ const decorar      = require('../services/decorador');
 
 const agregarCarta = async function(req, res){
   let err, userMetadata, ListaId, oldCarta, newCarta, carta;
+  ListaId = req.params.idLista;
   /*
     userMetadata
     {
@@ -12,6 +13,7 @@ const agregarCarta = async function(req, res){
       cantidad: cantidad de esta carta en la lista
       tipo    : main o side
       idCarta : id de la api
+      idLista : id de la lista
     }
   */
   oldCarta = req.body;
@@ -28,8 +30,10 @@ const agregarCarta = async function(req, res){
   }
   userMetadata = oldCarta.userMetadata;
   userMetadata.idCarta = newCarta.id;
-  userMetadata.ListaId = req.params.idLista;
+  userMetadata.ListaId = idLista;
   //agrego al detalle
+  console.log("CARTA: ",userMetadata);
+  console.log("LISTA: ",idLista);
   [err, userMetadata] = await to(DetalleLista.create(userMetadata));
   if(err) ReE(res, {success:false, error:err});
   //preparo el envio
