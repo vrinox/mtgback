@@ -30,10 +30,10 @@ const agregarCarta = async function(req, res){
   }
   userMetadata = oldCarta.userMetadata;
   userMetadata.idCarta = newCarta.id;
-  userMetadata.ListaId = idLista;
+  userMetadata.ListaId = ListaId;
   //agrego al detalle
   console.log("CARTA: ",userMetadata);
-  console.log("LISTA: ",idLista);
+  console.log("LISTA: ",ListaId);
   [err, userMetadata] = await to(DetalleLista.create(userMetadata));
   if(err) ReE(res, {success:false, error:err});
   //preparo el envio
