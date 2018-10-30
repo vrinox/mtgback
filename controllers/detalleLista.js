@@ -13,7 +13,7 @@ const agregarCarta = async function(req, res){
       cantidad: cantidad de esta carta en la lista
       tipo    : main o side
       idCarta : id de la api
-      idLista : id de la lista
+      ListaId : id de la lista
     }
   */
   oldCarta = req.body;
@@ -32,8 +32,6 @@ const agregarCarta = async function(req, res){
   userMetadata.idCarta = newCarta.id;
   userMetadata.ListaId = ListaId;
   //agrego al detalle
-  console.log("PARAMS: ",req.params);
-  console.log("CARTA: ",userMetadata);
   [err, userMetadata] = await to(DetalleLista.create(userMetadata));
   if(err) ReE(res, {success:false, error:err});
   //preparo el envio
