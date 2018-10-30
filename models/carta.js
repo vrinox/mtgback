@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
     cmc           : DataTypes.SMALLINT,
     rarity        : DataTypes.STRING,
     colorIdentity : DataTypes.STRING,
-    type         : DataTypes.STRING,
+    type          : DataTypes.STRING,
     types         : DataTypes.STRING,
     subtypes      : DataTypes.STRING,
     set           : DataTypes.STRING,
@@ -16,7 +16,8 @@ module.exports = (sequelize, DataTypes) => {
     power         : DataTypes.STRING,
     toughness     : DataTypes.STRING,
     manaCost      : DataTypes.STRING,
-    imageUrl      : DataTypes.STRING
+    imageUrl      : DataTypes.STRING,
+    multiverseid  : DataTypes.INT
   });
 
   Model.associate = function(models){
