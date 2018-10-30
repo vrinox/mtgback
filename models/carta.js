@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
     toughness     : DataTypes.STRING,
     manaCost      : DataTypes.STRING,
     imageUrl      : DataTypes.STRING,
-    multiverseid  : DataTypes.INT
+    multiverseid  : DataTypes.INTEGER
   });
 
   Model.associate = function(models){
