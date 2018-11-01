@@ -5,14 +5,20 @@ const authService = require('./../services/AuthService');
 const decorar     = require('../services/decorador');
 
 const getAll = async function(req, res){
-  let err, usuarios,
+  let err, usuarios, newFiltros,
   filtros = req.body.filtros,
-  newFiltros = {
-    $or:{},
-    $not:{
-      "id":req.user.id
-    }
-  };
+  if(req.user){
+    newFiltros = {
+      $or:{},
+      $not:{
+        "id":req.user.id
+      }
+    };
+  }else{
+    newFiltros = {
+      $or:{}
+    };
+  }
   Object.keys(filtros).forEach((each)=>{
     newFiltros.$or[each]={
       $like:'%'+filtros[each].toLowerCase()+'%'
