@@ -17,7 +17,7 @@ const rutas = function(router){
 }
 //rutas publicas
 const publicAPI = function(router){
-  router.get('/mazos'       , Ctrl.search);
+  router.post('/mazos'      , Ctrl.search);
   router.get('/mazo/:idMazo', Ctrl.get);
 }
 

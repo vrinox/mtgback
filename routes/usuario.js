@@ -17,7 +17,7 @@ const rutas = function(router){
 
 //rutas publicas
 const publicAPI = function(router){  
-  router.get('/usuarios'    , controlador.getAll);
+  router.post('/usuarios'    , controlador.getAll);
   router.get('/usuario/:id' , controlador.get);
 }
 

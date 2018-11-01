@@ -15,7 +15,6 @@ const rutas = function(router){
 }
 //rutas publicas
 const publicAPI = function(router){
-  router.get('/listas'        , Ctrl.search);
   router.get('/lista/:idLista', Ctrl.get);
 }
 
