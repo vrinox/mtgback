@@ -12,4 +12,4 @@ const public = function(){
   });
   return router;
 }
-module.exports = p;
+module.exports = public;
