@@ -51,7 +51,7 @@ app.use(function (req, res, next) {
 });
 
 app.use('/v1', v1);
-app.use('/public', public);
+app.use('/p', public);
 
 app.use('/', function(req, res){
 	res.statusCode = 200;//send the appropriate status code
