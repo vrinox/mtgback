@@ -1,5 +1,6 @@
 const controlador = require('./../controllers/usuario');
 const passport    = require('passport');
+
 const rutas = function(router){
   //rutas de autenticacion
   router.post(    '/usuario'       , controlador.create);
@@ -7,11 +8,18 @@ const rutas = function(router){
   router.post(    '/usuario/token' , controlador.token);
   //rutas privadas
   router.get(     '/usuario/:id/logout',  passport.authenticate('jwt', {session:false}), controlador.logout);
-  router.get(     '/usuario/:id',         passport.authenticate('jwt', {session:false}), controlador.get);
   router.post(    '/usuarios',            passport.authenticate('jwt', {session:false}), controlador.getAll);
   router.put(     '/usuario/:id/estado',  passport.authenticate('jwt', {session:false}), controlador.cambiarEstado);
   router.put(     '/usuario/:id',         passport.authenticate('jwt', {session:false}), controlador.update);
   router.delete(  '/usuario',             passport.authenticate('jwt', {session:false}), controlador.remove);
 }
 
-module.exports = rutas;
+//rutas publicas
+const publicAPI = function(router){  
+  router.get('/usuarios'    , controlador.getAll);
+  router.get('/usuario/:id' , controlador.get);
+}
+
+module.exports.rutas = rutas;
+module.exports.publicas = publicAPI;
+

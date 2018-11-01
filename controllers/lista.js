@@ -77,3 +77,29 @@ const remove = async function(req, res){
   return ReS(res, {message:'Lista eliminado'}, 200);
 }
 module.exports.remove = remove;
+
+const search = async function(req, res){
+  res.setHeader('Content-Type', 'application/json');
+  filtros = req.body.filtros,
+  newFiltros = {
+    $or:{}
+  };
+  Object.keys(filtros).forEach((each)=>{
+    newFiltros.$or[each]={
+      $like:'%'+filtros[each].toLowerCase()+'%'
+    }
+  });
+  [err, listas] = await to(Lista.findAll({
+    include:[{
+      model:Usuario
+    }],
+    where:newFiltros
+  }));
+  if(err) ReE(res, {success:false, error:err}, 422);
+  let listasJson = await Promise.all(listas.map(async (lista) => {
+    lista = await decorar.lista(lista);
+    return lista;
+  }));
+  return ReS(res, {listas:listasJson});
+}
+module.exports.search = search;

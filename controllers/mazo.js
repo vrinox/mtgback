@@ -123,3 +123,32 @@ const remove = async function(req, res){
   return ReS(res, {message:'Mazo eliminado'}, 200);
 }
 module.exports.remove = remove;
+
+//rutas de la api publica
+const search = async function(req, res){
+  res.setHeader('Content-Type', 'application/json');
+  filtros = req.body.filtros,
+  newFiltros = {
+    $or:{}
+  };
+  Object.keys(filtros).forEach((each)=>{
+    newFiltros.$or[each]={
+      $like:'%'+filtros[each].toLowerCase()+'%'
+    }
+  });
+  [err, mazos] = await to(Mazo.findAll({
+    include:[{
+      model:Formato
+    },{
+      model:Usuario
+    }],
+    where:newFiltros
+  }));
+  if(err) ReE(res, {success:false, error:err}, 422);
+  let mazosJson = await Promise.all(mazos.map(async (mazo) => {
+    mazo = await decorar.mazo(mazo);
+    return mazo;
+  }));
+  return ReS(res, {mazos:mazosJson});
+}
+module.exports.search = search;

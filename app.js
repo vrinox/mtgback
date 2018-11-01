@@ -4,13 +4,14 @@ require('./global_functions');  //instantiate global functions
 //middlewares y frameworks
 const express 		= require('express');
 const logger 	    = require('morgan');
-const bodyParser 	= require('body-parser');
-const passport    = require('passport');
-const custom      = require('./middleware/custom');
+const bodyParser    = require('body-parser');
+const passport      = require('passport');
+const custom        = require('./middleware/custom');
 
 
 //Rutas
 const v1 = require('./routes/v1')();
+const public = require('./routes/public')();
 const app = express();
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -50,6 +51,7 @@ app.use(function (req, res, next) {
 });
 
 app.use('/v1', v1);
+app.use('/public', public);
 
 app.use('/', function(req, res){
 	res.statusCode = 200;//send the appropriate status code
