@@ -26,12 +26,11 @@ const getAll = async function(req, res){
       }
     });
   }
-  console.log("ROUTER: aqui llego");
-  // [err, usuarios] = await to(Usuario.findAll({"where":newFiltros}))
-  // if(err) ReE(res, {success:false, error:err}, 422);
-  // usuarios =  usuarios.map((usuario)=>{
-  //   return usuario.toWeb();
-  // });
+  [err, usuarios] = await to(Usuario.findAll({"where":newFiltros}))
+  if(err) ReE(res, {success:false, error:err}, 422);
+  usuarios =  usuarios.map((usuario)=>{
+    return usuario.toWeb();
+  });
   ReS(res,{success:true,usuarios:usuarios});
 }
 module.exports.getAll = getAll;
