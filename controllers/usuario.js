@@ -4,6 +4,10 @@ const Usuario     = require('../models').Usuario;
 const authService = require('./../services/AuthService');
 const decorar     = require('../services/decorador');
 
+module.exports.prueba = async function (req,res){
+  console.log("ROUTER:entro");
+  ReS(res,{success:true});
+}
 const getAll = async function(req, res){
   let err, usuarios, newFiltros,
   filtros = req.body.filtros;
