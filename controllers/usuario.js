@@ -6,7 +6,7 @@ const decorar     = require('../services/decorador');
 
 const getAll = async function(req, res){
   let err, usuarios, newFiltros,
-  filtros = req.body.filtros,
+  filtros = req.body.filtros;
   if(req.user){
     newFiltros = {
       $or:{},
