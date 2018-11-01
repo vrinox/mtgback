@@ -18,7 +18,7 @@ const getAll = async function(req, res){
       $or:{}
     };
   }
-  if(req.body){
+  if(req.body.filtros){
     filtros = req.body.filtros;
     Object.keys(filtros).forEach((each)=>{
       newFiltros.$or[each]={
