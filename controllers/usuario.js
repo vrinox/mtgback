@@ -5,7 +5,6 @@ const authService = require('./../services/AuthService');
 const decorar     = require('../services/decorador');
 
 const getAll = async function(req, res){
-  console.log("ROUTER:entro");
   let err, usuarios, newFiltros,
   filtros = req.body.filtros;
   if(req.user){
@@ -20,16 +19,17 @@ const getAll = async function(req, res){
       $or:{}
     };
   }
-  Object.keys(filtros).forEach((each)=>{
-    newFiltros.$or[each]={
-      $like:'%'+filtros[each].toLowerCase()+'%'
-    }
-  });
-  [err, usuarios] = await to(Usuario.findAll({"where":newFiltros}))
-  if(err) ReE(res, {success:false, error:err}, 422);
-  usuarios =  usuarios.map((usuario)=>{
-    return usuario.toWeb();
-  });
+  console.log("ROUTER:entro");
+  // Object.keys(filtros).forEach((each)=>{
+  //   newFiltros.$or[each]={
+  //     $like:'%'+filtros[each].toLowerCase()+'%'
+  //   }
+  // });
+  // [err, usuarios] = await to(Usuario.findAll({"where":newFiltros}))
+  // if(err) ReE(res, {success:false, error:err}, 422);
+  // usuarios =  usuarios.map((usuario)=>{
+  //   return usuario.toWeb();
+  // });
   ReS(res,{success:true,usuarios:usuarios});
 }
 module.exports.getAll = getAll;
