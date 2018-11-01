@@ -5,8 +5,7 @@ const authService = require('./../services/AuthService');
 const decorar     = require('../services/decorador');
 
 const getAll = async function(req, res){
-  let err, usuarios, newFiltros,
-  filtros = req.body.filtros;
+  let err, usuarios, newFiltros, filtros 
   if(req.user){
     newFiltros = {
       $or:{},
@@ -19,12 +18,15 @@ const getAll = async function(req, res){
       $or:{}
     };
   }
-  console.log("ROUTER:entro");
-  // Object.keys(filtros).forEach((each)=>{
-  //   newFiltros.$or[each]={
-  //     $like:'%'+filtros[each].toLowerCase()+'%'
-  //   }
-  // });
+  if(req.body){
+    filtros = req.body.filtros;
+    Object.keys(filtros).forEach((each)=>{
+      newFiltros.$or[each]={
+        $like:'%'+filtros[each].toLowerCase()+'%'
+      }
+    });
+  }
+  console.log("ROUTER: aqui llego");
   // [err, usuarios] = await to(Usuario.findAll({"where":newFiltros}))
   // if(err) ReE(res, {success:false, error:err}, 422);
   // usuarios =  usuarios.map((usuario)=>{
