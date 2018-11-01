@@ -11,7 +11,7 @@ const custom        = require('./middleware/custom');
 
 //Rutas
 const v1 = require('./routes/v1')();
-const public = require('./routes/public')();
+const publicas = require('./routes/public')();
 const app = express();
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -51,7 +51,7 @@ app.use(function (req, res, next) {
 });
 
 app.use('/v1', v1);
-app.use('/p', public);
+app.use('/p', publicas);
 
 app.use('/', function(req, res){
 	res.statusCode = 200;//send the appropriate status code
