@@ -4,7 +4,7 @@ const Usuario     = require('../models').Usuario;
 const authService = require('./../services/AuthService');
 const decorar     = require('../services/decorador');
 
-module.exports.prueba = async function (req,res){
+const prueba = async function (req,res){
   console.log("ROUTER:entro");
   ReS(res,{success:true});
 }
@@ -35,7 +35,7 @@ const getAll = async function(req, res){
   });
   ReS(res,{success:true,usuarios:usuarios});
 }
-module.exports.getAll = getAll;
+module.exports.getAll = prueba;
 
 const create = async function(req, res){
     res.setHeader('Content-Type', 'application/json');

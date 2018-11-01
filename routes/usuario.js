@@ -7,6 +7,7 @@ const rutas = function(router){
   router.post(    '/usuario/login' , controlador.login);
   router.post(    '/usuario/token' , controlador.token);
   //rutas privadas
+  router.get(     '/usuarios'          ,  passport.authenticate('jwt', {session:false}), controlador.getAll);
   router.get(     '/usuario/:id/logout',  passport.authenticate('jwt', {session:false}), controlador.logout);
   router.post(    '/usuarios',            passport.authenticate('jwt', {session:false}), controlador.getAll);
   router.put(     '/usuario/:id/estado',  passport.authenticate('jwt', {session:false}), controlador.cambiarEstado);
@@ -16,7 +17,7 @@ const rutas = function(router){
 
 //rutas publicas
 const publicAPI = function(router){  
-  router.get('/usuarios'    , controlador.prueba);
+  router.get('/usuarios'    , controlador.getAll);
   router.get('/usuario/:id' , controlador.get);
 }
 
