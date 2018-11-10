@@ -106,18 +106,15 @@ const initSocket = function(io){
     }
   });
   io.on('connection', (socket) => {
-    Servidor
-      .getClienteById(socket.id)
-      .then((cliente)=>{
-        console.log('SOCKET: usuario '+cliente.usuario.username+' conectado');
-        socket.on('error',(err)=>{
-          console.log("Socket error:",err);
-        });
-        socket.on('disconnect',()=>{
-          console.log('SOCKET: usuario '+cliente.usuario.username+' desconectado');
-          Servidor.remove(socket);
-        })
-      })
+    let cliente = Servidor.getClienteById(socket.id)
+    console.log('SOCKET: usuario '+cliente.usuario.username+' conectado');
+    socket.on('error',(err)=>{
+      console.log("Socket error:",err);
+    });
+    socket.on('disconnect',()=>{
+      console.log('SOCKET: usuario '+cliente.usuario.username+' desconectado');
+      Servidor.remove(socket);
+    })
   });
   Servidor.io = io;
 }
