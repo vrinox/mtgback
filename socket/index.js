@@ -50,7 +50,7 @@ Servidor.add = function(socket){
 Servidor.remove = function(socket){
   this.clientes = this.clientes.filter((cliente)=>{
     if(socket.usuario){
-        return cliente.usuario.id != socket.usuario.id
+      return cliente.usuario.id != socket.usuario.id
     }else{
       return false;
     }

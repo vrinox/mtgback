@@ -12,10 +12,18 @@ module.exports = async function(socket,server){
   });
   socket.on("gps:disponibles",(data)=>{
     console.log("GPS:disponibles "+data.usuarioId);
-    server
-      .getCliente(data.usuarioId)
-      .then((cliente)=>{
-        console.log("GPS:",cliente.ultimaUbicacion);
-      })
+    let ubicaciones = server.clientes.map((cliente)=>{
+      if(cliente.usuario){
+        return {
+          usuario: cliente.usuario,
+          coords : cliente.latlng
+        }
+      }else{
+        return null;
+      }
+    }).filter((ubicacion)=>{
+      return ubicacion !== null;
+    });
+    socket.emit("gps:disponibles",{ubicaciones:ubicaciones})
   })
 }

@@ -5,9 +5,10 @@ const rutas = function(router){
     console.log(Servidor.clientes);
 		let clientes = Servidor.clientes.map((cliente)=>{
 			return {
-					id			: cliente.usuario.dataValues.id,
-					nombre	: cliente.usuario.dataValues.username,
-					socket	:	cliente.id
+					id				: cliente.usuario.dataValues.id,
+					nombre		: cliente.usuario.dataValues.username,
+					ubicacion	:	cliente.ultimaUbicacion,
+					socket		:	cliente.id
 			};
 		})
 		res.statusCode = 200;//send the appropriate status code
