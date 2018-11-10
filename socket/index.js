@@ -23,14 +23,16 @@ Servidor.getCliente =  function(usuarioId){
     if(!encontrado){
       let err,
       wrapper = {
-        usuario:null,
-        emit: null
+        usuario         : null,
+        //para el gps
+        ultimaUbicacion : null, 
+        emit            : null,
       };
       wrapper.usuario = await this.getUsuario(usuarioId);
       if(wrapper.usuario){
         resolve(wrapper);
       }else{
-        resolve(null);
+        reject(new Error("cliente no se encuentra conectado"));
       }
     }
   });
@@ -58,6 +60,7 @@ Servidor.remove = function(socket){
 Servidor.inicializarEventos = function(socket){
   require('./notificacion')(socket);
   require('./chat')(socket,this);
+  require('./gps')(socket,this);
 }
 
 const init = function(io){
