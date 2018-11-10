@@ -11,7 +11,6 @@ module.exports = async function(socket,server){
       })
   });
   socket.on("gps:disponibles",(data)=>{
-    console.log("GPS:disponibles "+data.usuarioId);
     let ubicaciones = server.clientes.map((cliente)=>{
       if(cliente.usuario){
         return {
