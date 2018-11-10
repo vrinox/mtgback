@@ -50,6 +50,12 @@ Servidor.remove = function(oldCliente){
   });
 }
 
+Servidor.getClienteById = function(socketId){
+  return this.clientes.find((cliente)=>{
+    return cliente.socket.id == socketId;
+  })
+}
+
 Servidor.inicializarEventos = function(socket){
   require('./notificacion')(socket);
   require('./chat')(socket,this);
@@ -100,14 +106,18 @@ const initSocket = function(io){
     }
   });
   io.on('connection', (socket) => {
-    console.log('SOCKET: usuario '+socket.usuario.username+' conectado');
-    socket.on('error',(err)=>{
-      console.log("Socket error:",err);
-    });
-    socket.on('disconnect',()=>{
-      console.log('SOCKET: usuario '+socket.usuario.username+' desconectado');
-      Servidor.remove(socket);
-    })
+    Servidor
+      .getClienteById(socket.id)
+      .then((cliente)=>{
+        console.log('SOCKET: usuario '+cliente.usuario.username+' conectado');
+        socket.on('error',(err)=>{
+          console.log("Socket error:",err);
+        });
+        socket.on('disconnect',()=>{
+          console.log('SOCKET: usuario '+cliente.usuario.username+' desconectado');
+          Servidor.remove(socket);
+        })
+      })
   });
   Servidor.io = io;
 }
