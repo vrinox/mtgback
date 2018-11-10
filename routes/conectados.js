@@ -2,7 +2,9 @@ const Servidor = require('../socket').Servidor;
 
 const rutas = function(router){
   router.get(  '/conectados' ,  (req, res)=>{
-    console.log(Servidor.clientes);
+    console.log(Servidor.clientes.map((cliente)=>{
+			return cliente.ubicacion;
+		}));
 		let clientes = Servidor.clientes.map((cliente)=>{
 			return {
 					ubicacion	:	cliente.ubicacion,
