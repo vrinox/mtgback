@@ -4,7 +4,7 @@ module.exports = async function(socket,server){
     server
       .getCliente(data.usuario)
       .then((cliente)=>{
-        cliente.ultimaUbicacion = data.latlng;
+        cliente.ubicacion = data.latlng;
       })
       .catch((err)=>{
         console.log("GPS:",err);
@@ -15,7 +15,7 @@ module.exports = async function(socket,server){
       if(cliente.usuario){
         return {
           usuario: cliente.usuario,
-          coords : cliente.latlng
+          coords : cliente.ubicacion
         }
       }else{
         return null;

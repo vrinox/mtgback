@@ -15,25 +15,13 @@ Servidor.onesignal= {
 Servidor.getCliente =  function(usuarioId){
   return new Promise(async (resolve,reject)=>{
     let encontrado = false;
-    this.clientes.forEach((socket)=>{
-      if(socket.usuario.id === usuarioId){
+    this.clientes.forEach((cliente)=>{
+      if(cliente.usuario.id === usuarioId){
         resolve(socket);
       }
     });
     if(!encontrado){
-      let err,
-      wrapper = {
-        usuario         : null,
-        //para el gps
-        ultimaUbicacion : null, 
-        emit            : null,
-      };
-      wrapper.usuario = await this.getUsuario(usuarioId);
-      if(wrapper.usuario){
-        resolve(wrapper);
-      }else{
-        reject(new Error("cliente no se encuentra conectado"));
-      }
+      reject(new Error("cliente no se encuentra conectado"));
     }
   });
 }
@@ -43,14 +31,19 @@ Servidor.getUsuario = async function(usuarioId){
   return usuario;
 };
 
-Servidor.add = function(socket){
-  this.remove(socket);
-  this.clientes.push(socket);
+Servidor.add = function(socket,usuario){
+  let cliente = {
+    socket   : socket,
+    usuario  : usuario,
+    ubicacion: null
+  }
+  this.remove(cliente);
+  this.clientes.push(cliente);
 }
-Servidor.remove = function(socket){
-  this.clientes = this.clientes.filter((cliente)=>{
-    if(socket.usuario){
-      return cliente.usuario.id != socket.usuario.id
+Servidor.remove = function(oldCliente){
+  this.clientes = this.clientes.filter((newCliente)=>{
+    if(oldCliente.usuario){
+      return newCliente.usuario.id != oldCliente.usuario.id
     }else{
       return false;
     }
@@ -92,10 +85,8 @@ const initSocket = function(io){
           let err,usuario;
           [err,usuario] = await to(Usuario.findOne({"where":{"id":UID}}));
           if(err) next(new Error('Socket: authentication error'));
-          socket.usuario = usuario;
           socket.emit("autenticado",{data:"autenticado"});
-          console.log("SOCKET: id ",socket.id);
-          Servidor.add(socket);
+          Servidor.add(socket,usuario);
           Servidor.inicializarEventos(socket);
           next();
         }else{

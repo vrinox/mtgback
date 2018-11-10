@@ -2,13 +2,13 @@ const Servidor = require('../socket').Servidor;
 
 const rutas = function(router){
   router.get(  '/conectados' ,  (req, res)=>{
-    console.log(Servidor.clientes.ultimaUbicacion);
+    console.log(Servidor.clientes);
 		let clientes = Servidor.clientes.map((cliente)=>{
 			return {
+					ubicacion	:	cliente.ubicacion,
 					id				: cliente.usuario.dataValues.id,
 					nombre		: cliente.usuario.dataValues.username,
-					ubicacion	:	cliente.ultimaUbicacion,
-					socket		:	cliente.id
+					socket		:	cliente.socket.id
 			};
 		})
 		res.statusCode = 200;//send the appropriate status code
