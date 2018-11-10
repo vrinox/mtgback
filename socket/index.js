@@ -17,7 +17,7 @@ Servidor.getCliente =  function(usuarioId){
     let encontrado = false;
     this.clientes.forEach((cliente)=>{
       if(cliente.usuario.id === usuarioId){
-        resolve(socket);
+        resolve(cliente);
       }
     });
     if(!encontrado){
