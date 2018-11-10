@@ -1,11 +1,10 @@
 
 module.exports = async function(socket,server){
   socket.on("gps",(data)=>{
-    console.log(data);
     server
       .getCliente(data.usuario)
       .then((cliente)=>{
-        cliente.ubicacion = data.latlng;
+        cliente.ubicacion = data.latLng;
         console.log("llego",cliente.ubicacion);
       })
       .catch((err)=>{
