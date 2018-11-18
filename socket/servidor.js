@@ -55,17 +55,13 @@ var Servidor = {};
     this.remove(cliente.socket);
     this.clientes.push(cliente);
   }
-  
+
   Servidor.remove = function(socket){
-    console.log("socket id del remove: ",socket.id);
-    let oldCliente = this.getClienteById(socket.id);
+    console.log("remove antes:",this.clientes.length);
     this.clientes = this.clientes.filter((newCliente)=>{
-      if(oldCliente.usuario){
-        return newCliente.usuario.id != oldCliente.usuario.id
-      }else{
-        return false;
-      }
+      return newCliente.socket.id != socket.id
     });
+    console.log("remove despues:",this.clientes.length);
   }
 
   Servidor.inicializarEventos = function(socket){
