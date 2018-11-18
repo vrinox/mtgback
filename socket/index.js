@@ -28,6 +28,12 @@ Servidor.getCliente =  function(usuarioId){
     }
   });
 }
+
+Servidor.getClienteById = function(socketId){
+  return this.clientes.find((cliente)=>{
+    return cliente.socket.id == socketId;
+  })
+}
 Servidor.getUsuario = async function(usuarioId){
   let err, usuario;
   [err, usuario] = await to(Usuario.findOne({"where":{"id":usuarioId}}));
@@ -45,6 +51,7 @@ Servidor.add = function(socket,usuario){
 }
 Servidor.remove = function(socket){
   let oldCliente = this.getClienteById(socket.id);
+  console.log(oldCliente);  
   this.clientes = this.clientes.filter((newCliente)=>{
     if(oldCliente.usuario){
       return newCliente.usuario.id != oldCliente.usuario.id
@@ -52,12 +59,6 @@ Servidor.remove = function(socket){
       return false;
     }
   });
-}
-
-Servidor.getClienteById = function(socketId){
-  return this.clientes.find((cliente)=>{
-    return cliente.socket.id == socketId;
-  })
 }
 
 Servidor.inicializarEventos = function(socket){
