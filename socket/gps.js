@@ -6,8 +6,9 @@ module.exports = async function(socket,server){
         cliente.ubicacion = data.latLng;
         cliente.cercanos = server.clientes.filter((otherClient)=>{
           if(otherClient.ubicacion && cliente.usuario.id !== otherClient.usuario.id){
-            console.log(server.gpsHelper);            
-            console.log(server.gpsHelper.obtenerDistancia(cliente,otherClient));            
+            console.log("username:"+cliente.usuario.username,cliente.ubicacion)
+            console.log("username:"+otherClient.usuario.username,otherClient.ubicacion);
+            console.log("distancia en km:",server.gpsHelper.obtenerDistancia(cliente,otherClient));            
             return server.gpsHelper.obtenerDistancia(cliente,otherClient) <= server.distaciaMax;
           }else{
             return false;
