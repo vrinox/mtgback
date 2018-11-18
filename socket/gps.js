@@ -2,22 +2,9 @@ module.exports = async function(socket,server){
   socket.on("gps",(data)=>{
     server
       .getCliente(data.usuario)
-      .then((cliente)=>{
+      .then(async (cliente)=>{
         cliente.ubicacion = data.latLng;
-        cliente.cercanos = server.clientes.filter((otherClient)=>{
-          if(otherClient.ubicacion && cliente.usuario.id !== otherClient.usuario.id){   
-            console.log(server.gpsHelper.obtenerDistancia(cliente,otherClient),server.distaciaMax);         
-            return server.gpsHelper.obtenerDistancia(cliente,otherClient) < server.distaciaMax;
-          }else{
-            return false;
-          }
-        }).map((newClient)=>{
-          return {
-            usuario   : newClient.usuario,
-            ubicacion : newClient.ubicacion
-          }
-        });
-        server.add(cliente);
+        await server.buscarCercanos(cliente);
       })
       .catch((err)=>{
         console.log("GPS:",err);
