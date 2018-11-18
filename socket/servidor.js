@@ -57,11 +57,9 @@ var Servidor = {};
   }
 
   Servidor.remove = function(socket){
-    console.log("remove antes:",this.clientes.length);
     this.clientes = this.clientes.filter((newCliente)=>{
       return newCliente.socket.id != socket.id
     });
-    console.log("remove despues:",this.clientes.length);
   }
 
   Servidor.inicializarEventos = function(socket){
@@ -76,7 +74,6 @@ var Servidor = {};
         cliente.cercanos = this.clientes.filter((otherClient)=>{
           if(otherClient.ubicacion && cliente.usuario.id !== otherClient.usuario.id){   
             let distancia = this.gpsHelper.obtenerDistancia(cliente,otherClient);
-            console.log("distancia:",distancia);          
             return distancia < this.distaciaMax;
           }else{
             return false;

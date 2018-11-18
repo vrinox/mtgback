@@ -10,8 +10,8 @@ module.exports = async function(socket,server){
         console.log("GPS:",err);
       })
   });
-  socket.on("gps:disponibles",(data)=>{
-    let cliente = server.getCliente(data.usuarioId);
+  socket.on("gps:disponibles",async (data)=>{
+    let cliente = await server.getCliente(data.usuarioId);
     console.log(cliente.cercanos);
     socket.emit("gps:disponibles",{ubicaciones:cliente.cercanos})
   })
