@@ -31,7 +31,9 @@ Servidor.getCliente =  function(usuarioId){
 
 Servidor.getClienteById = function(socketId){
   return this.clientes.find((cliente)=>{
+    console.log("/////////////////////////////////////////////////");
     console.log("getClienteById",cliente);
+    console.log("/////////////////////////////////////////////////");
     return cliente.socket.id == socketId;
   })
 }
