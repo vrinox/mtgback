@@ -30,7 +30,6 @@ var Servidor = {};
 
   Servidor.getClienteById = function(socketId){
     return this.clientes.find((cliente)=>{
-      console.log("Busqueda por id: un cliente",cliente.socket.id);  
       return cliente.socket.id == socketId;
     });
   }
@@ -74,8 +73,8 @@ var Servidor = {};
         cliente.cercanos = this.clientes.filter((otherClient)=>{
           if(otherClient.ubicacion && cliente.usuario.id !== otherClient.usuario.id){   
             let distancia = this.gpsHelper.obtenerDistancia(cliente,otherClient);
-            console.log(distancia,this.distaciaMax,distancia < this.distaciaMax);
-            return distancia < this.distaciaMax;
+            console.log(distancia,this.distanciaMax,distancia < this.distanciaMax);
+            return distancia < this.distanciaMax;
           }else{
             return false;
           }
