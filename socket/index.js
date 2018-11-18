@@ -1,8 +1,11 @@
 const Usuario = require('../models').Usuario;
 const OneSignal = require('onesignal-node');
+const gpsHelper = require('../services/gpsHelper');
 var Servidor = {};
 Servidor.clientes = [];
 Servidor.io       = null;
+Servidor.gpsHelper = new gpsHelper();
+Servidor.distanciaMax = 10; //kilometros para detectar jugadores
 Servidor.onesignal= {
   client:null,
   groupKeys:{
