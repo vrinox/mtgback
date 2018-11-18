@@ -50,7 +50,7 @@ var Servidor = {};
     this.remove(cliente.socket);
     this.clientes.push(cliente);
   }
-  
+
   Servidor.remove = function(socket){
     let oldCliente = this.getClienteById(socket.id);
     this.clientes = this.clientes.filter((newCliente)=>{
@@ -70,11 +70,11 @@ var Servidor = {};
 
   Servidor.buscarCercanos = function(cliente){
     return new Promise(async (resolve,reject)=>{
-      cliente.cercanos = server.clientes.filter((otherClient)=>{
+      cliente.cercanos = this.clientes.filter((otherClient)=>{
         if(otherClient.ubicacion && cliente.usuario.id !== otherClient.usuario.id){   
-          let distancia = server.gpsHelper.obtenerDistancia(cliente,otherClient);
+          let distancia = this.gpsHelper.obtenerDistancia(cliente,otherClient);
           console.log("distancia:",distancia);          
-          return distancia < server.distaciaMax;
+          return distancia < this.distaciaMax;
         }else{
           return false;
         }
@@ -84,7 +84,7 @@ var Servidor = {};
           ubicacion : newClient.ubicacion
         }
       });
-      await server.add(cliente);
+      await this.add(cliente);
       resolve();
     });
   }
