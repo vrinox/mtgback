@@ -53,7 +53,7 @@ const initSocket = function(io){
     });
     socket.on('disconnect',()=>{
       console.log('SOCKET: usuario '+cliente.usuario.username+' desconectado');
-      Servidor.remove(socket);
+      Servidor.remove(socket,"desconexion");
     })
   });
   Servidor.io = io;

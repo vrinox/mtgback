@@ -47,12 +47,12 @@ var Servidor = {};
       usuario  : usuario,
       ubicacion: null
     }
-    this.remove(cliente.socket);
+    this.remove(cliente.socket,"add");
     this.clientes.push(cliente);
   }
 
-  Servidor.remove = function(socket){
-    console.log("socket id del remove: ",socket.id);
+  Servidor.remove = function(socket,llamado){
+    console.log("socket id del remove("+llamado+"): ",socket.id);
     let oldCliente = this.getClienteById(socket.id);
     this.clientes = this.clientes.filter((newCliente)=>{
       if(oldCliente.usuario){
