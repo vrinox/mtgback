@@ -13,7 +13,8 @@ module.exports = async function(socket,server){
   socket.on("gps:disponibles",async (data)=>{
     let cliente = await server.getCliente(data.usuarioId);
     cliente.idInterval = setInterval(()=>{
-      socket.emit("gps:disponibles",{ubicaciones:cliente.cercanos})
+      let jugador = await server.getCliente(data.usuarioId);
+      socket.emit("gps:disponibles",{ubicaciones:jugador.cercanos})
     },3000);
   })
   socket.on("gps:stop",async (data)=>{
