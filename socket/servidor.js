@@ -70,21 +70,23 @@ var Servidor = {};
 
   Servidor.buscarCercanos = function(cliente){
     return new Promise(async (resolve,reject)=>{
-      cliente.cercanos = this.clientes.filter((otherClient)=>{
-        if(otherClient.ubicacion && cliente.usuario.id !== otherClient.usuario.id){   
-          let distancia = this.gpsHelper.obtenerDistancia(cliente,otherClient);
-          console.log("distancia:",distancia);          
-          return distancia < this.distaciaMax;
-        }else{
-          return false;
-        }
-      }).map((newClient)=>{
-        return {
-          usuario   : newClient.usuario,
-          ubicacion : newClient.ubicacion
-        }
-      });
-      await this.add(cliente);
+      if(this.clientes.length){
+        cliente.cercanos = this.clientes.filter((otherClient)=>{
+          if(otherClient.ubicacion && cliente.usuario.id !== otherClient.usuario.id){   
+            let distancia = this.gpsHelper.obtenerDistancia(cliente,otherClient);
+            console.log("distancia:",distancia);          
+            return distancia < this.distaciaMax;
+          }else{
+            return false;
+          }
+        }).map((newClient)=>{
+          return {
+            usuario   : newClient.usuario,
+            ubicacion : newClient.ubicacion
+          }
+        });
+        await this.add(cliente);
+      }
       resolve();
     });
   }
