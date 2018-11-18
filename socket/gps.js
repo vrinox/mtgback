@@ -16,6 +16,7 @@ module.exports = async function(socket,server){
             ubicacion : newClient.ubicacion
           }
         });
+        console.log(cliente.cercanos);
       })
       .catch((err)=>{
         console.log("GPS:",err);
