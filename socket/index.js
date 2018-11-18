@@ -19,6 +19,7 @@ const initOneSignal = function(){
   }
 };
 const initSocket = function(io){
+  //middleware
   io.use(async (socket,next)=>{
     //se pregunta el socket no posee usuario relacionado
     if(!socket.usuario){
@@ -32,7 +33,7 @@ const initSocket = function(io){
           [err,usuario] = await to(Usuario.findOne({"where":{"id":UID}}));
           if(err) next(new Error('Socket: authentication error'));
           socket.emit("autenticado",{data:"autenticado"});
-          Servidor.add(socket,usuario,"inicial");
+          Servidor.add(socket,usuario);
           Servidor.inicializarEventos(socket);
           next();
         }else{
@@ -53,7 +54,7 @@ const initSocket = function(io){
     });
     socket.on('disconnect',()=>{
       console.log('SOCKET: usuario '+cliente.usuario.username+' desconectado');
-      Servidor.remove(socket,"desconexion");
+      Servidor.remove(socket);
     })
   });
   Servidor.io = io;

@@ -41,18 +41,23 @@ var Servidor = {};
     return usuario;
   };
 
-  Servidor.add = function(socket,usuario,llamado){
+  Servidor.add = function(socket,usuario){
     let cliente = {
       socket   : socket,
       usuario  : usuario,
       ubicacion: null
     }
-    this.remove(cliente.socket,"add"+llamado);
+    this.remove(cliente.socket);
     this.clientes.push(cliente);
   }
 
-  Servidor.remove = function(socket,llamado){
-    console.log("socket id del remove("+llamado+"): ",socket.id);
+  Servidor.update = function(cliente){
+    this.remove(cliente.socket);
+    this.clientes.push(cliente);
+  }
+  
+  Servidor.remove = function(socket){
+    console.log("socket id del remove: ",socket.id);
     let oldCliente = this.getClienteById(socket.id);
     this.clientes = this.clientes.filter((newCliente)=>{
       if(oldCliente.usuario){
@@ -86,7 +91,7 @@ var Servidor = {};
             ubicacion : newClient.ubicacion
           }
         });
-        await this.add(cliente,"cercanos");
+        await this.update(cliente);
       }
       resolve();
     });
