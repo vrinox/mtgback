@@ -15,4 +15,4 @@ const gpsHelper = {};
     return d; // returns the distance in meter
   }
 
-module.exports.gpsHelper = gpsHelper;
+module.exports = gpsHelper;
