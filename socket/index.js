@@ -43,7 +43,8 @@ Servidor.add = function(socket,usuario){
   this.remove(cliente);
   this.clientes.push(cliente);
 }
-Servidor.remove = function(oldCliente){
+Servidor.remove = function(socket){
+  let oldCliente = this.getClienteById(socket.id);
   this.clientes = this.clientes.filter((newCliente)=>{
     if(oldCliente.usuario){
       return newCliente.usuario.id != oldCliente.usuario.id
