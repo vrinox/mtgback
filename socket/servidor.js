@@ -52,6 +52,7 @@ var Servidor = {};
   }
 
   Servidor.remove = function(socket){
+    console.log("socket id del remove: ",socket.id);
     let oldCliente = this.getClienteById(socket.id);
     this.clientes = this.clientes.filter((newCliente)=>{
       if(oldCliente.usuario){
