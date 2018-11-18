@@ -79,8 +79,8 @@ var Servidor = {};
           }
         }).map((newClient)=>{
           return {
-            usuario   : newClient.usuario.dataValues,
-            ubicacion : newClient.ubicacion
+            usuario : newClient.usuario.dataValues,
+            coords  : newClient.ubicacion
           }
         });
         await this.update(cliente);
