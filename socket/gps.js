@@ -22,8 +22,8 @@ module.exports = async function(socket,server){
       })
   });
   socket.on("gps:disponibles",(data)=>{
-    console.log("pidio disponibles",data);
-    let cliente = server.getClienteById(socket.id);
+    let cliente = server.getCliente(data.usuarioId);
+    console.log(cliente.cercanos);
     socket.emit("gps:disponibles",{ubicaciones:cliente.cercanos})
   })
 }
