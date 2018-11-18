@@ -5,7 +5,7 @@ var Servidor = {};
 Servidor.clientes = [];
 Servidor.io       = null;
 Servidor.gpsHelper = gpsHelper;
-Servidor.distanciaMax = 10; //kilometros para detectar jugadores
+Servidor.distanciaMax = 10000; //metros para detectar jugadores
 Servidor.onesignal= {
   client:null,
   groupKeys:{

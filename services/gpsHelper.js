@@ -14,5 +14,4 @@ const gpsHelper = {};
     var d = R * c;
     return d; // returns the distance in meter
   }
-
 module.exports = gpsHelper;
