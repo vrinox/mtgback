@@ -5,7 +5,7 @@ module.exports = async function(socket,server){
       .then((cliente)=>{
         cliente.ubicacion = data.latLng;
         cliente.cercanos = server.clientes.filter((otherClient)=>{
-          if(otherClient.ubicacion){
+          if(otherClient.ubicacion && cliente.usuario.id !== otherClient.usuario.id){
             console.log(server.gpsHelper);            
             console.log(server.gpsHelper.obtenerDistancia(cliente,otherClient));            
             return server.gpsHelper.obtenerDistancia(cliente,otherClient) <= server.distaciaMax;
