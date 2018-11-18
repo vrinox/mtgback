@@ -73,7 +73,6 @@ var Servidor = {};
         cliente.cercanos = this.clientes.filter((otherClient)=>{
           if(otherClient.ubicacion && cliente.usuario.id !== otherClient.usuario.id){   
             let distancia = this.gpsHelper.obtenerDistancia(cliente,otherClient);
-            console.log(distancia,this.distanciaMax,distancia < this.distanciaMax);
             return distancia < this.distanciaMax;
           }else{
             return false;
