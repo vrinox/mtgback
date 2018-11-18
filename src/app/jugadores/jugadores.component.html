@@ -1,0 +1,68 @@
+<form [formGroup]="searchForm" >
+  <div class="example-container">
+    <mat-form-field class="example-full-width">
+      <input matInput placeholder="Buscar" formControlName="nombre" type="search">
+      <button mat-mini-fab class="final" color="primary" (click)="buscar()">
+        <i class="material-icons">search</i>
+      </button>
+    </mat-form-field>
+  </div>
+</form>
+<div class="left">
+  <!-- lista de usuarios-->
+  <mat-list>
+    <h3 mat-subheader><mat-icon mat-list-icon>face</mat-icon>Usuarios</h3>
+    <mat-list-item *ngFor="let usuario of usuarios" (click)="detalleUsuario(usuario)">
+      <mat-icon mat-list-icon>face</mat-icon>
+      <img class="avatar" *ngIf="usuario.imagesrc" src="{{usuario.imagesrc}}">
+      <h4 mat-line>{{usuario.username}}</h4>
+      <p mat-line> {{usuario.nombre + " " + usuario.apellido}} </p>
+    </mat-list-item>
+  </mat-list>
+</div>
+<!-- detalle de usuario-->
+<div class="right">
+  <!-- usuario placeholder-->
+  <div class="detalle" *ngIf="!detalle.id">
+    <div class="texto">
+      Elije a un jugador para ver 
+      <br>
+      su informacion personal
+    </div>
+  </div>
+  <!-- detalle -->
+  <div class="detalle" *ngIf="detalle.id">
+    <mat-toolbar color="primary">        
+      <mat-toolbar-row>    
+          <img class="avatar completo "src="{{detalle.imagesrc}}" >
+          <!-- This fills the remaining space of the current row -->
+          <span class="nombre">{{detalle.username}}</span>          
+      </mat-toolbar-row>
+    </mat-toolbar>
+    <div class="mitad">
+      <mat-list>
+          <h3 mat-subheader><mat-icon mat-list-icon>all_inbox</mat-icon>Listas</h3>
+          <mat-list-item *ngFor="let lista of detalle.listas" >
+            <h4 mat-line *ngIf="lista.tipo == 't'">TradeList</h4>
+            <h4 mat-line *ngIf="lista.tipo == 'w'">WishList</h4>
+            <p mat-line> Cartas{{' '+lista.cartas.length}}</p>
+          </mat-list-item>
+        </mat-list>
+        <div class="clear"></div>
+    </div>
+    <div class="mitad">
+      <mat-list>
+        <h3 mat-subheader><mat-icon mat-list-icon>turned_in</mat-icon>Mazos</h3>
+        <mat-list-item *ngFor="let mazo of detalle.mazos" >
+          <i mat-list-icon class="ss ss-{{mazo.Formato.iconclass}}"></i>
+          <h4 mat-line>{{mazo.nombre}}</h4>
+          <p mat-line> Main{{ " " + mazo.mainLength + " // Side " + mazo.sideLength}} </p>
+          <i *ngFor="let color of mazo.colores "class="ms ms-cost ms-shadow ms-{{ color }}"></i>
+        </mat-list-item>
+      </mat-list>
+      <div class="clear"></div>
+    </div>
+    <div class="clear"></div>
+  </div>
+</div>
+<div class="clear"></div>

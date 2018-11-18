@@ -1,0 +1,40 @@
+<div class="example-container">
+  <mat-form-field class="example-full-width">
+    <input matInput placeholder="Buscar" [(ngModel)]="nombre" type="search">
+    <button mat-mini-fab class="final" color="primary" (click)="buscar()">
+      <i class="material-icons">search</i>
+    </button>
+  </mat-form-field>
+</div>
+<br>
+<div class="contener">
+  <div *ngFor="let carta of cartas" class="card">
+    <div class="left">
+      <img src="{{carta.imageUrl}}" alt="">
+    </div>
+    <div class="price-guide">
+      <div class="titulo">Informacion</div>
+      <table>
+        <tr>
+          <td class="label">N° colecionista</td>
+        </tr>
+        <tr>
+          <td colspan="2" class="title">Precios</td>
+        </tr>   
+        <tr>
+          <td class="label">Dolares</td>
+          <td>{{carta.priceGuide.usd}}</td>
+        </tr>    
+        <tr>
+          <td class="label">Euros</td>
+          <td>{{carta.priceGuide.eu}}</td>
+        </tr>    
+        <tr>
+          <td class="label">Tix</td>
+          <td>{{carta.priceGuide.tix}}</td>
+        </tr> 
+      </table>     
+    </div>
+    <div class="clear"></div>
+  </div>
+</div>

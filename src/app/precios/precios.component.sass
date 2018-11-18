@@ -1,0 +1,39 @@
+.contener
+  display: flex
+  flex-direction: row
+  flex-wrap: wrap
+  justify-content: space-around
+  align-content: stretch
+  align-items: flex-start
+  .card
+    width: 350px
+    border: 1px solid rgba(0,0,0,0.14)
+    .left
+        padding: 4px
+        float: left
+        img
+            width: 177px
+
+    .price-guide
+      display:block
+      float: left
+      width: calc(350px - 197px)
+      
+      .titulo
+        padding: 10px
+        text-align: center
+        font-weight: bold
+        color: #38adae
+        background-color:transparent
+      
+      table
+        width: 100%
+
+        td
+          padding: 4px
+          &.label
+            font-weight: bold
+          
+          &.title
+            color: #38adae
+            text-align: center

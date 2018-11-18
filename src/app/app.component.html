@@ -1,0 +1,16 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<mat-toolbar color="primary">
+  <mat-toolbar-row>
+      <span>DashBoard</span>
+
+    <!-- This fills the remaining space of the current row -->
+    <span class="example-fill-remaining-space"></span>
+    <span>MagicHub(Viewver)</span>
+  </mat-toolbar-row>
+  <mat-toolbar-row class="content">
+    <span routerLink="/jugadores"><i class="material-icons">face</i>Jugadores</span>
+    <span routerLink="/precios"> <i class="material-icons">view_carousel</i>Cartas</span>
+    <span routerLink="/decks"><i class="material-icons">turned_in</i>Decks</span>
+  </mat-toolbar-row>
+</mat-toolbar>
+<router-outlet></router-outlet>

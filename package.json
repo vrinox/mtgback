@@ -1,18 +1,44 @@
 {
-  "name": "server",
+  "name": "mtg-back",
   "version": "0.0.0",
-  "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "ng": "ng",
+    "start": "node .Servidor/bin/www",
+    "build": "ng build",
+    "test": "ng test",
+    "lint": "ng lint",
+    "e2e": "ng e2e",
+    "postinstall": "ng build --aot --prod"
   },
+  "private": true,
   "dependencies": {
+    "@angular/animations": "^7.0.2",
+    "@angular/cdk": "^7.0.2",
+    "@angular/cli": "^7.0.4",
+    "@angular/common": "~7.0.0",
+    "@angular/compiler": "~7.0.0",
+    "@angular/compiler-cli": "^7.0.2",
+    "@angular/core": "~7.0.0",
+    "@angular/forms": "~7.0.0",
+    "@angular/http": "~7.0.0",
+    "@angular/material": "^7.0.2",
+    "@angular/platform-browser": "~7.0.0",
+    "@angular/platform-browser-dynamic": "~7.0.0",
+    "@angular/router": "~7.0.0",
+    "core-js": "^2.5.4",
+    "hammerjs": "^2.0.8",
+    "path": "^0.12.7",
+    "rxjs": "~6.3.3",
+    "typescript": "~3.1.1",
+    "zone.js": "~0.8.26",
+    
     "bcrypt": "^1.0.3",
     "bcrypt-promise": "^2.0.0",
     "body-parser": "~1.18.2",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.9",
     "dotenv": "^4.0.0",
-    "express": "^4.16.3",
+    "express": "^4.16.4",    
     "googleapis": "^27.0.0",
     "morgan": "~1.9.0",
     "mtgsdk": "^0.3.0",
@@ -27,7 +53,30 @@
     "socket.io": "^2.1.1",
     "validator": "^9.2.0"
   },
-  "engines":{
-    "node": "8.9.3"
+  "devDependencies": {
+    "@angular-devkit/build-angular": "~0.10.0",
+    "@angular/cli": "^7.0.4",
+    "@angular/compiler-cli": "^7.0.2",
+    "@angular/language-service": "~7.0.0",
+    "@types/jasmine": "~2.8.8",
+    "@types/jasminewd2": "~2.0.3",
+    "@types/node": "~8.9.4",
+    "codelyzer": "~4.5.0",
+    "enhanced-resolve": "^3.3.0",
+    "jasmine-core": "~2.99.1",
+    "jasmine-spec-reporter": "~4.2.1",
+    "karma": "~3.0.0",
+    "karma-chrome-launcher": "~2.2.0",
+    "karma-coverage-istanbul-reporter": "~2.0.1",
+    "karma-jasmine": "~1.1.2",
+    "karma-jasmine-html-reporter": "^0.2.2",
+    "protractor": "~5.4.0",
+    "ts-node": "~7.0.0",
+    "tslint": "~5.11.0",
+    "typescript": "~3.1.1"
+  },
+  "engines": {
+    "node": "8.9.3",
+    "npm": "6.4.1"
   }
 }
