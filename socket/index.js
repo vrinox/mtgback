@@ -31,11 +31,7 @@ Servidor.getCliente =  function(usuarioId){
 
 Servidor.getClienteById = function(socketId){
   return this.clientes.find((cliente)=>{
-    console.log("/////////////////////////////////////////////////");
-    console.log("getClienteById",cliente);
-    console.log("/////////////////////////////////////////////////");
-    console.log("id",cliente.socket.id);
-    console.log("/////////////////////////////////////////////////");    
+    console.log("Busqueda por id: un cliente",cliente.socket.id);  
     return cliente.socket.id == socketId;
   })
 }
@@ -56,7 +52,9 @@ Servidor.add = function(socket,usuario){
 }
 Servidor.remove = function(socket){
   let oldCliente = this.getClienteById(socket.id);
-  console.log(oldCliente);  
+  console.log("/////////////////////////////////////////////////");  
+  console.log("buscando old Client",oldCliente);
+  console.log("/////////////////////////////////////////////////");    
   this.clientes = this.clientes.filter((newCliente)=>{
     if(oldCliente.usuario){
       return newCliente.usuario.id != oldCliente.usuario.id
