@@ -41,13 +41,13 @@ var Servidor = {};
     return usuario;
   };
 
-  Servidor.add = function(socket,usuario){
+  Servidor.add = function(socket,usuario,llamado){
     let cliente = {
       socket   : socket,
       usuario  : usuario,
       ubicacion: null
     }
-    this.remove(cliente.socket,"add");
+    this.remove(cliente.socket,"add"+llamado);
     this.clientes.push(cliente);
   }
 
@@ -86,7 +86,7 @@ var Servidor = {};
             ubicacion : newClient.ubicacion
           }
         });
-        await this.add(cliente);
+        await this.add(cliente,"cercanos");
       }
       resolve();
     });

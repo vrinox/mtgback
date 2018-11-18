@@ -32,7 +32,7 @@ const initSocket = function(io){
           [err,usuario] = await to(Usuario.findOne({"where":{"id":UID}}));
           if(err) next(new Error('Socket: authentication error'));
           socket.emit("autenticado",{data:"autenticado"});
-          Servidor.add(socket,usuario);
+          Servidor.add(socket,usuario,"inicial");
           Servidor.inicializarEventos(socket);
           next();
         }else{
