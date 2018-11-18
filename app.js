@@ -1,17 +1,17 @@
 
-require('./config/config');     //instantiate configuration variables
+require('./Servidor/config/config');     //instantiate configuration variables
 require('./global_functions');  //instantiate global functions
 //middlewares y frameworks
 const express 		= require('express');
 const logger 	    = require('morgan');
 const bodyParser    = require('body-parser');
 const passport      = require('passport');
-const custom        = require('./middleware/custom');
+const custom        = require('./Servidor/middleware/custom');
 
 
 //Rutas
-const v1 = require('./routes/v1')();
-const publicas = require('./routes/public')();
+const v1 = require('./Servidor/routes/v1')();
+const publicas = require('./Servidor/routes/public')();
 const app = express();
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -24,7 +24,7 @@ app.use(express.static(__dirname + '/dist/mtgPrice'));
 app.use(passport.initialize());
 
 //DATABASE
-const models = require("./models");
+const models = require("./Servidor/models");
 models.sequelize.authenticate().then(() => {
     console.log('Connected to SQL database:', CONFIG.db_name);
 })
