@@ -80,7 +80,7 @@ var Servidor = {};
           }
         }).map((newClient)=>{
           return {
-            usuario   : newClient.usuario,
+            usuario   : newClient.usuario.dataValues,
             ubicacion : newClient.ubicacion
           }
         });
