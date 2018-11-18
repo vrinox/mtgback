@@ -51,10 +51,10 @@ Servidor.add = function(socket,usuario){
   this.clientes.push(cliente);
 }
 Servidor.remove = function(socket){
-  let oldCliente = this.getClienteById(socket.id);
   console.log("/////////////////////////////////////////////////");  
-  console.log("buscando old Client",oldCliente);
+  console.log("buscando old Client",socket.id);
   console.log("/////////////////////////////////////////////////");    
+  let oldCliente = this.getClienteById(socket.id);
   this.clientes = this.clientes.filter((newCliente)=>{
     if(oldCliente.usuario){
       return newCliente.usuario.id != oldCliente.usuario.id
