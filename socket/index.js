@@ -53,6 +53,9 @@ const initSocket = function(io){
       console.log("Socket error:",err);
     });
     socket.on('disconnect',()=>{
+      if(cliente.idInterval){
+        clearInterval(cliente.idInterval);
+      }
       console.log('SOCKET: usuario '+cliente.usuario.username+' desconectado');
       Servidor.remove(socket);
     })
