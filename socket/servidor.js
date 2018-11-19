@@ -68,6 +68,9 @@ var Servidor = {};
   }
 
   Servidor.buscarCercanos = function(cliente){
+    console.log("clientes:",this.clientes.map((cliente)=>{
+      return cliente.usuario.username
+    }));
     return new Promise(async (resolve,reject)=>{
       if(this.clientes.length){
         cliente.cercanos = this.clientes.filter((otherClient)=>{
