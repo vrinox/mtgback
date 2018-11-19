@@ -3,6 +3,7 @@ module.exports = async function(socket,server){
     server
       .getCliente(data.usuario)
       .then(async (cliente)=>{
+        cliente.estado = true;
         cliente.ubicacion = data.latLng;
         await server.buscarCercanos(cliente);
       })
@@ -16,8 +17,13 @@ module.exports = async function(socket,server){
       let jugador = await server.getCliente(data.usuarioId);
       socket.emit("gps:disponibles",{ubicaciones:jugador.cercanos})
     },3000);
-  })
+  })  
   socket.on("gps:stop",async (data)=>{
+    let cliente = await server.getCliente(data.usuarioId);
+    cliente.estado = false;
+    server.update(cliente);    
+  })
+  socket.on("gps:disponibles:stop",async (data)=>{
     let cliente = await server.getCliente(data.usuarioId);
     clearInterval(cliente.idInterval);
   })

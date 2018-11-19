@@ -44,7 +44,8 @@ var Servidor = {};
     let cliente = {
       socket   : socket,
       usuario  : usuario,
-      ubicacion: null
+      ubicacion: null,
+      estado   : false
     }
     this.remove(cliente.socket);
     this.clientes.push(cliente);
@@ -71,9 +72,11 @@ var Servidor = {};
     return new Promise(async (resolve,reject)=>{
       if(this.clientes.length){
         cliente.cercanos = this.clientes.filter((otherClient)=>{
-          if(otherClient.ubicacion && cliente.usuario.id !== otherClient.usuario.id){   
-            let distancia = this.gpsHelper.obtenerDistancia(cliente,otherClient);
-            return distancia < this.distanciaMax;
+          if(otherClient.ubicacion && cliente.usuario.id !== otherClient.usuario.id){
+            if(otherClient.estado){
+              let distancia = this.gpsHelper.obtenerDistancia(cliente,otherClient);
+              return distancia < this.distanciaMax;
+            }
           }else{
             return false;
           }
