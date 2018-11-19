@@ -52,7 +52,8 @@ const initSocket = function(io){
     socket.on('error',(err)=>{
       console.log("Socket error:",err);
     });
-    socket.on('disconnect',()=>{
+    socket.on('disconnect',async ()=>{
+      let cliente = await server.getClienteById(socket.id);
       if(cliente.idInterval){
         clearInterval(cliente.idInterval);
       }
