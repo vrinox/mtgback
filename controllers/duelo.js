@@ -144,7 +144,7 @@ const rechazar = async function(req, res){
   .get(req.params.id)
   .then((invitacion)=>{
     let notificacion = invitacion.Notificacion;
-    operaciones = await Promise.all([
+    return Promise.all([
       //destruyo la invitacion
       invitacion.destroy(),
       //guardo los cambios en la notificacion
@@ -152,7 +152,9 @@ const rechazar = async function(req, res){
     ).catch((err)=>{
       console.log(err);
     });
-    return ReS(res, {"success":true,"message":"invitacion rechazada"})
+  })
+  .then(()=>{
+    return ReS(res, {"success":true,"message":"invitacion rechazada"});
   })
   .catch((err)=>{
     return ReE(res,{"success":false,"error":err},422);

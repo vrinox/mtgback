@@ -55,7 +55,7 @@ const aceptar = async function(req, res){
   let usuario = req.user;
   Invitacion
   .get(req.params.id)
-  .then((invitacion)=>{
+  .then(async (invitacion)=>{
     let notificacion = invitacion.Notificacion,
     anfitrion = invitacion.idInvitado,
     invitado  = notificacion.UsuarioId;
@@ -67,7 +67,7 @@ const aceptar = async function(req, res){
     let data = {
       "tipo"  : "amigo"
     }
-    operaciones = await Promise.all([
+    return Promise.all([
       //creo amigo en la lista del invitado
       Amigo.create({
         idAmigo   : anfitrion,
@@ -84,9 +84,9 @@ const aceptar = async function(req, res){
       notificacion.destroy(),
       //envio respuesta
       pushServer.enviarNotificacion(usuario,anfitrion,"INVITACION_AMIGO",data,mensaje)
-    ]).catch((err)=>{
-      console.log(err);
-    });
+    ]);
+  })
+  .then(()=>{
     return ReS(res, {"success":true,"message":"amigo agregado"});
   })
   .catch((err)=>{
@@ -98,17 +98,16 @@ module.exports.aceptar = aceptar;
 const rechazar = async function(req, res){
   Invitacion
   .get(req.params.id)
-  .then((invitacion)=>{
-      
+  .then((invitacion)=>{ 
     let notificacion = invitacion.Notificacion;
-    operaciones = await Promise.all([
+    return Promise.all([
       //destruyo la invitacion
       invitacion.destroy(),
       //guardo los cambios en la notificacion
       notificacion.destroy()]
-    ).catch((err)=>{
-      console.log(err);
-    });
+    )
+  })
+  .then(()=>{
     return ReS(res, {"success":true,"message":"invitacion rechazada"})
   })
   .catch((err)=>{
