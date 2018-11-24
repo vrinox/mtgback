@@ -2,7 +2,7 @@
 module.exports = (sequelize, DataTypes) => {
   var Model = sequelize.define('Duelo', {
     tipo        : DataTypes.STRING,
-    imagesrc    : DataTypes.STRING,
+    imagesrc    : DataTypes.STRING,//?????
     vencimiento : DataTypes.DATE,
     idRetador   : DataTypes.INTEGER,
     idRetado    : DataTypes.INTEGER

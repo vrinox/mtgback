@@ -1,9 +1,6 @@
-const OneSignal = require('onesignal-node');
-
+const Invitacion  = require('invitacion');
 const Amigo       = require('../models').Amigo;
 const Usuario     = require('../models').Usuario;
-const Invitacion  = require('../models').Invitacion;
-const Notificacion= require('../models').Notificacion;
 const pushServer  = require('../socket').Servidor;
 
 
@@ -23,74 +20,99 @@ const getAll = async function(req, res){
 
 module.exports.getAll = getAll;
 
-const crearInvitacion = async function(req, res){
-  let err, notificacion, invitacion
-  emisor    = req.user,
-  receptorId= req.body.invitado,
-  now       = new Date();
-  [err,notificacion] = await to(Notificacion.create({
-    "titulo":"invitacion de amistad",
-    "contenido":emisor.username+" quiere ser tu amigo",
-    "estado":"P",
-    "UsuarioId": receptorId
-  }));
-  if(err) ReE(res, {success:false, error:err}, 422);
-  [err, invitacion] = await to(Invitacion.create({
-    "tipo"          : "A", //amistad
-    "idInvitado"    : emisor.id,
-    "estado"        : "P", //pendiente
-    "vencimiento"   : now.setDate(now.getDate() + 30),
-    "NotificacionId": notificacion.id
-  }));
-  if(err){
-    ReE(res, {success:false, error:err}, 422);
-  } else{
-    enviarInvitacion(emisor,receptorId,notificacion.toWeb(),invitacion.toWeb());
-    ReS(res, {success:true,message:"invitacion enviada de forma exitosa"});
-  }
+const crearInvitacion = async function(req,res){
+  emisor      = req.user,
+  receptorId  = req.body.invitado,
+  vencimiento = new Date().setDate(new Date().getDate() + 30),
+  tipo        = 'A';
+
+  Invitacion.create(emisor,receptorId,vencimiento,tipo)
+  .then((notificacion,invitacion)=>{
+    let mensaje = {
+      titulo        : notificacion.titulo,
+      contenido     : notificacion.contenido,
+      group_messaje : invitacion.titulo
+    }
+    let data = {
+      "tipo"        :"invitacion",
+      "emisor"      :emisor.id,
+      "notificacion":notificacion,
+      "invitacion"  :invitacion
+    };
+    return pushServer.enviarNotificacion(emisor,receptorId,"INVITACION_AMIGO",data,mensaje)
+  })
+  .then((response)=>{
+    return ReS(res,{"success":true,"message":response},200);
+  })
+  .catch((error)=>{
+    return ReE(res,{"success":false,"error":error},422);
+  });
 }
 
 module.exports.crearInvitacion = crearInvitacion;
 
-const enviarInvitacion = async function(emisor,receptorId,notificacion,invitacion){
-  //enviar invitacion por push y por socket
-  let receptor, enviado = false;
-  pushServer
-    .getUsuario(receptorId)
-    .then((receptor)=>{
-      let data = {
-          "tipo"        :"invitacion",
-          "emisor"      :emisor.id,
-          "notificacion":notificacion,
-          "invitacion"  :invitacion
-      };
-
-      if(receptor.deviceId){
-        let oneSignal = pushServer.onesignal;
-        var push = new OneSignal.Notification({
-          "contents": {
-              "en" : notificacion.contenido,
-              "es" : notificacion.contenido
-          }
-        });
-        push.setTargetDevices([receptor.deviceId]);
-
-        push.setParameter("headings",{
-          "en" : notificacion.titulo,
-          "es" : notificacion.titulo
-        });
-        push.setParameter("data", data);
-        push.setParameter("large_icon",emisor.imagesrc);
-        push.setParameter("android_group",oneSignal.groupKeys.INVITACION_AMIGO);
-        push.setParameter("android_group_message", "Invitaciones de amistad");
-
-        oneSignal.client.sendNotification(push)
-          .then((response)=>{
-            console.log("ONESIGNAL: notificacion enviada",response.data, response.httpResponse.statusCode)
-          })
-          .catch((err)=>{console.log("error enviando push",err)});
-      }else{
-        console.log("no posee deviceId");
-      }
+const aceptar = async function(req, res){
+  let usuario = req.user;
+  Invitacion
+  .get(req.params.id)
+  .then((invitacion)=>{
+    let notificacion = invitacion.Notificacion,
+    anfitrion = invitacion.idInvitado,
+    invitado  = notificacion.UsuarioId;
+    let mensaje = {
+      titulo        : "Nuevo Amigo",
+      contenido     : usuario.username+' acepto tu invitacion de amistad',
+      group_messaje : "invitaciones de Amistad"
+    };
+    let data = {
+      "tipo"  : "amigo"
+    }
+    operaciones = await Promise.all([
+      //creo amigo en la lista del invitado
+      Amigo.create({
+        idAmigo   : anfitrion,
+        UsuarioId : invitado,
+      }),
+      //creo amigo en lista del anfitrion
+      Amigo.create({
+        idAmigo   : invitado,
+        UsuarioId : anfitrion,
+      }),
+      //destruyo la invitacion
+      invitacion.destroy(),
+      //guardo los cambios en la notificacion
+      notificacion.destroy(),
+      //envio respuesta
+      pushServer.enviarNotificacion(usuario,anfitrion,"INVITACION_AMIGO",data,mensaje)
+    ]).catch((err)=>{
+      console.log(err);
     });
+    return ReS(res, {"success":true,"message":"amigo agregado"});
+  })
+  .catch((err)=>{
+    return ReE(res,{"success":false,"error":err},422);
+  });
 }
+module.exports.aceptar = aceptar;
+
+const rechazar = async function(req, res){
+  Invitacion
+  .get(req.params.id)
+  .then((invitacion)=>{
+      
+    let notificacion = invitacion.Notificacion;
+    operaciones = await Promise.all([
+      //destruyo la invitacion
+      invitacion.destroy(),
+      //guardo los cambios en la notificacion
+      notificacion.destroy()]
+    ).catch((err)=>{
+      console.log(err);
+    });
+    return ReS(res, {"success":true,"message":"invitacion rechazada"})
+  })
+  .catch((err)=>{
+    return ReE(res,{"success":false,"error":err},422);
+  });
+}
+module.exports.rechazar = rechazar;

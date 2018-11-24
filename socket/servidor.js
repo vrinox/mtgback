@@ -1,4 +1,5 @@
 const gpsHelper = require('../services/gpsHelper');
+const OneSignal = require('onesignal-node');
 
 var Servidor = {};
   Servidor.clientes = [];
@@ -89,6 +90,44 @@ var Servidor = {};
         await this.update(cliente);
       }
       resolve();
+    });
+  }
+
+  Servidor.enviarNotificacion =  async function(emisor,receptorId,grupo_notificacion,data,mensaje){
+    
+    return new Promise(async (resolve,reject)=>{
+      this
+        .getUsuario(receptorId)
+        .then((receptor)=>{
+          if(receptor.deviceId){
+            let oneSignal = pushServer.onesignal;
+            let push = new OneSignal.Notification({
+              "contents": {
+                  "en" : mensaje.contenido,
+                  "es" : mensaje.contenido
+              }
+            });
+            push.setTargetDevices([receptor.deviceId]);
+            push.setParameter("headings",{
+              "en" : mensaje.titulo,
+              "es" : mensaje.titulo
+            });
+            push.setParameter("data", data);
+            push.setParameter("large_icon",emisor.imagesrc);
+            push.setParameter("android_group",oneSignal.groupKeys[grupo_notificacion]);
+            push.setParameter("android_group_message", mensaje.group_messaje);
+
+            oneSignal.client.sendNotification(push)
+              .then((response)=>{
+                resolve("Invitacion Enviada de forma exitosa");
+                console.log("ONESIGNAL: notificacion enviada",response.data, response.httpResponse.statusCode)
+              })
+              .catch((err)=>{console.log("error enviando push",err)});
+          }else{
+            resolve("Enviado:El usuario no posee dispositivo asosciado");
+            console.log("no posee deviceId");
+          }
+        });
     });
   }
 module.exports = Servidor;
