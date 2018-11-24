@@ -2,7 +2,8 @@ const Invitacion  = require('../models').Invitacion;
 const Notificacion= require('../models').Notificacion;
 
 const get = async function(idInvitacion){
-  return new Promise((resolve,reject)=>{
+  let err,invitacion;
+  return new Promise(async (resolve,reject)=>{
     [err, invitacion] = await to(Invitacion.findOne({
       include:[{model:Notificacion}],
       where:{id:idInvitacion}
@@ -16,7 +17,7 @@ module.exports.get = get;
 
 const create = async function(emisor,receptorId,vencimiento,tipo){
   let err, notificacion, invitacion;
-  return new Promise(()=>{
+  return new Promise(async (resolve,reject)=>{
     [err,notificacion] = await to(Notificacion.create({
       "titulo":"invitacion  a un duelo",
       "contenido":emisor.username+" te ha retado",

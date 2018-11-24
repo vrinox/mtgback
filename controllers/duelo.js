@@ -3,9 +3,8 @@ const Invitacion  = require('./invitacion');
 const pushServer  = require('../socket').Servidor;
 
 const create = async function(retador,retado,dueloInfo){
-    return new Promise((resolve,reject)=>{        
-      let err, duelo,;
-      dueloInfo = req.body;
+    return new Promise(async (resolve,reject)=>{        
+      let err, duelo;
 
       [err, duelo] = await to(Duelo.create(dueloInfo));
       if(err) reject(err);
