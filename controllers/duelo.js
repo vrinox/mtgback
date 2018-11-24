@@ -1,5 +1,5 @@
 const Duelo       = require('../models').Duelo;
-const Invitacion  = require('invitacion');
+const Invitacion  = require('./invitacion');
 const pushServer  = require('../socket').Servidor;
 
 const create = async function(retador,retado,dueloInfo){

@@ -1,4 +1,4 @@
-const Invitacion  = require('invitacion');
+const Invitacion  = require('./invitacion');
 const Amigo       = require('../models').Amigo;
 const Usuario     = require('../models').Usuario;
 const pushServer  = require('../socket').Servidor;
