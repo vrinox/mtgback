@@ -113,7 +113,7 @@ const aceptar = async function(req, res){
     };
     pushServer.getUsuario(notificacion.UsuarioId)
     .then((retador)=>{
-      return this.create(retador,retado,{"tipo":"A","vencimiento": new Date().setDate(new Date().getDate() + 3)})
+      return create(retador,retado,{"tipo":"A","vencimiento": new Date().setDate(new Date().getDate() + 3)})
     }).then((duelo)=>{
       let data = {
         "tipo"  : "reto",
