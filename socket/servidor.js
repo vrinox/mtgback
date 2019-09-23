@@ -28,9 +28,7 @@ Servidor.init = function(){
     return new Promise(async (resolve,reject)=>{
       let encontrado = false;
       this.clientes.forEach((cliente)=>{
-        console.log("client",cliente.usuario.id,usuarioId,"valor",cliente.usuario.id === usuarioId);
         if(cliente.usuario.id === usuarioId){
-          console.log("se cumple");
           resolve(cliente);
         }
       });
