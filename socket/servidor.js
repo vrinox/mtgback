@@ -19,6 +19,7 @@ Servidor.init = function(){
       "MENSAJE":3
     }
   };
+  console.log("[Servidor]=",this.estado);
 }
 
 
