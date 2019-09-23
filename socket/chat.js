@@ -12,7 +12,6 @@ module.exports = async function(socket,server){
     }else{
       data.id = mensaje.id;
       socket.emit("msg:estado",{success:true,mensaje:data});
-      console.log("receptor",data.receptor);
       server
         .getCliente(data.receptor.id)
         .then((cliente)=>{
