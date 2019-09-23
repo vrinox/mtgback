@@ -10,7 +10,8 @@ const rutas = function(router){
 					ubicacion	:	cliente.ubicacion,
 					id			:	cliente.usuario.dataValues.id,
 					nombre		:	cliente.usuario.dataValues.username,
-					socket		:	cliente.socket.id
+					socket		:	cliente.socket.id,
+					deviceId	:	cliente.usuario.dataValues.deviceId
 			};
 		})
 		res.statusCode = 200;//send the appropriate status code
