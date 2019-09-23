@@ -3,8 +3,12 @@ const OneSignal = require('onesignal-node');
 const Servidor = require('./servidor');
 
 const init = function(io){
+  Servidor.init();
+  if(CONFIG.log_body == 1){console.log("[Arranque]=Servidor arrancado")}
   initSocket(io);
+  if(CONFIG.log_body == 1){console.log("[Arranque]=Sockets arrancado")}
   initOneSignal();
+  if(CONFIG.log_body == 1){console.log("[Arranque]=OneSignal arrancado")}
 }
 const initOneSignal = function(){
   if(CONFIG.environment == "prod"){

@@ -1,7 +1,12 @@
 const gpsHelper = require('../services/gpsHelper');
 const OneSignal = require('onesignal-node');
 
-var Servidor = {};
+var Servidor = {
+  estado:"sinArrancar"
+};
+
+Servidor.init = function(){
+  Servidor.estado = "inicializado";
   Servidor.clientes = [];
   Servidor.io       = null;
   Servidor.gpsHelper = gpsHelper;
@@ -14,6 +19,8 @@ var Servidor = {};
       "MENSAJE":3
     }
   };
+}
+
 
   Servidor.getCliente =  function(usuarioId){
     return new Promise(async (resolve,reject)=>{
