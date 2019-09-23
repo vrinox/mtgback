@@ -1,6 +1,6 @@
 const gpsHelper = require('../services/gpsHelper');
 const OneSignal = require('onesignal-node');
-const Usuario = require('../models/usuario');
+const Usuario = require('../models').Usuario;;
 
 var Servidor = {
   estado:"sinArrancar"
