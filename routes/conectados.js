@@ -1,4 +1,4 @@
-const Servidor = require('../socket').Servidor;
+const Servidor = require('../socket/servidor');
 
 const rutas = function(router){
   router.get(  '/conectados' ,  (req, res)=>{
