@@ -17,7 +17,7 @@ module.exports = async function(socket,server){
         .then((cliente)=>{
             //4: envio mensaje
             cliente.socket.emit('add-message',data);
-            console.log("SOCKET: mensaje enviado a "+cliente.usuario.username+" id: "+cliente.id);
+            console.log("SOCKET: mensaje enviado a "+cliente.usuario.username+" id: "+cliente.usuario.id+" socketId:"+cliente.socket.id);
         }).catch((err)=>{
           console.log("error cliente",err);
             server
