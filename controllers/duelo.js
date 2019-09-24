@@ -1,6 +1,6 @@
 const Duelo       = require('../models').Duelo;
 const Invitacion  = require('./invitacion');
-const pushServer  = require('../socket').Servidor;
+const pushServer  = require('../socket/servidor');
 
 const create = async function(retador,retado,dueloInfo){
     return new Promise(async (resolve,reject)=>{        
@@ -100,7 +100,6 @@ const crearInvitacion = async function(req, res){
 
   Invitacion.create(emisor,receptorId,vencimiento,tipo)
   .then(([notificacion,invitacion])=>{
-    console.log("[ERROR]",notificacion,invitacion);
     let mensaje = {
       titulo        : notificacion.titulo,
       contenido     : notificacion.contenido,
