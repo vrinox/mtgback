@@ -99,8 +99,8 @@ const crearInvitacion = async function(req, res){
   tipo        = 'D';
 
   Invitacion.create(emisor,receptorId,vencimiento,tipo)
-  .then((notificacion,invitacion)=>{
-    console.log("[ERROR]",notificacion,invitacion);
+  .then(([notificacion,invitacion])=>{
+   
     let mensaje = {
       titulo        : notificacion.titulo,
       contenido     : notificacion.contenido,
