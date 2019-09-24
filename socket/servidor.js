@@ -109,7 +109,7 @@ Servidor.init = function(){
         .getUsuario(receptorId)
         .then((receptor)=>{
           if(receptor.deviceId){
-            let oneSignal = pushServer.onesignal;
+            let oneSignal = this.onesignal;
             let push = new OneSignal.Notification({
               "contents": {
                   "en" : mensaje.contenido,
