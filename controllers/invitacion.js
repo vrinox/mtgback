@@ -32,6 +32,7 @@ const create = async function(emisor,receptorId,vencimiento,tipo){
       "vencimiento"   : vencimiento,
       "NotificacionId": notificacion.id
     }));
+    console.log("[Err]",err);
     if(err){
       reject(err);
     } else{      
