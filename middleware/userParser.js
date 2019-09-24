@@ -8,7 +8,7 @@ let retador = async function (req, res, next) {
     [err, retador] = await to(Usuario.findOne({where:{"id":idRetador}}));
     if(err) return ReE(res, "err encontrando retador");
 
-    if(!retador) return ReE(res, "Retador no encontrando con id "+idUsuario);
+    if(!retador) return ReE(res, "Retador no encontrando con id "+idRetador);
 
     [err, retador] = await to(UsuarioController.decoradorUsuario(retador));
     if(err) next(err, false);
