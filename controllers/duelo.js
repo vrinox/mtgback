@@ -1,4 +1,5 @@
 const Duelo       = require('../models').Duelo;
+const Usuario       = require('../models').Usuario;
 const Invitacion  = require('./invitacion');
 const Servidor  = require('../socket/servidor');
 
