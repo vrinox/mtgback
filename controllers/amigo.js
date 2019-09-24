@@ -1,7 +1,7 @@
 const Invitacion  = require('./invitacion');
 const Amigo       = require('../models').Amigo;
 const Usuario     = require('../models').Usuario;
-const pushServer  = require('../socket').Servidor;
+const Servidor  = require('../socket/servidor');
 
 
 const getAll = async function(req, res){
@@ -39,7 +39,7 @@ const crearInvitacion = async function(req,res){
       "notificacion":notificacion,
       "invitacion"  :invitacion
     };
-    return pushServer.enviarNotificacion(emisor,receptorId,"INVITACION_AMIGO",data,mensaje)
+    return Servidor.enviarNotificacion(emisor,receptorId,"INVITACION_AMIGO",data,mensaje)
   })
   .then((response)=>{
     return ReS(res,{"success":true,"message":response},200);
@@ -83,7 +83,7 @@ const aceptar = async function(req, res){
       //guardo los cambios en la notificacion
       notificacion.destroy(),
       //envio respuesta
-      pushServer.enviarNotificacion(usuario,anfitrion,"INVITACION_AMIGO",data,mensaje)
+      Servidor.enviarNotificacion(usuario,anfitrion,"INVITACION_AMIGO",data,mensaje)
     ]);
   })
   .then(()=>{

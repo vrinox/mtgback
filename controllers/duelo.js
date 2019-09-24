@@ -135,7 +135,7 @@ const aceptar = async function(req, res){
       contenido     : retado.username+' acepto tu retod',
       group_messaje : "Retos"
     };
-    pushServer.getUsuario(notificacion.UsuarioId)
+    Servidor.getUsuario(notificacion.UsuarioId)
     .then((retador)=>{
       return create(retador,retado,{"tipo":"A","vencimiento": new Date().setDate(new Date().getDate() + 3)})
     }).then((duelo)=>{
@@ -149,7 +149,7 @@ const aceptar = async function(req, res){
         //guardo los cambios en la notificacion
         notificacion.destroy(),
         //envio respuesta
-        pushServer.enviarNotificacion(retado,retador.id,"INVITACION_DUELO",data,mensaje)
+        Servidor.enviarNotificacion(retado,retador.id,"INVITACION_DUELO",data,mensaje)
       ])
     })
     .then(()=>{
