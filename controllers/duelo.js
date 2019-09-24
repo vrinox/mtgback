@@ -102,7 +102,7 @@ const crearInvitacion = async function(req, res){
   titulo      = "invitacion  a un duelo";
   contenido   = emisor.username+" te ha retado";
 
-  Invitacion.create(emisor,receptorId,vencimiento,tipo)
+  Invitacion.create(emisor,receptorId,vencimiento,tipo,titulo,contenido)
   .then(([notificacion,invitacion])=>{
     let mensaje = {
       titulo        : notificacion.titulo,
@@ -136,13 +136,14 @@ const aceptar = async function(req, res){
     let notificacion = invitacion.Notificacion;
     let mensaje = {
       titulo        : "Reto Aceptado",
-      contenido     : retado.username+' acepto tu retod',
+      contenido     : retado.username+' acepto tu reto',
       group_messaje : "Retos"
     };
     Servidor.getUsuario(notificacion.UsuarioId)
     .then((retador)=>{
       return create(retador,retado,{"tipo":"A","vencimiento": new Date().setDate(new Date().getDate() + 3)})
     }).then((duelo)=>{
+      console.log("[Duelo]:duelo creado",duelo)
       let data = {
         "tipo"  : "reto",
         "duelo" : duelo.id
