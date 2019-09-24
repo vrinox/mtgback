@@ -43,7 +43,8 @@ module.exports.getAll = getAll;
 
 const get = async function(req, res){
     res.setHeader('Content-Type', 'application/json');
-    let idDuelo, duelo;
+    let idDuelo, duelo, usuario;
+    usuario = req.user;
     idDuelo = req.body.idDuelo;
     [err, duelo] = await to(Duelo.findOne({
       include:[
