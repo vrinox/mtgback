@@ -4,7 +4,7 @@ const passport      	  = require('passport');
 
 const rutas = function(router){
   router.get(       '/duelo'            , passport.authenticate('jwt', {session:false}), userParser.retador, DueloController.get);
-  router.get(       '/duelos'            , passport.authenticate('jwt', {session:false}), DueloController.get);
+  router.get(       '/duelos'            , passport.authenticate('jwt', {session:false}), DueloController.getAll);
   router.post(      '/duelo/:id/invitar', passport.authenticate('jwt', {session:false}), DueloController.crearInvitacion);
   router.put(       '/duelo'            , passport.authenticate('jwt', {session:false}), userParser.retador, DueloController.update);
   router.delete(    '/duelo'            , passport.authenticate('jwt', {session:false}), userParser.retador, DueloController.remove);
