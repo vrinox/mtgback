@@ -1,6 +1,6 @@
 const Duelo       = require('../models').Duelo;
 const Invitacion  = require('./invitacion');
-const pushServer  = require('../socket/servidor');
+const Servidor  = require('../socket/servidor');
 
 const create = async function(retador,retado,dueloInfo){
     return new Promise(async (resolve,reject)=>{        
@@ -111,7 +111,7 @@ const crearInvitacion = async function(req, res){
       "notificacion":notificacion,
       "invitacion"  :invitacion
     };
-    return pushServer.enviarNotificacion(emisor,receptorId,"INVITACION_DUELO",data,mensaje)
+    return Servidor.enviarNotificacion(emisor,receptorId,"INVITACION_DUELO",data,mensaje)
   })
   .then((response)=>{
     return ReS(res,{"success":true,"message":response},200);
