@@ -97,6 +97,8 @@ const crearInvitacion = async function(req, res){
   receptorId  = req.body.invitado,
   vencimiento = new Date().setDate(new Date().getDate() + 3),//tres dias para vencerse
   tipo        = 'D';
+  titulo      = "invitacion  a un duelo";
+  contenido   = emisor.username+" te ha retado";
 
   Invitacion.create(emisor,receptorId,vencimiento,tipo)
   .then(([notificacion,invitacion])=>{

@@ -25,8 +25,10 @@ const crearInvitacion = async function(req,res){
   receptorId  = req.body.invitado,
   vencimiento = new Date().setDate(new Date().getDate() + 30),
   tipo        = 'A';
+  titulo      = 'Invitacion Amistad';
+  contenido   = emisor.username+' te ha enviado una invitacion de amistad';
 
-  Invitacion.create(emisor,receptorId,vencimiento,tipo)
+  Invitacion.create(emisor,receptorId,vencimiento,tipo,titulo,contenido)
   .then((notificacion,invitacion)=>{
     let mensaje = {
       titulo        : notificacion.titulo,

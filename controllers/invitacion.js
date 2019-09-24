@@ -15,12 +15,12 @@ const get = async function(idInvitacion){
 
 module.exports.get = get;
 
-const create = async function(emisor,receptorId,vencimiento,tipo){
+const create = async function(emisor,receptorId,vencimiento,tipo,titulo,contenido){
   let err, notificacion, invitacion;
   return new Promise(async (resolve,reject)=>{
     [err,notificacion] = await to(Notificacion.create({
-      "titulo":"invitacion  a un duelo",
-      "contenido":emisor.username+" te ha retado",
+      "titulo":titulo,
+      "contenido":contenido,
       "estado":"P",
       "UsuarioId": receptorId
     }));
