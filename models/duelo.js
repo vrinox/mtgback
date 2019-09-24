@@ -9,8 +9,8 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   Model.associate = function(models){
-    this.belongsTo(models.Usuario,{ foreignKey:"idRetador",sourceKey:"id" });
-    this.belongsTo(models.Usuario,{ foreignKey:"idRetado",sourceKey:"id" });
+    this.belongsTo(models.Usuario,{ as:"retador", foreignKey:"idRetador",sourceKey:"id" });
+    this.belongsTo(models.Usuario,{ as:"retado", foreignKey:"idRetado",sourceKey:"id" });
     this.belongsTo(models.Formato);
     //tiene
     this.hasMany(models.Partida);

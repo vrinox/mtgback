@@ -19,11 +19,23 @@ const getAll = async function(req, res){
     let err, duelos, usuario;
     usuario = req.user;
 
-    [err, duelos] = await to(usuario.getDuelos());
+    [err, duelos] = await to(Duelo.findAll({
+      include:[
+        {"model":Usuario,"as":"retador"},
+        {"model":Usuario,"as":"retado"}
+      ],
+      where:{
+        idRetado: usuario.id,
+        $or:[
+          {idRetador:usuario.id},
+          {idRetado:usuario.id}
+        ]
+      }
+    }));
     let duelosJson = duelos.map(duelo => {
       return duelo.toWeb();
     });
-    console.log('duelos',duelos);
+    console.log('[Duelos]',duelos);
     return ReS(res, {duelos:duelosJson});
 }
 module.exports.getAll = getAll;
@@ -32,7 +44,19 @@ const get = async function(req, res){
     res.setHeader('Content-Type', 'application/json');
     let idDuelo, duelo;
     idDuelo = req.body.idDuelo;
-    [err, duelo] = await to(Duelo.findOne({where:{id:idDuelo}}));
+    [err, duelo] = await to(Duelo.findOne({
+      include:[
+        {"model":Usuario,"as":"retador"},
+        {"model":Usuario,"as":"retado"}
+      ],
+      where:{
+        id:idDuelo,
+        $or:[
+          {idRetador:usuario.id},
+          {idRetado:usuario.id}
+        ]
+      }
+    }));
     if(err) return ReE(res, "err encontrando duelo");
 
     return ReS(res, {duelo:duelo.toWeb()});
