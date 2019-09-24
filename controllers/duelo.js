@@ -100,6 +100,7 @@ const crearInvitacion = async function(req, res){
 
   Invitacion.create(emisor,receptorId,vencimiento,tipo)
   .then((notificacion,invitacion)=>{
+    console.log("[ERROR]",notificacion,invitacion);
     let mensaje = {
       titulo        : notificacion.titulo,
       contenido     : notificacion.contenido,
