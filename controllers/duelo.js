@@ -9,9 +9,10 @@ const create = async function(retador,retado,dueloInfo){
 
       [err, dueloIncompleto] = await to(Duelo.create({
         tipo:dueloInfo.tipo,
-        vencimiento: dueloInfo.vencimiento,
-        idRetado:retado.id,
-        idRetador:retador.id
+        vencimiento : dueloInfo.vencimiento,
+        idRetado    : retado.id,
+        idRetador   : retador.id,
+        imagesrc    : retador.imagesrc
       }));
       if(err) reject(err);
       [err, duelo] = await to(Duelo.findOne({
@@ -159,7 +160,6 @@ const aceptar = async function(req, res){
       usuarioRetador = retador;
       return create(retador,retado,{"tipo":"A","vencimiento": new Date().setDate(new Date().getDate() + 3)})
     }).then((duelo)=>{
-      console.log("[Duelo]:duelo creado",duelo)
       let data = {
         "tipo"  : "reto",
         "duelo" : duelo.id
