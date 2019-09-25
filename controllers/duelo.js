@@ -5,9 +5,9 @@ const Servidor    = require('../socket/servidor');
 
 const create = async function(retador,retado,dueloInfo){
     return new Promise(async (resolve,reject)=>{        
-      let err, duelo;
+      let err, duelo,dueloIncompleto;
 
-      [err, duelo] = await to(Duelo.create({
+      [err, dueloIncompleto] = await to(Duelo.create({
         tipo:dueloInfo.tipo,
         vencimiento: dueloInfo.vencimiento,
         idRetado:retado.id,
@@ -20,7 +20,7 @@ const create = async function(retador,retado,dueloInfo){
           {"model":Usuario,"as":"retado"}
         ],
         where:{
-          id:idDuelo,
+          id:dueloIncompleto.id,
           $or:[
             {idRetador:usuario.id},
             {idRetado:usuario.id}
