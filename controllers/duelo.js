@@ -21,10 +21,6 @@ const create = async function(retador,retado,dueloInfo){
         ],
         where:{
           id:dueloIncompleto.id,
-          $or:[
-            {idRetador:usuario.id},
-            {idRetado:usuario.id}
-          ]
         }
       }));
       if(err) reject(err);
