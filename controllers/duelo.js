@@ -157,7 +157,7 @@ const aceptar = async function(req, res){
       contenido     : retado.username+' acepto tu reto',
       group_messaje : "Retos"
     };
-    Servidor.getUsuario(notificacion.UsuarioId)
+    Servidor.getUsuario(invitacion.idInvitado)
     .then((retador)=>{
       return create(retador,retado,{"tipo":"A","vencimiento": new Date().setDate(new Date().getDate() + 3)})
     }).then((duelo)=>{
