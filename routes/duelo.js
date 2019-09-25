@@ -9,8 +9,8 @@ const rutas = function(router){
   router.put(       '/duelo'            , passport.authenticate('jwt', {session:false}), userParser.retador, DueloController.update);
   router.delete(    '/duelo'            , passport.authenticate('jwt', {session:false}), userParser.retador, DueloController.remove);
   //rutas invitacion
-  router.get('/invitacion/:id/aceptar'  ,  passport.authenticate('jwt', {session:false}), DueloController.aceptar);
-  router.get('/invitacion/:id/rechazar' ,  passport.authenticate('jwt', {session:false}), DueloController.rechazar);
+  router.get('/duelo/:id/aceptar'  ,  passport.authenticate('jwt', {session:false}), DueloController.aceptar);
+  router.get('/duelo/:id/rechazar' ,  passport.authenticate('jwt', {session:false}), DueloController.rechazar);
 }
 
 module.exports = rutas;
