@@ -153,8 +153,10 @@ const aceptar = async function(req, res){
       contenido     : retado.username+' acepto tu reto',
       group_messaje : "Retos"
     };
+    let usuarioRetador;
     Servidor.getUsuario(invitacion.idInvitado)
     .then((retador)=>{
+      usuarioRetador = retador;
       return create(retador,retado,{"tipo":"A","vencimiento": new Date().setDate(new Date().getDate() + 3)})
     }).then((duelo)=>{
       console.log("[Duelo]:duelo creado",duelo)
@@ -168,7 +170,7 @@ const aceptar = async function(req, res){
         //guardo los cambios en la notificacion
         notificacion.destroy(),
         //envio respuesta
-        Servidor.enviarNotificacion(retado,retador.id,"INVITACION_DUELO",data,mensaje)
+        Servidor.enviarNotificacion(retado,usuarioRetador.id,"INVITACION_DUELO",data,mensaje)
       ])
     })
     .then(()=>{
