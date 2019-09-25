@@ -1,16 +1,34 @@
 const Duelo       = require('../models').Duelo;
-const Usuario       = require('../models').Usuario;
+const Usuario     = require('../models').Usuario;
 const Invitacion  = require('./invitacion');
-const Servidor  = require('../socket/servidor');
+const Servidor    = require('../socket/servidor');
 
 const create = async function(retador,retado,dueloInfo){
     return new Promise(async (resolve,reject)=>{        
       let err, duelo;
 
-      [err, duelo] = await to(Duelo.create(dueloInfo));
+      [err, duelo] = await to(Duelo.create({
+        tipo:dueloInfo.tipo,
+        vencimiento: dueloInfo.vencimiento,
+        idRetado:retado.id,
+        idRetador:retador.id
+      }));
       if(err) reject(err);
-      retador.addDuelo(duelo, {through:"retador"});
-      retado.addDuelo(duelo, {through:"retado"});
+      [err, duelo] = await to(Duelo.findOne({
+        include:[
+          {"model":Usuario,"as":"retador"},
+          {"model":Usuario,"as":"retado"}
+        ],
+        where:{
+          id:idDuelo,
+          $or:[
+            {idRetador:usuario.id},
+            {idRetado:usuario.id}
+          ]
+        }
+      }));
+      if(err) reject(err);
+  
       resolve(duelo.toWeb());
     })    
 }
