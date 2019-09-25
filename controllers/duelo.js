@@ -41,7 +41,6 @@ const getAll = async function(req, res){
         {"model":Usuario,"as":"retado"}
       ],
       where:{
-        idRetado: usuario.id,
         $or:[
           {idRetador:usuario.id},
           {idRetado:usuario.id}
