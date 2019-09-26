@@ -30,7 +30,7 @@ module.exports = async function(socket,server){
     clearInterval(cliente.idInterval);
   });
   //-------------------- manejo de oponente por battle chat -------------------------------
-  socket.on("gps:oponente",async (data)=>{
+  socket.on("gps:oponente:start",async (data)=>{
     let cliente = await server.getClienteById(socket.id);    
     console.log("[Gps:Duelo:solicitud]: usuario "+cliente.usuario.username+" esta solicitando data")
     cliente.idIntervalOponente = setInterval(async ()=>{
