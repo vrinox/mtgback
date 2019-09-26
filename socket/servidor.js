@@ -34,7 +34,8 @@ Servidor.init = function(){
         }
       });
       if(!encontrado){
-        reject(new Error("cliente no se encuentra conectado"));
+        console.log('[Error]: cliente no se encuentra conectado');
+        reject(null);
       }
     });
   }
