@@ -31,9 +31,11 @@ module.exports = async function(socket,server){
   });
   //-------------------- manejo de oponente por battle chat -------------------------------
   socket.on("gps:oponente",async (data)=>{
-    let cliente = await server.getClienteById(socket.id);
+    let cliente = await server.getClienteById(socket.id);    
+    console.log("[Gps:Duelo:solicitud]: usuario "+cliente.usuario.username+" esta solicitando data")
     cliente.idIntervalOponente = setInterval(async ()=>{
-      let jugador = await server.getCliente(data.usuarioId);
+      let jugador = await server.getCliente(data.usuarioId);      
+      console.log("[Gps:Duelo:envio]: usuario "+jugador.usuario.username+" data enviada")
       socket.emit("gps:oponente",{ubicaciones:jugador.ubicacion})
     },3000);
   });
