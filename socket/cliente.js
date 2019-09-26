@@ -13,6 +13,7 @@
     cerrarIntervalos(){
       if(this.idInterval){clearInterval(this.idInterval)}
       if(this.idIntervalOponente){clearInterval(this.idIntervalOponente)}
+      this.ubicacion = null;
     }
     
   } 
