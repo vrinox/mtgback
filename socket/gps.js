@@ -39,7 +39,7 @@ module.exports = async function(socket,server){
       }else{
         socket.emit("gps:oponente",{ubicacion:null})
       }
-    },3000);
+    },5000);
   });
   socket.on("gps:oponente:stop",async (data)=>{
     let cliente = await server.getClienteById(socket.id);
