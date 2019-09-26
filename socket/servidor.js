@@ -1,6 +1,7 @@
 const gpsHelper = require('../services/gpsHelper');
 const OneSignal = require('onesignal-node');
-const Usuario = require('../models').Usuario;;
+const Usuario = require('../models').Usuario;
+const Cliente = require('./cliente');
 
 var Servidor = {
   estado:"sinArrancar"
@@ -51,12 +52,14 @@ Servidor.init = function(){
   };
 
   Servidor.add = function(socket,usuario){
-    let cliente = {
+    
+    let cliente = new Cliente({
       socket   : socket,
       usuario  : usuario,
       ubicacion: null,
       estado   : false
-    }
+    });
+    
     this.remove(cliente.socket);
     this.clientes.push(cliente);
   }

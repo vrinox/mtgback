@@ -58,9 +58,7 @@ const initSocket = function(io){
     });
     socket.on('disconnect',async ()=>{
       let cliente = await Servidor.getClienteById(socket.id);
-      if(cliente.idInterval){
-        clearInterval(cliente.idInterval);
-      }
+      cliente.cerrarIntervalos();
       console.log('SOCKET: usuario '+cliente.usuario.username+' desconectado');
       Servidor.remove(socket);
     })

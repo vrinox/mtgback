@@ -1,0 +1,20 @@
+'use strict';
+ 
+  class Cliente{
+    constructor(datos){
+      this.socket = datos.socket;
+      this.usuario  = dato.usuario;
+      this.ubicacion = null;
+      this.estado   = false;
+      this.idInterval = datos.idInterval;
+      this.idIntervalOponente = datos.idIntervalOponente;
+    }
+    
+    cerrarIntervalos(){
+      if(this.idInterval){clearInterval(this.idInterval)}
+      if(this.idIntervalOponente){clearInterval(this.idIntervalOponente)}
+    }
+    
+  } 
+
+  module.exports = Cliente;
