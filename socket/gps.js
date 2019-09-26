@@ -31,14 +31,14 @@ module.exports = async function(socket,server){
   });
   //-------------------- manejo de oponente por battle chat -------------------------------
   socket.on("gps:oponente",async (data)=>{
-    let cliente = await server.getCliente(data.usuarioId);
-    cliente.idInterval = setInterval(async ()=>{
+    let cliente = await server.getClienteById(socket.id);
+    cliente.idIntervalOponente = setInterval(async ()=>{
       let jugador = await server.getCliente(data.usuarioId);
-      socket.emit("gps:oponente",{ubicaciones:jugador.cercanos})
+      socket.emit("gps:oponente",{ubicaciones:jugador.ubicacion})
     },3000);
   });
   socket.on("gps:oponente:stop",async (data)=>{
-    let cliente = await server.getCliente(data.usuarioId);
-    clearInterval(cliente.idInterval);
+    let cliente = await server.getClienteById(socket.id);
+    clearInterval(cliente.idIntervalOponente);
   });
 }
