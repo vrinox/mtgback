@@ -50,7 +50,6 @@ const getAll = async function(req, res){
     let duelosJson = duelos.map(duelo => {
       return duelo.toWeb();
     });
-    console.log('[Duelos]',duelos);
     return ReS(res, {duelos:duelosJson});
 }
 module.exports.getAll = getAll;

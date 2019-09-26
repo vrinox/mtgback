@@ -3,7 +3,7 @@
   class Cliente{
     constructor(datos){
       this.socket = datos.socket;
-      this.usuario  = dato.usuario;
+      this.usuario  = datos.usuario;
       this.ubicacion = null;
       this.estado   = false;
       this.idInterval = datos.idInterval;
