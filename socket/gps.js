@@ -9,7 +9,7 @@ module.exports = async function(socket,server){
         await server.buscarCercanos(cliente);
       })
       .catch((err)=>{
-        console.log("GPS:",err);
+        console.log("[GPS]:",err);
       })
   });
   
