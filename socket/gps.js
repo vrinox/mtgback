@@ -20,6 +20,7 @@ module.exports = async function(socket,server){
   //---------------------- manejo de disponibles para duelos -----------------------------
   socket.on("gps:disponibles",async (data)=>{
     let cliente = await server.getCliente(data.usuarioId);
+    console.log("[GPS:disponible]",cliente);
     cliente.idInterval = setInterval(async ()=>{
       let jugador = await server.getCliente(data.usuarioId);
       socket.emit("gps:disponibles",{ubicaciones:jugador.cercanos})
@@ -31,7 +32,8 @@ module.exports = async function(socket,server){
   });
   //-------------------- manejo de oponente por battle chat -------------------------------
   socket.on("gps:oponente:start",async (data)=>{
-    let cliente = await server.getClienteById(socket.id);    
+    let cliente = await server.getClienteById(socket.id);
+    console.log("[GPS:oponente]",cliente);   
     cliente.idIntervalOponente = setInterval(async ()=>{
       let jugador = await server.getCliente(data.usuarioId); 
       if(jugador && jugador.estado == true){
