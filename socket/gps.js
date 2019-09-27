@@ -3,6 +3,7 @@ module.exports = async function(socket,server){
     server
       .getCliente(data.usuario)
       .then(async (cliente)=>{
+        console.log("[GPS]",usuario,cliente.usuario.dataValues.username,cliente.dataValues.id);
         cliente.estado = true;
         cliente.ubicacion = data.latLng;
         await server.buscarCercanos(cliente);
@@ -20,14 +21,14 @@ module.exports = async function(socket,server){
   //---------------------- manejo de disponibles para duelos -----------------------------
   socket.on("gps:disponibles",async (data)=>{
     let cliente = await server.getCliente(data.usuarioId);
-    console.log("[GPS:disponible]",cliente.dataValues.username,cliente.dataValues.id);
+    console.log("[GPS:disponible]",cliente.usuario.dataValues.username,cliente.dataValues.id);
     cliente.idInterval = setInterval(async ()=>{
       let jugador = await server.getCliente(data.usuarioId);
       socket.emit("gps:disponibles",{ubicaciones:jugador.cercanos})
     },3000);
   });
   socket.on("gps:disponibles:stop",async (data)=>{
-    let cliente = await server.getCliente(data.usuarioId,cliente.dataValues.username,cliente.dataValues.id);
+    let cliente = await server.getCliente(data.usuarioId,cliente.usuario.dataValues.username,cliente.dataValues.id);
     clearInterval(cliente.idInterval);
   });
   //-------------------- manejo de oponente por battle chat -------------------------------
