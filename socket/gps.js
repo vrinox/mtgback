@@ -3,7 +3,6 @@ module.exports = async function(socket,server){
     server
       .getCliente(data.usuario)
       .then(async (cliente)=>{
-        console.log("[GPS]",data.usuario,cliente.usuario.dataValues.id);
         cliente.estado = true;
         cliente.ubicacion = data.latLng;
         await server.buscarCercanos(cliente);
@@ -28,13 +27,13 @@ module.exports = async function(socket,server){
     },3000);
   });
   socket.on("gps:disponibles:stop",async (data)=>{
-    let cliente = await server.getCliente(data.usuarioId,cliente.usuario.dataValues.username,cliente.usuario.dataValues.id);
+    let cliente = await server.getCliente(data.usuarioId);
     clearInterval(cliente.idInterval);
   });
   //-------------------- manejo de oponente por battle chat -------------------------------
   socket.on("gps:oponente:start",async (data)=>{
     let cliente = await server.getClienteById(socket.id);
-    console.log("[GPS:oponente]",cliente);   
+    console.log("[GPS:oponente]",cliente.usuario.dataValues.username,cliente.usuario.dataValues.id);   
     cliente.idIntervalOponente = setInterval(async ()=>{
       let jugador = await server.getCliente(data.usuarioId); 
       if(jugador && jugador.estado == true){
