@@ -3,7 +3,7 @@ module.exports = async function(socket,server){
     server
       .getCliente(data.usuario)
       .then(async (cliente)=>{
-        console.log("[GPS]",data.usuario,cliente.usuario.dataValues.username,cliente.dataValues.id);
+        console.log("[GPS]",data.usuario,cliente.dataValues.id);
         cliente.estado = true;
         cliente.ubicacion = data.latLng;
         await server.buscarCercanos(cliente);
