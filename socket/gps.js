@@ -35,7 +35,15 @@ module.exports = async function(socket,server){
     cliente.idIntervalOponente = setInterval(async ()=>{
       let jugador = await server.getCliente(data.usuarioId); 
       if(jugador && jugador.estado == true){
-        socket.emit("gps:oponente",{ubicacion:jugador.ubicacion})
+        socket.emit("gps:oponente", { 
+          ubicaciones:[ 
+            { 
+              usuario : jugador.usuario.dataValues,
+              coords : jugador.ubicacion,usuarioId: 
+              jugador.usuario.dataValues.id 
+            }
+          ]
+        });
       }else{
         socket.emit("gps:oponente",{ubicacion:null})
       }

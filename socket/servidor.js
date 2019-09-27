@@ -97,7 +97,8 @@ Servidor.init = function(){
         }).map((newClient)=>{
           return {
             usuario : newClient.usuario.dataValues,
-            coords  : newClient.ubicacion
+            coords  : newClient.ubicacion,
+            usuarioId: newClient.usuario.dataValues.id
           }
         });
         await this.update(cliente);
