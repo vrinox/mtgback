@@ -13,8 +13,7 @@ const rutas = function(router){
 				idIntervalOponente	:	cliente.idIntervalOponente,
 		};
 	})
-    console.log(clientes);
-		
+    console.log(clientes);		
 		res.statusCode = 200;//send the appropriate status code
 		res.json({usuarios:clientes.length, clientes:clientes});
 	});
