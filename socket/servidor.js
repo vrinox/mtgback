@@ -30,6 +30,7 @@ Servidor.init = function(){
       let encontrado = false;
       this.clientes.forEach((cliente)=>{
         if(cliente.usuario.id === usuarioId){
+          encontrado = true;
           resolve(cliente);
         }
       });
