@@ -11,7 +11,9 @@ const rutas = function(router){
 					id			:	cliente.usuario.dataValues.id,
 					nombre		:	cliente.usuario.dataValues.username,
 					socket		:	cliente.socket.id,
-					deviceId	:	cliente.usuario.dataValues.deviceId
+					deviceId	:	cliente.usuario.dataValues.deviceId,
+					intervalId	:	cliente.intervalId,
+					idIntervalOponente	:	cliente.idIntervalOponente,
 			};
 		})
 		res.statusCode = 200;//send the appropriate status code
