@@ -203,8 +203,8 @@ const rechazar = async function(req, res){
 }
 module.exports.rechazar = rechazar;
 
-const Eliminar = function(idDuelo){
-  return new Promise((resolve,reject)=>{
+const Eliminar = async function(idDuelo){
+  return new Promise( async (resolve,reject)=>{
     
     [err, duelo] = await to(Duelo.findOne({where:{"id":idDuelo}}));
     if(err) reject("err encontrando duelo");
