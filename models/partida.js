@@ -2,7 +2,7 @@
 module.exports = (sequelize, DataTypes) => {
   var Model = sequelize.define('Partida', {
     inicio  : DataTypes.DATE,
-    fin     : DataTypes.DATE
+    fin     : DataTypes.DATE,
   });
 
   Model.associate = function(models){

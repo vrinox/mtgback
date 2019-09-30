@@ -171,3 +171,35 @@ const extraerMensaje = function(mensaje){
   };
 }
 module.exports.mensajeDB = extraerMensaje;
+
+const armarPartida = async function(partida){
+  let PartidaId = partida.id;
+  [err, detalles] = await to(DetallePartida.findAll({
+    "include":[
+      {"model":Usuario},
+      {"model":Mazo}
+    ],
+    "where":{"PartidaId":PartidaId}
+  }));
+  if(err) ReE(res, err);
+  
+  partida = partida.toWeb();
+
+  detalles.map((detalle)=>{
+    if(detalle.usuario.id == partida.duelo.retador.id){
+      partida.retador = {
+        usuario : detalle.usuario.dataValues,
+        deck    : detalle.mazo.dataValues
+      }
+    }else{
+      partida.retado = {
+        usuario : detalle.usuario.dataValues,
+        deck    : detalle.mazo.dataValues
+      }
+    }
+  })
+  partida.duelo = partida.duelo.dataValues;
+
+  return partida;
+}
+module.exports.mazo = armarPartida;

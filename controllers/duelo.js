@@ -95,15 +95,14 @@ const update = async function(req, res){
 module.exports.update = update;
 
 const remove = async function(req, res){
-  let err, duelo;
 
-  [err, duelo] = await to(Duelo.findOne({where:{"id":req.body.idDuelo}}));
-  if(err) return ReE(res, "err encontrando duelo");
+  Eliminar(req.body.idDuelo).then(()=>{
+    return ReS(res, {message:'Duelo eliminado'}, 204);
+  }).catch((err)=>{
+    return ReE(res, err);
+  })
 
-  [err, duelo] = await to(duelo.destroy());
-  if(err) return ReE(res, 'Ha ocurrido un error mientras se eliminama el duelo');
-
-  return ReS(res, {message:'Duelo eliminado'}, 204);
+  
 }
 module.exports.remove = remove;
 
@@ -203,3 +202,16 @@ const rechazar = async function(req, res){
   });
 }
 module.exports.rechazar = rechazar;
+
+const Eliminar = function(idDuelo){
+  return new Promise((resolve,reject)=>{
+    
+    [err, duelo] = await to(Duelo.findOne({where:{"id":idDuelo}}));
+    if(err) reject("err encontrando duelo");
+
+    [err, duelo] = await to(duelo.destroy());
+    if(err) reject('Ha ocurrido un error mientras se eliminama el duelo') 
+
+    resolve()
+  })
+}
