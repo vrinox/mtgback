@@ -20,7 +20,7 @@ const create = async function(solicitud){
 module.exports.create = create;
 const get = async function(idPartida){
   let err,partida;
-  return new Promise((resolve,reject)=>{
+  return new Promise(async (resolve,reject)=>{
     [err, partida] = await to(Partida.findOne({
       include:[
         {"model":Duelo,"as":"duelo"}
@@ -41,7 +41,7 @@ const get = async function(idPartida){
 module.exports.get = get;
 
 const Eliminar = function(idDuelo){
-  return new Promise((resolve,reject)=>{
+  return new Promise(async (resolve,reject)=>{
     
     [err, duelo] = await to(Duelo.findOne({where:{"id":idDuelo}}));
     if(err) reject("err encontrando duelo");
