@@ -17,34 +17,40 @@ const create = async function(solicitud){
 }
 
 
-// const get = async function(idPartida){
-//   let err,partida;
-//   return new Promise((resolve,reject)=>{
-//     [err, partida] = await to(Partida.findOne({
-//       include:[
-//         {"model":Duelo,"as":"duelo"}
-//       ],
-//       where:{
-//         id:idPartida
-//       }
-//     }));
-//     if(err){
-//       reject(err);
-//     }else{     
-//       partida = decorar.armarPartida(partida.toWeb());
-//       resolve(duelo.toWeb());
-//     }
-//   })
-// }
-// const Eliminar = function(idDuelo){
-//   return new Promise((resolve,reject)=>{
+module.exports.create = create;
+const get = async function(idPartida){
+  let err,partida;
+  return new Promise((resolve,reject)=>{
+    [err, partida] = await to(Partida.findOne({
+      include:[
+        {"model":Duelo,"as":"duelo"}
+      ],
+      where:{
+        id:idPartida
+      }
+    }));
+    if(err){
+      reject(err);
+    }else{     
+      partida = decorar.armarPartida(partida.toWeb());
+      resolve(duelo.toWeb());
+    }
+  })
+}
+
+module.exports.get = get;
+
+const Eliminar = function(idDuelo){
+  return new Promise((resolve,reject)=>{
     
-//     [err, duelo] = await to(Duelo.findOne({where:{"id":idDuelo}}));
-//     if(err) reject("err encontrando duelo");
+    [err, duelo] = await to(Duelo.findOne({where:{"id":idDuelo}}));
+    if(err) reject("err encontrando duelo");
 
-//     [err, duelo] = await to(duelo.destroy());
-//     if(err) reject('Ha ocurrido un error mientras se eliminama el duelo') 
+    [err, duelo] = await to(duelo.destroy());
+    if(err) reject('Ha ocurrido un error mientras se eliminama el duelo') 
 
-//     resolve()
-//   })
-// }
+    resolve()
+  })
+}
+
+module.exports.Eliminar = Eliminar;
