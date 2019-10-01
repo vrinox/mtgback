@@ -4,6 +4,7 @@ const Partida = require('../controllers/partida');
 module.exports = async function(socket,server){
   //ida
   socket.on("partida:solicitud",(data)=>{
+    console.log("[Partida]:solicitada",data);
     server
       .getCliente(data.recerptor.id)
       .then((cliente)=>{
@@ -15,6 +16,8 @@ module.exports = async function(socket,server){
   });
   //retorno
   socket.on("partida:aceptada",(data)=>{
+    
+    console.log("[Partida]:aceptada",data);
     Partida.create(data).then((partida)=>{
       server
         .getCliente()
@@ -25,6 +28,8 @@ module.exports = async function(socket,server){
     })
   })
   socket.on("partida:rechazada",(data)=>{
+    
+    console.log("[Partida]:rechazada",data);
     server
       .getCliente(data.emisor.id)
       .then((cliente)=>{
