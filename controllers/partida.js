@@ -18,13 +18,14 @@ const create = async function(solicitud){
 
 
 const get = async function(idPartida){
+  let err,partidas;
   return new Promise((resolve,reject)=>{
     [err, partida] = await to(Partida.findOne({
       include:[
-        {"model":Duelo,"as":"duelo"},
+        {"model":Duelo,"as":"duelo"}
       ],
       where:{
-        id:idPartida,
+        id:idPartida
       }
     }));
     if(err){
