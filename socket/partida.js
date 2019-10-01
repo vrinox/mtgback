@@ -15,8 +15,7 @@ module.exports = async function(socket,server){
       })
   });
   //retorno
-  socket.on("partida:aceptada",(data)=>{
-    
+  socket.on("partida:aceptada",(data)=>{    
     console.log("[Partida]:aceptada",data);
     Partida.create(data).then((partida)=>{
       server
@@ -27,8 +26,7 @@ module.exports = async function(socket,server){
         })
     })
   })
-  socket.on("partida:rechazada",(data)=>{
-    
+  socket.on("partida:rechazada",(data)=>{    
     console.log("[Partida]:rechazada",data);
     server
       .getCliente(data.emisor.id)

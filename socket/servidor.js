@@ -81,6 +81,7 @@ Servidor.init = function(){
     require('./notificacion')(socket);
     require('./chat')(socket,this);
     require('./gps')(socket,this);
+    require('./partida')(socket,this);
   }
 
   Servidor.buscarCercanos = function(cliente){
