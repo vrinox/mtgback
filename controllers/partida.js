@@ -18,7 +18,7 @@ const create = async function(solicitud){
 
 
 const get = async function(idPartida){
-  let err,partidas;
+  let err,partida;
   return new Promise((resolve,reject)=>{
     [err, partida] = await to(Partida.findOne({
       include:[
