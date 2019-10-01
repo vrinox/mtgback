@@ -36,15 +36,15 @@ const create = async function(solicitud){
 //     }
 //   })
 // }
-const Eliminar = function(idDuelo){
-  return new Promise((resolve,reject)=>{
+// const Eliminar = function(idDuelo){
+//   return new Promise((resolve,reject)=>{
     
-    [err, duelo] = await to(Duelo.findOne({where:{"id":idDuelo}}));
-    if(err) reject("err encontrando duelo");
+//     [err, duelo] = await to(Duelo.findOne({where:{"id":idDuelo}}));
+//     if(err) reject("err encontrando duelo");
 
-    [err, duelo] = await to(duelo.destroy());
-    if(err) reject('Ha ocurrido un error mientras se eliminama el duelo') 
+//     [err, duelo] = await to(duelo.destroy());
+//     if(err) reject('Ha ocurrido un error mientras se eliminama el duelo') 
 
-    resolve()
-  })
-}
+//     resolve()
+//   })
+// }
