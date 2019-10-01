@@ -17,25 +17,25 @@ const create = async function(solicitud){
 }
 
 
-const get = async function(idPartida){
-  let err,partida;
-  return new Promise((resolve,reject)=>{
-    [err, partida] = await to(Partida.findOne({
-      include:[
-        {"model":Duelo,"as":"duelo"}
-      ],
-      where:{
-        id:idPartida
-      }
-    }));
-    if(err){
-      reject(err);
-    }else{     
-      partida = decorar.armarPartida(partida.toWeb());
-      resolve(duelo.toWeb());
-    }
-  })
-}
+// const get = async function(idPartida){
+//   let err,partida;
+//   return new Promise((resolve,reject)=>{
+//     [err, partida] = await to(Partida.findOne({
+//       include:[
+//         {"model":Duelo,"as":"duelo"}
+//       ],
+//       where:{
+//         id:idPartida
+//       }
+//     }));
+//     if(err){
+//       reject(err);
+//     }else{     
+//       partida = decorar.armarPartida(partida.toWeb());
+//       resolve(duelo.toWeb());
+//     }
+//   })
+// }
 const Eliminar = function(idDuelo){
   return new Promise((resolve,reject)=>{
     
