@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   Model.associate = function(models){
-    this.belongsTo(models.Duelo);
+    this.belongsTo(models.Duelo,{through:"duelo"});
     this.belongsTo(models.Usuario,{through:"ganador"});
     //tiene
     this.hasMany(models.DetallePartida);
