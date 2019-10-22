@@ -184,21 +184,28 @@ const armarPartida = async function(partida){
     "where":{"PartidaId":PartidaId}
   }));
   if(err) ReE(res, err);
-    
-  detalles.map(async (detalle)=>{
-    if(detalle.UsuarioId == partida.Duelo.idRetador){
-      partida.retador = {
-        usuario : detalle.Usuario.dataValues,
-        deck    : await armarMazo(detalle.Mazo)
-      }
-    }else{
-      partida.retado = {
-        usuario : detalle.Usuario.dataValues,
-        deck    : await armarMazo(detalle.Mazo)
-      }
-    }
+  return new Promise(()=>{
+    Promise.all(detalles.map(async (detalle)=>{
+      return decorarDetallePartida(detalle);
+    }))
+    .then((detallesDecorados)=>{
+      detallesDecorados.forEach((detalleDecorado)=>{
+        if(detalleDecorado.usuario.id == partida.Duelo.idRetador){
+          partida.retador = detalleDecorado;
+        }else{
+          partida.retado = detalleDecorado;
+        }
+      })
+      resolve(partida);
+    })     
   })
-
-  return partida;
 }
 module.exports.partida = armarPartida;
+
+const decorarDetallePartida = async function(detalle){
+  return new Promise((resolve,reject)=>{
+      armarMazo(detalle.Mazo).then((mazo)=>{
+        resolve({"deck":mazo,"usuario":detalle.Usuario.dataValues})
+      })
+  })
+}

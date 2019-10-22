@@ -47,8 +47,9 @@ const get = async function(idPartida){
     if(err){
       reject(err);
     }else{     
-      partida = await decorar.partida(partida.toWeb());
-      resolve(partida);
+      decorar.partida(partida.toWeb()).then((partidaDecorada)=>{
+        resolve(partidaDecorada);
+      });
     }
   })
 }

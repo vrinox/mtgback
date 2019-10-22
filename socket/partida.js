@@ -13,15 +13,19 @@ module.exports = async function(socket,server){
         }else if(data.tipo == "aceptada"){
           //ACEPTADA
           console.log("[Partida]:aceptada",data);
-          Partida.create(data).then((partida)=>{
-            data.partida = partida;
-            server
-              .getCliente(data.emisor.id)
-              .then((emisor)=>{
+          server
+            .getCliente(data.emisor.id)
+            .then((emisor)=>{
+              //envio aceptada
+              cliente.socket.emit('partida:solicitud',data);
+              emisor.socket.emit('partida:solicitud',data);
+              Partida.create(data).then((partida)=>{
+                data.partida = partida;
+                data.tipo = 'iniciar';
                 cliente.socket.emit('partida:solicitud',data);
                 emisor.socket.emit('partida:solicitud',data);
-              });
-          })
+              })
+            });
         }else if(data.tipo == "rechazada"){
           //RECHAZADA
           console.log("[Partida]:rechazada",data);
