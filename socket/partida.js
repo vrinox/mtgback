@@ -6,7 +6,7 @@ module.exports = async function(socket,server){
   socket.on("partida:solicitud",(data)=>{
     console.log("[Partida]:solicitada",data);
     server
-      .getCliente(data.recerptor.id)
+      .getCliente(data.receptor.id)
       .then((cliente)=>{
         cliente.emit('partida:solicitud',data)
       })
