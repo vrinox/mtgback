@@ -11,6 +11,7 @@ const create = async function(solicitud){
       }));
       if(err) reject(err);
       get(partida.id).then((partidaDecorada)=>{
+        console.log('[Partida]:enviar',partidaDecorada);        
         resolve(partidaDecorada);
       })
     })    

@@ -14,10 +14,13 @@ module.exports = async function(socket,server){
           //ACEPTADA
           console.log("[Partida]:aceptada",data);
           Partida.create(data).then((partida)=>{
-            let solicitud = {"tipo":"aceptada","partida":partida };
-            console.log('[Partida]',solicitud);
-            cliente.socket.emit('partida:solicitud',solicitud);
-            socket.emit('partida:solicitud',solicitud);
+            data.partida = partida;
+            server
+              .getCliente(data.emisor.id)
+              .then((emisor)=>{
+                cliente.socket.emit('partida:solicitud',data);
+                emisor.socket.emit('partida:solicitud',data);
+              });
           })
         }else if(data.tipo == "rechazada"){
           //RECHAZADA
