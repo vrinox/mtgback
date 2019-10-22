@@ -186,16 +186,15 @@ const armarPartida = async function(partida){
   if(err) ReE(res, err);
     
   detalles.map((detalle)=>{
-    console.log('[Detalle]',detalle);
-    if(detalle.usuario.id == partida.Duelo.idRetador){
+    if(detalle.UsuarioId == partida.Duelo.idRetador){
       partida.retador = {
-        usuario : detalle.usuario.dataValues,
-        deck    : detalle.mazo.dataValues
+        usuario : detalle.Usuario.dataValues,
+        deck    : armarMazo(detalle.Mazo.dataValues)
       }
     }else{
       partida.retado = {
-        usuario : detalle.usuario.dataValues,
-        deck    : detalle.mazo.dataValues
+        usuario : detalle.Usuario.dataValues,
+        deck    : armarMazo(detalle.Mazo.dataValues)
       }
     }
   })
