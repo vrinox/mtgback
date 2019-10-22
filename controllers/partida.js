@@ -7,7 +7,7 @@ const create = async function(solicitud){
       let err, partida;
 
       [err, partida] = await to(Partida.create({
-        dueloId : solicitud.dueloId
+        dueloId : solicitud.dueloId,
       }));
       if(err) reject(err);
       get(partida.id).then((partidaDecorada)=>{
