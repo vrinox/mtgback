@@ -33,7 +33,7 @@ const get = async function(idPartida){
     if(err){
       reject(err);
     }else{     
-      partida = decorar.armarPartida(partida.toWeb());
+      partida = decorar.partida(partida.toWeb());
       resolve(duelo.toWeb());
     }
   })

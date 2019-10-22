@@ -202,4 +202,4 @@ const armarPartida = async function(partida){
 
   return partida;
 }
-module.exports.mazo = armarPartida;
+module.exports.partida = armarPartida;
