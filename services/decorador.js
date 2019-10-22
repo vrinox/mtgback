@@ -184,9 +184,7 @@ const armarPartida = async function(partida){
     "where":{"PartidaId":PartidaId}
   }));
   if(err) ReE(res, err);
-  
-  console.log('[Decorador]:partida',partida);
-  
+    
   detalles.map((detalle)=>{
     if(detalle.usuario.id == partida.Duelo.retador.id){
       partida.retador = {

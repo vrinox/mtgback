@@ -14,8 +14,10 @@ module.exports = async function(socket,server){
           //ACEPTADA
           console.log("[Partida]:aceptada",data);
           Partida.create(data).then((partida)=>{
-            cliente.socket.emit('partida:solicitud',{"tipo":"aceptada","partida":partida });
-            socket.emit('partida:solicitud',{"tipo":"aceptada","partida":partida });
+            let solicitud = {"tipo":"aceptada","partida":partida };
+            console.log('[Partida]',solicitud);
+            cliente.socket.emit('partida:solicitud',solicitud);
+            socket.emit('partida:solicitud',solicitud);
           })
         }else if(data.tipo == "rechazada"){
           //RECHAZADA
