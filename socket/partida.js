@@ -3,7 +3,7 @@ const Partida = require('../controllers/partida');
 
 module.exports = async function(socket,server){
   socket.on("partida:solicitud",(data)=>{
-    console.log("[Partida]:solicitad",data);
+    console.log("[Partida]:solicitud",data);
     server
       .getCliente(data.receptor.id)
       .then((cliente)=>{
@@ -24,6 +24,8 @@ module.exports = async function(socket,server){
           Duelo.Eliminar(data.dueloId).then(()=>{
             console.log("[Partida]:duelo eliminado")
           });
+        }else{          
+          console.log("[Partida]:desconocida",data);
         }
       })
       .catch((err)=>{
