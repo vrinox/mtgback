@@ -23,7 +23,7 @@ const get = async function(idPartida){
   return new Promise(async (resolve,reject)=>{
     [err, partida] = await to(Partida.findOne({
       include:[
-        {"model":Duelo,"as":"duelo"}
+        {"model":Duelo}
       ],
       where:{
         id:idPartida

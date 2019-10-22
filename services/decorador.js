@@ -184,7 +184,7 @@ const armarPartida = async function(partida){
   if(err) ReE(res, err);
   
   partida = partida.toWeb();
-
+  console.log('[Decorador]:partida',partida);
   detalles.map((detalle)=>{
     if(detalle.usuario.id == partida.duelo.retador.id){
       partida.retador = {
