@@ -13,7 +13,7 @@ const create = async function(solicitud){
       if(err) reject(err);
       [err, PartidaEmisor] = await to(DetallePartida.create({
         UsuarioId : solicitud.emisor.id,
-        MazoId    : solicitud.emiso.deck
+        MazoId    : solicitud.emisor.deck
       }));      
       if(err) reject(err);
       [err, PartidaReceptor] = await to(DetallePartida.create({
