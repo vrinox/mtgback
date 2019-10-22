@@ -1,10 +1,11 @@
 //imports
-const Formato     = require('../models').Formato;
-const Mazo        = require('../models').Mazo;
-const Lista       = require('../models').Lista;
-const Carta       = require('../models').Carta;
-const DetalleMazo = require('../models').DetalleMazo;
-const DetalleLista= require('../models').DetalleLista;
+const Formato       = require('../models').Formato;
+const Mazo          = require('../models').Mazo;
+const Lista         = require('../models').Lista;
+const Carta         = require('../models').Carta;
+const Usuario       = require('../models').Usuario;
+const DetalleMazo   = require('../models').DetalleMazo;
+const DetalleLista  = require('../models').DetalleLista;
 const DetallePartida= require('../models').DetallePartida;
 
 const usuario = async function(newUsuario){
