@@ -186,7 +186,8 @@ const armarPartida = async function(partida){
   if(err) ReE(res, err);
     
   detalles.map((detalle)=>{
-    if(detalle.usuario.id == partida.Duelo.retador.id){
+    console.log('[Detalle]',detalle);
+    if(detalle.usuario.id == partida.Duelo.idRetador){
       partida.retador = {
         usuario : detalle.usuario.dataValues,
         deck    : detalle.mazo.dataValues
