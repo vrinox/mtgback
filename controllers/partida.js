@@ -13,12 +13,14 @@ const create = async function(solicitud){
       if(err) reject(err);
       [err, PartidaEmisor] = await to(DetallePartida.create({
         UsuarioId : solicitud.emisor.id,
-        MazoId    : solicitud.emisor.deck
+        MazoId    : solicitud.emisor.deck,
+        PartidaId : partida.id
       }));      
       if(err) reject(err);
       [err, PartidaReceptor] = await to(DetallePartida.create({
         UsuarioId : solicitud.receptor.id,
-        MazoId    : solicitud.receptor.deck
+        MazoId    : solicitud.receptor.deck,
+        PartidaId : partida.id
       }));      
       if(err) reject(err);
 
