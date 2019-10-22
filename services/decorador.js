@@ -5,6 +5,7 @@ const Lista       = require('../models').Lista;
 const Carta       = require('../models').Carta;
 const DetalleMazo = require('../models').DetalleMazo;
 const DetalleLista= require('../models').DetalleLista;
+const DetallePartida= require('../models').DetallePartida;
 
 const usuario = async function(newUsuario){
   let err,mazos,listas;
