@@ -1,5 +1,6 @@
 const Duelo   = require('../models').Duelo;
 const Partida = require('../models').Partida;
+const DetallePartida = require('../models').DetallePartida;
 const decorar = require('../services/decorador')
 
 const create = async function(solicitud){
@@ -10,6 +11,17 @@ const create = async function(solicitud){
         DueloId : solicitud.dueloId,
       }));
       if(err) reject(err);
+      [err, PartidaEmisor] = await to(DetallePartida.create({
+        UsuarioId : solicitud.emisor.id,
+        MazoId    : solicitud.emiso.deck
+      }));      
+      if(err) reject(err);
+      [err, PartidaReceptor] = await to(DetallePartida.create({
+        UsuarioId : solicitud.receptor.id,
+        MazoId    : solicitud.receptor.deck
+      }));      
+      if(err) reject(err);
+
       get(partida.id).then((partidaDecorada)=>{
         console.log('[Partida]:enviar',partidaDecorada);        
         resolve(partidaDecorada);
