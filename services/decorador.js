@@ -185,16 +185,16 @@ const armarPartida = async function(partida){
   }));
   if(err) ReE(res, err);
     
-  detalles.map((detalle)=>{
+  detalles.map(async (detalle)=>{
     if(detalle.UsuarioId == partida.Duelo.idRetador){
       partida.retador = {
         usuario : detalle.Usuario.dataValues,
-        deck    : armarMazo(detalle.Mazo.dataValues)
+        deck    : await armarMazo(detalle.Mazo.dataValues)
       }
     }else{
       partida.retado = {
         usuario : detalle.Usuario.dataValues,
-        deck    : armarMazo(detalle.Mazo.dataValues)
+        deck    : await armarMazo(detalle.Mazo.dataValues)
       }
     }
   })
