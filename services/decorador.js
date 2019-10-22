@@ -198,7 +198,6 @@ const armarPartida = async function(partida){
       }
     }
   })
-  partida.Duelo = partida.Duelo.dataValues;
 
   return partida;
 }
