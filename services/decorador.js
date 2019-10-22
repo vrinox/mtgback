@@ -189,12 +189,12 @@ const armarPartida = async function(partida){
     if(detalle.UsuarioId == partida.Duelo.idRetador){
       partida.retador = {
         usuario : detalle.Usuario.dataValues,
-        deck    : await armarMazo(detalle.Mazo.dataValues)
+        deck    : await armarMazo(detalle.Mazo)
       }
     }else{
       partida.retado = {
         usuario : detalle.Usuario.dataValues,
-        deck    : await armarMazo(detalle.Mazo.dataValues)
+        deck    : await armarMazo(detalle.Mazo)
       }
     }
   })
