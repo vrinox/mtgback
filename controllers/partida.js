@@ -9,6 +9,7 @@ const create = async function(solicitud){
       [err, partida] = await to(Partida.create({
         dueloId : solicitud.dueloId,
       }));
+      console.log('[Partida]:create',solicitud,partida);
       if(err) reject(err);
       get(partida.id).then((partidaDecorada)=>{
         resolve(partidaDecorada);
