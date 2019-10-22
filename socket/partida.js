@@ -8,7 +8,7 @@ module.exports = async function(socket,server){
     server
       .getCliente(data.receptor.id)
       .then((cliente)=>{
-        cliente.emit('partida:solicitud',data)
+        cliente.socket.emit('partida:solicitud',data)
       })
       .catch((err)=>{
         console.log("[Partida]:",err);
