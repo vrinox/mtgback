@@ -186,8 +186,9 @@ const armarPartida = async function(partida){
   if(err) ReE(res, err);
   
   console.log('[Decorador]:partida',partida);
+  
   detalles.map((detalle)=>{
-    if(detalle.usuario.id == partida.duelo.retador.id){
+    if(detalle.usuario.id == partida.Duelo.retador.id){
       partida.retador = {
         usuario : detalle.usuario.dataValues,
         deck    : detalle.mazo.dataValues
@@ -199,7 +200,7 @@ const armarPartida = async function(partida){
       }
     }
   })
-  partida.duelo = partida.duelo.dataValues;
+  partida.Duelo = partida.Duelo.dataValues;
 
   return partida;
 }
