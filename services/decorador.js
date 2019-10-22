@@ -184,7 +184,7 @@ const armarPartida = async function(partida){
     "where":{"PartidaId":PartidaId}
   }));
   if(err) ReE(res, err);
-  return new Promise(()=>{
+  return new Promise((resolve)=>{
     Promise.all(detalles.map(async (detalle)=>{
       return decorarDetallePartida(detalle);
     }))
