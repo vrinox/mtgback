@@ -68,8 +68,7 @@ const Termino = function(partidaTerminada){
     if(err) reject('Ha ocurrido un error mientras se eliminama el duelo') 
 
     partida.set({
-      UsuarioId: partida.id,
-      fin: new Date().toISOString()
+      UsuarioId: partida.id
     });
 
     [err, partida] = await to(partida.save());

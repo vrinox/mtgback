@@ -12,7 +12,7 @@ module.exports = async function(socket,server){
           cliente.socket.emit('partida:solicitud',data);
         }else if(data.tipo == "aceptada"){
           //ACEPTADA
-          console.log("[Partida]:aceptada",data);
+          // console.log("[Partida]:aceptada",data);
           server
             .getCliente(data.emisor.id)
             .then((emisor)=>{
@@ -28,10 +28,10 @@ module.exports = async function(socket,server){
             });
         }else if(data.tipo == "rechazada"){
           //RECHAZADA
-          console.log("[Partida]:rechazada",data);
+          // console.log("[Partida]:rechazada",data);
           cliente.socket.emit('partida:rechazada',data)
           Duelo.Eliminar(data.dueloId).then(()=>{
-            console.log("[Partida]:duelo eliminado")
+            // console.log("[Partida]:duelo eliminado");
           });
         }else{          
           console.log("[Partida]:desconocida",data);
@@ -42,7 +42,7 @@ module.exports = async function(socket,server){
       });
   });
   socket.on("partida:datos",(data)=>{
-    console.log("[Partida]:datos",data);    
+    // console.log("[Partida]:datos",data);
     server
       .getCliente(data.receptor.id)
       .then((cliente)=>{        
