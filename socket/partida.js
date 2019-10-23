@@ -42,10 +42,16 @@ module.exports = async function(socket,server){
       });
   });
   socket.on("partida:datos",(data)=>{
-    console.log("[Partida]:datos",data);
+    console.log("[Partida]:datos",data);    
     server
       .getCliente(data.receptor.id)
-      .then((cliente)=>{
+      .then((cliente)=>{        
+        if(data.datos.tipo === 'termino'){
+          Partida.Termino()
+            .then(()=>{
+              // partida terminada
+            })
+        }
         cliente.socket.emit('partida:datos',data);
       });
   });

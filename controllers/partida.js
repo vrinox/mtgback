@@ -55,17 +55,28 @@ const get = async function(idPartida){
 
 module.exports.get = get;
 
-const Eliminar = function(idDuelo){
+const Termino = function(partidaTerminada){
   return new Promise(async (resolve,reject)=>{
-    
-    [err, duelo] = await to(Duelo.findOne({where:{"id":idDuelo}}));
+    let duelo,partida;
+    [err, duelo] = await to(Duelo.findOne({where:{"id":partidaTerminada.duelo.id}}));
     if(err) reject("err encontrando duelo");
 
     [err, duelo] = await to(duelo.destroy());
     if(err) reject('Ha ocurrido un error mientras se eliminama el duelo') 
+  
+    [err, partida] = await to(Partida.findOne({where:{"id":partidaTerminada.id}}));
+    if(err) reject('Ha ocurrido un error mientras se eliminama el duelo') 
 
+    partida.set({
+      UsuarioId: partida.id,
+      fin: new Date().toISOString()
+    });
+
+    [err, partida] = await to(partida.save());
+    if(err) reject('error mientras se actualiza la partida')
+      
     resolve()
   })
 }
 
-module.exports.Eliminar = Eliminar;
+module.exports.Termino = Termino;
