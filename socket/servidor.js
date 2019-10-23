@@ -36,7 +36,7 @@ Servidor.init = function(){
       });
       if(!encontrado){
         console.log('[Error]: cliente '+usuarioId+' no se encuentra conectado');
-        reject(null);
+        reject(new Error('[Error]: cliente '+usuarioId+' no se encuentra conectado'));
       }
     });
   }
