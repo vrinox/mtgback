@@ -13,6 +13,7 @@ const getAll = async function(req, res){
         page    : pagina actual,
         pageSize: registros por pagina
     */
+   console.log("[Cartas]",filtros);
     [err, cartas] = await to(mtg.card.where(filtros));
     if(err) ReE(res, {success:false, error:err}, 422);
     return ReS(res, {"cartas":cartas});
