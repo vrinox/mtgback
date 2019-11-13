@@ -34,16 +34,17 @@ const getAllCards = async function(req, res){
       page    : pagina actual,
       pageSize: registros por pagina
   */
- console.log("[Cartas]",filtros);
+  console.log("[Cartas]",filtros);
   let todas = [];
   mtg.card.all(filtros)
   .on("data",(data)=>{
     console.log("[CartasAll]:data",data);
     cartas.push(data);
   })
-  mtg.card.all(filtros)
-  .on("end",(data)=>{    
-    console.log("[CartasAll]:All",data,todas)
+  mtg.card.where(filtros).then((cartas)=>{
+    console.log("[CartasAll]:where",cartas.map((carta)=>{
+      return carta.name;
+    }))
   })
   return ReS(res, {"mensaje":"arranco"});
 }
