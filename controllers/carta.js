@@ -38,12 +38,11 @@ module.exports.getAllCards = getAllCards;
 const getPaginado = async function(filtros){
   let todas = [];
   return new Promise((resolve,reject)=>{    
-    let busqueda = mtg.card.all(filtros);
-    busqueda.on("data",(data)=>{
+    mtg.card.all(filtros).on("data",(data)=>{
       console.log("[CartasAll]:data",data.name);
       todas.push(data);
     })
-   busqueda.on("end",(data)=>{
+    mtg.card.all(filtros).on("end",(data)=>{
       resolve(todas);
     })
   })
