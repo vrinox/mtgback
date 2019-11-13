@@ -29,29 +29,25 @@ const getAllCards = async function(req, res){
   if(!filtros.hasOwnProperty("orderBy")){
     filtros.orderBy="name";
   }
-  /*
-    para paginacion usa:
-      page    : pagina actual,
-      pageSize: registros por pagina
-  */
-  let todas = [];
-  mtg.card.all(filtrosAll)
-  .on("data",(data)=>{
-    console.log("[CartasAll]:data",data.name);
-    todas.push(data);
-  })
-  let num = 0;
-  mtg.card.all(filtrosAll)
-  .on("end",(data)=>{
-    console.log("[CartasAll]:data",todas.map((carta)=>{
-      num++;
-      return {n:carta.name,"º":num};
-    }));
-  })
-  return ReS(res, {"mensaje":"arranco"});
+  let todas = await getPaginado(filtros);  
+  return ReS(res, {"cartas":todas});
 }
 
 module.exports.getAllCards = getAllCards;
+
+const getPaginado = async function(filtros){
+  let todas = [];
+  return new Promise((resolve,reject)=>{    
+    mtg.card.all(filtros)
+    .on("data",(data)=>{
+      console.log("[CartasAll]:data",data.name);
+      todas.push(data);
+    })
+    .on("end",(data)=>{
+      resolve(todas);
+    })
+  })
+}
 
 const get = async function(req, res){
     res.setHeader('Content-Type', 'application/json');
