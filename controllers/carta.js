@@ -41,12 +41,15 @@ const getAllCards = async function(req, res){
   let todas = [];
   mtg.card.all(filtrosAll)
   .on("data",(data)=>{
-    console.log("[CartasAll]:data",data);
+    console.log("[CartasAll]:data",data.nombre);
     todas.push(data);
   })
   mtg.card.all(filtrosAll)
   .on("end",(data)=>{
-    console.log("[CartasAll]:data",todas);
+    console.log("[CartasAll]:data",todas.map((carta)=>{
+      num++;
+      return {n:carta.name,"º":num};
+    }));
   })
   let num = 0;
   mtg.card.where(filtros).then((cartas)=>{
