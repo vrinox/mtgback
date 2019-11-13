@@ -35,14 +35,14 @@ const getAllCards = async function(req, res){
       pageSize: registros por pagina
   */
  console.log("[Cartas]",filtros);
-  let cartas = [];
+  let todas = [];
   mtg.card.all(filtros)
   .on("data",(data)=>{
     console.log("[CartasAll]:data",data);
     cartas.push(data);
   })
   .on("end",(data)=>{    
-    console.log("[CartasAll]:All",data,cartas)
+    console.log("[CartasAll]:All",data,todas)
   })
   return ReS(res, {"mensaje":"arranco"});
 }
