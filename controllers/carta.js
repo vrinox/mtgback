@@ -32,7 +32,7 @@ const getAllCards = async function(req, res){
   getPaginado(filtros).then((todas)=>{
     console.log(todas.map((card)=>{return card.name}))
   })
-  return ReS(res, {"cartas":todas});
+  return ReS(res, {"cartas":"todas"});
 }
 
 module.exports.getAllCards = getAllCards;
