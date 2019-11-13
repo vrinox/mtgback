@@ -41,6 +41,7 @@ const getAllCards = async function(req, res){
     console.log("[CartasAll]:data",data);
     cartas.push(data);
   })
+  mtg.card.all(filtros)
   .on("end",(data)=>{    
     console.log("[CartasAll]:All",data,todas)
   })
