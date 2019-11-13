@@ -29,7 +29,9 @@ const getAllCards = async function(req, res){
   if(!filtros.hasOwnProperty("orderBy")){
     filtros.orderBy="name";
   }
-  let todas = await getPaginado(filtros);  
+  getPaginado(filtros).then((todas)=>{
+    console.log(todas.map((card)=>{return card.name}))
+  })
   return ReS(res, {"cartas":todas});
 }
 
