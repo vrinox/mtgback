@@ -35,9 +35,16 @@ const getAllCards = async function(req, res){
       pageSize: registros por pagina
   */
  console.log("[Cartas]",filtros);
-  [err, cartas] = await to(mtg.card.all(filtros));
-  if(err) ReE(res, {success:false, error:err}, 422);
-  return ReS(res, {"cartas":cartas});
+  let cartas = [];
+  mtg.card.all(filtros)
+  .on("data",(data)=>{
+    console.log("[CartasAll]:data",data);
+    cartas.push(data);
+  })
+  .on("end",(data)=>{    
+    console.log("[CartasAll]:All",data,cartas)
+  })
+  return ReS(res, {"mensaje":"arranco"});
 }
 
 module.exports.getAllCards = getAllCards;
